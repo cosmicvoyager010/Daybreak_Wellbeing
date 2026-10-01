@@ -286,7 +286,12 @@
     @media (max-width: 740px) { .site-header { min-height: 60px; } }
     main section[id], main div[id=daily] { scroll-margin-top: 92px; }
     .sprout { display: flex; align-items: center; gap: 14px; width: 100%; margin: 18px 0 18px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 20px; background: var(--white); text-align: left; cursor: pointer; font: inherit; color: inherit; }
-    .sprout-icon { font-size: 40px; line-height: 1; flex: none; animation: sway 4s ease-in-out infinite; transform-origin: 50% 90%; }
+    .sprout { --glow: 0; box-shadow: 0 0 calc(4px + 26px * var(--glow)) rgb(236 196 96 / calc(.10 + .38 * var(--glow))); }
+    .sprout-icon { font-size: 40px; line-height: 1; flex: none; animation: sway 4s ease-in-out infinite; transform-origin: 50% 90%; filter: drop-shadow(0 0 calc(1px + 9px * var(--glow)) rgb(240 200 90 / .85)); }
+    .sprout.bloom { border-color: #d8b24a; animation: bloomglow 3.2s ease-in-out infinite; }
+    @keyframes bloomglow { 0%, 100% { box-shadow: 0 0 18px rgb(236 196 96 / .35); } 50% { box-shadow: 0 0 34px rgb(236 196 96 / .65); } }
+    @media (prefers-reduced-motion: reduce) { .sprout.bloom, .sprout-icon { animation: none; } }
+    .sprout.grew { border-color: var(--green); box-shadow: 0 0 0 3px rgb(94 128 87 / 25%); }
     .sprout.grew { border-color: var(--green); box-shadow: 0 0 0 3px rgb(94 128 87 / 25%); }
     @keyframes sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
     .sprout-text { display: grid; gap: 4px; flex: 1; min-width: 0; }
@@ -312,6 +317,13 @@
     .mh:first-child { margin-top: 2px; }
     .mg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .mg button:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .dev-steps { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 8px; font-size: calc(13.5px * var(--ts, 1)); }
+    .dev-steps code, #dev-dialog code { background: #eef0e6; padding: 1px 5px; border-radius: 6px; font-size: .92em; }
+    #dev-menu-item[hidden] { display: none; }
+    .dev-more { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 4px; }
+    .dev-more summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; }
+    .dev-more .dev-steps { margin-top: 4px; }
+    ul.dev-steps { list-style: disc; }
     .menu-more { margin-top: 12px; }
     .menu-more summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; padding: 0 4px; font-weight: 600; color: var(--muted); }
     .menu-more .mg { margin-top: 6px; }
@@ -1760,8 +1772,12 @@
           <strong id="sprout-title">Your sprout</strong>
           <span id="sprout-sub" class="small"></span>
           <span class="sprout-bar" aria-hidden="true"><i id="sprout-fill"></i></span>
+          <span id="sprout-shelf" class="micro"></span>
         </span>
       </button>
+      <div class="actions" id="sprout-harvest-row" hidden style="margin: -6px 0 18px;">
+        <button class="button primary" id="sprout-harvest" type="button">🌰 Harvest the seeds &amp; plant a new one</button>
+      </div>
 
       <section class="card hero" aria-labelledby="hero-title">
         <div class="hero-copy">
@@ -2507,6 +2523,44 @@
     </footer>
   </div>
 
+  <dialog id="dev-dialog" aria-labelledby="dev-title">
+    <div class="dialog-header">
+      <h2 id="dev-title">Dev notes</h2>
+      <button class="close-button" type="button" data-close="dev-dialog" aria-label="Close">×</button>
+    </div>
+    <p class="micro">For the person who updates the app. Hidden from the menu until unlocked (tap the daybreak logo 7 times). Hidden, not secret: anyone who knows the trick can see this.</p>
+    <h3 class="pat-h">This build</h3>
+    <ul class="pat-list" id="dev-info"></ul>
+    <h3 class="pat-h">Working on next</h3>
+    <p class="micro">Edit the list <code>DEV_NEXT</code> in <code>index.html</code> at the end of each session.</p>
+    <ol class="dev-steps" id="dev-next"></ol>
+    <details class="dev-more"><summary>What has been built (newest first)</summary><ul class="dev-steps" id="dev-log"></ul></details>
+    <details class="dev-more"><summary>Merging two versions of the app</summary><ol class="dev-steps" id="dev-merge"></ol></details>
+    <details class="dev-more"><summary>Hand-off note for a new chat or account</summary>
+      <p class="micro">Tap the box, copy it, and paste it into the new chat together with the <code>index.html</code> file.</p>
+      <textarea id="dev-handoff" rows="10" readonly style="width: 100%; font: inherit; font-size: 13px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--white);"></textarea>
+      <div class="actions" style="margin-top: 8px;"><button class="button" type="button" id="dev-copy">Copy note</button></div>
+    </details>
+    <h3 class="pat-h">When you change the app</h3>
+    <ol class="dev-steps">
+      <li><strong>Save a backup first</strong> (Menu → Settings &amp; backup), so your check-ins are safe.</li>
+      <li><strong>Edit <code>index.html</code> on the PC</strong> and open it in your browser to try it. Installing and offline use only work from the live web address, so test those on the live link.</li>
+      <li><strong>Change the version in <code>sw.js</code></strong> (for example <code>daybreak-v27</code> to <code>daybreak-v28</code>) every time <code>index.html</code> changes. Without this, phones keep showing the old copy.</li>
+      <li><strong>Also update <code>APP_BUILD</code></strong> in <code>index.html</code> to the same number, so this screen can tell you if they match.</li>
+      <li><strong>Upload to GitHub:</strong> repo → Add file → Upload files → drag <code>index.html</code> and <code>sw.js</code> → Commit changes.</li>
+      <li><strong>Wait about a minute</strong> for Cloudflare, then open the live link and check this screen: the cache name should match the build.</li>
+      <li><strong>On the phone,</strong> close and reopen the installed app once or twice to load the new version.</li>
+      <li><strong>If something breaks:</strong> in GitHub open the file → History, and restore the earlier version (or upload the previous files again).</li>
+    </ol>
+    <h3 class="pat-h">Where the data lives</h3>
+    <p class="small">Only in each browser, for each web address. The repo and Cloudflare never see check-ins. A new address, a new browser or a cleared browser starts empty, so use Save a backup and Restore a backup to move data. The saved items on this device:</p>
+    <ul class="pat-list" id="dev-keys"></ul>
+    <div class="dialog-actions">
+      <button class="button" type="button" id="dev-hide">Hide dev notes</button>
+      <button class="button primary" type="button" data-close="dev-dialog">Close</button>
+    </div>
+  </dialog>
+
   <dialog id="reminder-dialog" aria-labelledby="rem-title">
     <div class="dialog-header">
       <h2 id="rem-title">A gentle daily reminder</h2>
@@ -2841,6 +2895,7 @@
           <button class="button" type="button" data-menu="__settings">⚙ Settings</button>
           <button class="button" type="button" data-menu="__backup">💾 Save a backup</button>
           <button class="button" type="button" data-menu="__restore">📂 Restore a backup</button>
+          <button class="button" type="button" id="dev-menu-item" data-menu="__dev" hidden>🛠 Dev notes</button>
         </div>
       </details>
     </div>
@@ -3601,21 +3656,35 @@
         return svg;
       }
 
-      /* ---- Sprout: grows with every day you return; never shrinks, never scolds ---- */
-      const SPROUT_KEY = "daybreak.sprout.v1";
+      /* ---- Sprout: a gentle seasonal cycle. Grows with days you show up, blooms, gives seeds, starts again. Never shrinks, never scolds. ---- */
+      const SPROUT_KEY = "daybreak.sprout.v2";
       const SPROUT = [[0, "🌰", "A seed"], [1, "🌱", "A sprout"], [4, "🌿", "A little plant"], [9, "🪴", "Growing steadily"], [16, "🌳", "A young tree"], [30, "🌸", "In bloom"]];
-      function renderSprout() {
-        const days = Object.values(state.logs).filter((l) => l && (l.walk || l.reflected || l.noticed || l.awake || l.wake || (l.feels || []).length || (l.evening || []).length || HABITS.some((h) => l.habits && l.habits[h]))).length;
-        let i = 0; SPROUT.forEach((st, n) => { if (days >= st[0]) i = n; });
-        const cur = SPROUT[i], nxt = SPROUT[i + 1];
-        $("#sprout-icon").textContent = cur[1];
-        $("#sprout-title").textContent = cur[2];
-        $("#sprout-sub").textContent = `${days} ${days === 1 ? "day" : "days"} of showing up` + (nxt ? ` · ${nxt[0] - days} more to grow` : " · fully grown, and still yours");
-        $("#sprout-fill").style.width = (nxt ? Math.round(((days - cur[0]) / (nxt[0] - cur[0])) * 100) : 100) + "%";
-        let prev = null; try { prev = localStorage.getItem(SPROUT_KEY); } catch {}
-        if (prev !== null && Number(prev) < i) { $("#sprout-title").textContent = `✨ It grew: ${cur[2]}`; $("#sprout").classList.add("grew"); setTimeout(() => { $("#sprout").classList.remove("grew"); $("#sprout-title").textContent = cur[2]; }, 6000); }
-        try { localStorage.setItem(SPROUT_KEY, String(Math.max(i, Number(prev) || 0))); } catch {}
+      const sproutRead = () => { try { return Object.assign({ base: 0, seeds: 0, last: 0 }, JSON.parse(localStorage.getItem(SPROUT_KEY)) || {}); } catch { return { base: 0, seeds: 0, last: 0 }; } };
+      const sproutWrite = (v) => { try { localStorage.setItem(SPROUT_KEY, JSON.stringify(v)); } catch {} };
+      function sproutDays() {
+        return Object.values(state.logs).filter((l) => l && (l.walk || l.reflected || l.noticed || l.awake || l.wake || (l.feels || []).length || (l.evening || []).length || HABITS.some((h) => l.habits && l.habits[h]))).length;
       }
+      function renderSprout() {
+        const days = sproutDays(), had = (() => { try { return localStorage.getItem(SPROUT_KEY) !== null; } catch { return false; } })();
+        const sp = sproutRead(); if (sp.base > days) sp.base = days;
+        const cd = days - sp.base;
+        let i = 0; SPROUT.forEach((st, n) => { if (cd >= st[0]) i = n; });
+        const cur = SPROUT[i], nxt = SPROUT[i + 1], ready = !nxt, card = $("#sprout");
+        $("#sprout-icon").textContent = cur[1];
+        $("#sprout-title").textContent = ready ? "In bloom, ready to harvest" : cur[2];
+        $("#sprout-sub").textContent = `${cd} ${cd === 1 ? "day" : "days"} this season` + (ready ? " · the seeds are ready" : ` · ${nxt[0] - cd} more to grow`);
+        $("#sprout-shelf").textContent = sp.seeds ? `🌰 ×${sp.seeds} seed${sp.seeds === 1 ? "" : "s"} saved from earlier blooms` : "";
+        $("#sprout-fill").style.width = (nxt ? Math.round(((cd - cur[0]) / (nxt[0] - cur[0])) * 100) : 100) + "%";
+        card.style.setProperty("--glow", Math.min(1, cd / 30).toFixed(2));
+        card.classList.toggle("bloom", ready);
+        $("#sprout-harvest-row").hidden = !ready;
+        if (had && i > sp.last && !ready) { $("#sprout-title").textContent = `✨ It grew: ${cur[2]}`; card.classList.add("grew"); setTimeout(() => { card.classList.remove("grew"); renderSprout(); }, 6000); }
+        sp.last = i; sproutWrite(sp);
+      }
+      $("#sprout-harvest").addEventListener("click", () => {
+        const sp = sproutRead(); sp.seeds += 1; sp.base = sproutDays(); sp.last = 0; sproutWrite(sp);
+        renderSprout(); toast("🌰 Harvested. A seed is saved, and a new one is planted.");
+      });
       $("#sprout").addEventListener("click", () => $("#rhythm").scrollIntoView({ behavior: "smooth", block: "start" }));
 
       function renderHistory() {
@@ -4566,10 +4635,105 @@
       $("#open-patterns").addEventListener("click", openPatterns);
       $("#pat-all").addEventListener("change", (e) => { patAll = e.target.checked; renderPatterns(); });
 
+      /* ---- Dev notes: hidden until the logo is tapped 7 times ---- */
+      const DEV_KEY = "daybreak.dev.v1";
+      const APP_BUILD = "29";
+      const APP_DATE = "2026-10-01";
+      /* EDIT THESE LISTS at the end of every session. They are the project memory that travels with the file. */
+      const DEV_NEXT = [
+        "FIRST: use the app for a week or two before adding more. Keep a short list of what annoys you or gets skipped, and let that decide the next change.",
+        "Protect the data: install to the Home Screen (to check, verify whether Safari clears website data after about a week unused). Add a last-backed-up line with a gentle monthly nudge, and a readable summary export that could be shown to a doctor or therapist.",
+        "Simplify the main screen: one calm focus at the top (today, one small thing), everything else a tap away. Too many cards can feel like a to-do list.",
+        "First-run welcome: three short screens (what this is, nothing is graded, your data stays on your phone) and sensible starting settings.",
+        "Gentle response to a run of very low days (for example several Very low check-ins in a row): a kind note suggesting someone they trust or a doctor. Never diagnose, never alarm. Needs careful wording and a real review.",
+        "Weekly look-back: one short Sunday summary (days showing up, one pattern, the sprout) instead of numbers everywhere.",
+        "Accessibility pass: VoiceOver labels on chips and dialogs, contrast of lighter text, and a dark mode for early mornings.",
+        "Keep a small test script in the repo (the headless browser checks used so far) so any session can confirm nothing broke before uploading.",
+        "Test the live Cloudflare version on the iPhone: install to the home screen, reopen twice, and check an update arrives (see Match? above).",
+        "Characters with roles: Moss gentle (feelings), Pip practical (plan and next step), Wren curious (one small question). The chosen character should be the one that checks in.",
+        "Smarter navigation: Moss says where it is taking you, a small Back button appears after a jump, and Moss can answer where was I.",
+        "Quiet milestone badges under the sprout (first walk, first week, first feeling check-in). No pressure, no streaks.",
+        "Decide whether the Daily reminder (calendar file) fits the earlier wish to remove reminders. Keep it only if it is wanted.",
+        "Real-device pass on Safari (iPhone) and Chrome (Windows): text sizes, the Moss panel, dialogs, backup and restore.",
+        "Cleanup pass: look for code left unused after merging the two branches (search the comment markers listed in the merge notes)."
+      ];
+      const DEV_LOG = [
+        "Build 29 (Oct 2026): Dev notes now hold the project memory (next steps, build history, merge tips, hand-off note) and the refinement ideas listed first under Working on next.",
+        "Build 27 (Oct 2026): Dev notes screen, hidden until the logo is tapped 7 times. Merged branch fixed_25 (weather, daily reminder, installable app) with the sprout harvest cycle.",
+        "Sprout cycle: grows over 30 days of showing up, glows more as it grows, blooms, then Harvest saves a seed and plants a new one. Never shrinks. Key daybreak.sprout.v2.",
+        "Mood and patterns: mood chart, comparisons (weather, walk, awake-to-up gap, evening set-up, time of day, words), 20-minute clustering, back-and-forth taps set aside, Just trying this out checkbox, edit or remove any tap, and Count every tap to compare with and without.",
+        "Backup and restore: saves every daybreak.* item to a JSON file and restores it. The dev switch is left out of backups.",
+        "Smart check-ins: Moss opens with a line based on time of day and what is done, highlights one chip, reorders chip groups, and pop-up hints appear at most once per part of the day with a three-day pause after two ignored.",
+        "Progress: Menu has My progress and Mood and patterns; the sprout card sits on the main screen.",
+        "Text size moved from the header into the Menu as three labelled buttons (no more accidental taps).",
+        "Moss chips grouped into Now, Feeling and Plan. Typing and microphone code removed because the typing box was never shown.",
+        "Cold-weather checklist ticks now persist for the day; Undo toast lasts 15 seconds.",
+        "Earlier: undo for awake and out-of-bed stamps, cold-weather checklist, sticky header with Feel, Menu and Settings, Moss confirms before saving awake or out-of-bed, choice of meditation practices with no auto-start, optional weather tag in the feeling check-in, bold key phrases, quiet hours and the reminders toggle removed."
+      ];
+      const DEV_MERGE = [
+        "Both versions share the same core, so compare instead of re-writing. In VS Code: select both files, right-click, Compare Selected. Or give both files to a new chat and ask for a diff of ids and functions.",
+        "Search index.html for these comment markers to find each feature: Smart check-ins, Sprout, Mood & patterns, Backup & restore, Dev notes, Cold-weather checklist.",
+        "Saved data is read through a clean-up step when the app loads. Any NEW saved field must be added there, or it is silently dropped after a reload (this happened with the set-aside flag on mood taps).",
+        "Storage keys all start with daybreak. so backups pick them up. The main one is daybreak.gentle-plan.v4-rhythm. If you change how it is stored, add a migration instead of renaming it.",
+        "When two versions both changed the same screen, keep the newer layout and re-add the other version's behaviour, then test the buttons by hand.",
+        "After merging: raise the version in sw.js and APP_BUILD together, upload index.html and sw.js, and use the Match? line above to confirm."
+      ];
+      function devHandoff() {
+        return [
+          `This is my Daybreak wellbeing app: a single index.html plus sw.js, manifest and icons. Build ${APP_BUILD} (${APP_DATE}). It is hosted on Cloudflare Pages from a private GitHub repo. All user data is saved in the browser (localStorage keys starting with daybreak.), never on a server.`,
+          "",
+          "Tone rules: calm, no streaks, no scolding, nothing shrinks or is lost. Keep the text-size, Undo and confirm-before-save behaviours.",
+          "Technical rules: raise the version in sw.js and APP_BUILD together. Any new saved field must be added to the load clean-up step. Backups must include every daybreak.* key.",
+          "",
+          "Built so far (newest first):",
+          ...DEV_LOG.map((x) => "- " + x),
+          "",
+          "Next:",
+          ...DEV_NEXT.map((x, i) => `${i + 1}. ${x}`),
+          "",
+          "Please start by opening the file in a browser test and checking it still works, then continue with the first item under Next."
+        ].join("\n");
+      }
+      const devOn = () => { try { return localStorage.getItem(DEV_KEY) === "1"; } catch { return false; } };
+      const applyDev = () => { $("#dev-menu-item").hidden = !devOn(); };
+      let devTaps = [];
+      $(".brand").addEventListener("click", () => {
+        const n = Date.now(); devTaps = devTaps.filter((t) => n - t < 4000); devTaps.push(n);
+        if (devTaps.length >= 7) {
+          devTaps = []; const on = !devOn();
+          try { localStorage.setItem(DEV_KEY, on ? "1" : "0"); } catch {}
+          applyDev(); toast(on ? "Dev notes unlocked. Find them in Menu → Settings & backup." : "Dev notes hidden.");
+        }
+      });
+      async function openDev() {
+        const info = $("#dev-info"); info.replaceChildren();
+        const add = (a, b) => { const li = document.createElement("li"); const x = document.createElement("span"); x.textContent = a; const y = document.createElement("strong"); y.textContent = b; li.append(x, y); info.append(li); };
+        add("Build in this file", APP_BUILD);
+        add("Opened from", location.protocol === "file:" ? "a file on this device (no install or offline)" : location.origin);
+        let cache = "not available here";
+        try { if ("caches" in window) { const ks = (await caches.keys()).filter((k) => k.startsWith("daybreak-")); cache = ks.length ? ks.join(", ") : "none yet"; } } catch {}
+        add("Offline copy (service worker cache)", cache);
+        if (/^daybreak-v\d+$/.test(cache)) add("Match?", cache === `daybreak-v${APP_BUILD}` ? "Yes, up to date" : "No: reopen the app once or twice to finish updating");
+        const ul = $("#dev-keys"); ul.replaceChildren();
+        try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (!k.startsWith("daybreak.")) continue; const li = document.createElement("li"); const x = document.createElement("span"); x.textContent = k; const y = document.createElement("strong"); y.textContent = `${(localStorage.getItem(k) || "").length.toLocaleString()} chars`; li.append(x, y); ul.append(li); } } catch {}
+        const fill = (id, arr) => { const el = $(id); el.replaceChildren(); arr.forEach((t) => { const li = document.createElement("li"); li.textContent = t; el.append(li); }); };
+        fill("#dev-next", DEV_NEXT); fill("#dev-log", DEV_LOG); fill("#dev-merge", DEV_MERGE);
+        $("#dev-handoff").value = devHandoff();
+        $("#dev-dialog").showModal();
+      }
+      $("#dev-handoff").addEventListener("focus", (e) => e.target.select());
+      $("#dev-copy").addEventListener("click", async () => {
+        const box = $("#dev-handoff"); box.select();
+        try { await navigator.clipboard.writeText(box.value); toast("Hand-off note copied."); }
+        catch { try { document.execCommand("copy"); toast("Hand-off note copied."); } catch { toast("Select the text and copy it by hand."); } }
+      });
+      $("#dev-hide").addEventListener("click", () => { try { localStorage.setItem(DEV_KEY, "0"); } catch {} applyDev(); $("#dev-dialog").close(); });
+      applyDev();
+
       /* ---- Backup & restore: a file you keep, so clearing the browser can't erase it ---- */
       function exportBackup() {
         const data = { app: "daybreak", version: 1, saved: new Date().toISOString(), items: {} };
-        try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith("daybreak.")) data.items[k] = localStorage.getItem(k); } } catch {}
+        try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith("daybreak.") && k !== DEV_KEY) data.items[k] = localStorage.getItem(k); } } catch {}
         const a = document.createElement("a");
         a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: "application/json" }));
         a.download = `daybreak-backup-${dateKey(new Date())}.json`;
@@ -5359,7 +5523,7 @@
       $$("[data-menu]").forEach((b) => b.addEventListener("click", () => {
         $("#menu-dialog").close();
         const t = b.dataset.menu;
-        setTimeout(() => { if (t === "__settings") $("#open-settings").click(); else if (t === "__backup") exportBackup(); else if (t === "__patterns") openPatterns(); else if (t === "__restore") $("#restore-file").click(); else if (t === "__feel") openFeel(); else if (t === "__reminder") openReminder(); else $("#" + t)?.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80);
+        setTimeout(() => { if (t === "__settings") $("#open-settings").click(); else if (t === "__backup") exportBackup(); else if (t === "__dev") openDev(); else if (t === "__patterns") openPatterns(); else if (t === "__restore") $("#restore-file").click(); else if (t === "__feel") openFeel(); else if (t === "__reminder") openReminder(); else $("#" + t)?.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80);
       }));
       $$("[data-practice]").forEach((b) => b.addEventListener("click", () => openPractice(b.dataset.practice)));
 
