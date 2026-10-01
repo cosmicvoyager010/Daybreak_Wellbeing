@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f3eb">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
   <meta name="description" content="Gentle mornings, little walks, and a kinder way back to your everyday rhythm.">
   <title>Daybreak — A little light, a little walk</title>
   <style>
@@ -12,12 +15,12 @@
       --paper: #f5f3eb;
       --white: #fffef9;
       --ink: #303f34;
-      --muted: #6c7468;
+      --muted: #5b6356;
       --line: #dfe3d6;
       --green: #496348;
       --green-dark: #354c35;
       --sage: #e8eddf;
-      --orange: #ad532f;
+      --orange: #984726;
       --peach: #f4e5d4;
       --yellow: #f1ca7d;
       --lavender: #eceaf2;
@@ -39,7 +42,7 @@
       background: var(--paper);
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 14px;
+      font-size: calc(15px * var(--ts, 1));
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
     }
@@ -74,6 +77,9 @@
       text-underline-offset: 4px;
     }
 
+    .skip-link { position: absolute; left: 8px; top: -64px; z-index: 100; padding: 12px 16px; border-radius: 12px; background: var(--green-dark); color: #fff; font-weight: 600; }
+    .skip-link:focus { top: 8px; }
+    main:focus { outline: none; }
     :focus-visible {
       outline: 3px solid var(--orange);
       outline-offset: 4px;
@@ -94,13 +100,13 @@
     }
 
     h2 {
-      font-size: 29px;
+      font-size: calc(29px * var(--ts, 1));
       line-height: 1.2;
       letter-spacing: -0.8px;
     }
 
     h3 {
-      font-size: 14px;
+      font-size: calc(14px * var(--ts, 1));
       font-weight: 600;
     }
 
@@ -137,7 +143,7 @@
 
     .eyebrow {
       color: var(--muted);
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
       font-weight: 650;
       letter-spacing: 1.8px;
       text-transform: uppercase;
@@ -145,12 +151,12 @@
 
     .small {
       color: var(--muted);
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .micro {
       color: var(--muted);
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
     }
 
     .button {
@@ -164,7 +170,7 @@
       border-radius: 100px;
       background: transparent;
       color: var(--ink);
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
       font-weight: 600;
       text-decoration: none;
       transition: background 160ms ease, transform 160ms ease;
@@ -192,13 +198,15 @@
       background: var(--white);
     }
 
+    .wx-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 6px; }
+    .wx-line[hidden] { display: none; }
     .text-button {
       min-height: 44px;
       padding: 5px 0;
       border: 0;
       background: transparent;
       color: var(--muted);
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
       text-decoration: underline;
       text-underline-offset: 4px;
     }
@@ -231,7 +239,7 @@
 
     .section-top > p {
       max-width: 270px;
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
       color: var(--muted);
     }
 
@@ -245,12 +253,16 @@
     }
 
     .brand {
+      padding: 0;
+      border: 0;
+      background: none;
+      color: inherit;
       display: inline-flex;
       align-items: center;
       min-height: 44px;
       gap: 9px;
       text-decoration: none;
-      font-size: 24px;
+      font-size: calc(24px * var(--ts, 1));
       font-weight: 650;
       letter-spacing: -1px;
     }
@@ -267,17 +279,62 @@
       align-items: center;
       gap: 26px;
     }
+    .header-right { flex-wrap: wrap; justify-content: flex-end; gap: 10px 17px; }
+    .site-header { flex-wrap: wrap; padding: 8px 0; position: sticky; top: 0; z-index: 6; min-height: 68px; background: var(--paper); }
+    html { scroll-padding-top: 84px; }
+    #open-menu { display: inline-flex; }
+    @media (max-width: 740px) { .site-header { min-height: 60px; } }
+    main section[id], main div[id=daily] { scroll-margin-top: 92px; }
+    .sprout { display: flex; align-items: center; gap: 14px; width: 100%; margin: 18px 0 18px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 20px; background: var(--white); text-align: left; cursor: pointer; font: inherit; color: inherit; }
+    .sprout-icon { font-size: 40px; line-height: 1; flex: none; animation: sway 4s ease-in-out infinite; transform-origin: 50% 90%; }
+    .sprout.grew { border-color: var(--green); box-shadow: 0 0 0 3px rgb(94 128 87 / 25%); }
+    @keyframes sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+    .sprout-text { display: grid; gap: 4px; flex: 1; min-width: 0; }
+    .sprout-bar { height: 6px; border-radius: 6px; background: #e4eadb; overflow: hidden; }
+    .sprout-bar i { display: block; height: 100%; width: 0; background: var(--green); transition: width .6s; }
+    .pat-h { margin: 18px 0 6px; font-size: calc(16px * var(--ts, 1)); }
+    .pat-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+    .trial-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: calc(13px * var(--ts, 1)); }
+    .pat-ctl { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .pat-ctl select { min-height: 44px; padding: 0 8px; border: 1px solid #7c8676; border-radius: 10px; background: var(--white); font: inherit; }
+    .pat-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; justify-content: space-between; padding: 8px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); font-size: calc(13px * var(--ts, 1)); }
+    .pat-sum { padding: 12px 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--sage); font-size: calc(14.5px * var(--ts, 1)); line-height: 1.5; }
+    .pat-sum > div { margin-top: 6px; }
+    .note-more { margin-top: 6px; }
+    .note-more > summary, .pat-more > summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; color: var(--green-dark); }
+    .pat-card { padding: 10px 12px; margin-top: 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); font-size: calc(13.5px * var(--ts, 1)); }
+    .pat-card .bars { display: grid; gap: 4px; margin-top: 6px; }
+    .pat-card .bar { display: grid; grid-template-columns: 96px 1fr 44px; align-items: center; gap: 8px; font-size: calc(12px * var(--ts, 1)); }
+    .pat-card .bar i { display: block; height: 8px; border-radius: 8px; background: var(--green); opacity: .75; }
+    .menu-list { display: grid; gap: 8px; margin-top: 8px; }
+    .menu-list button { justify-content: flex-start; text-align: left; width: 100%; }
+    .mh { margin: 12px 0 6px; font-size: calc(12px * var(--ts, 1)); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+    .mh:first-child { margin-top: 2px; }
+    .mg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .mg button:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .menu-more { margin-top: 12px; }
+    .menu-more summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; padding: 0 4px; font-weight: 600; color: var(--muted); }
+    .menu-more .mg { margin-top: 6px; }
+    .ts-row { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .ts-label { flex: 1; font-weight: 600; font-size: calc(14px * var(--ts, 1)); }
+    .ts-row .button { min-width: 52px; padding: 0 12px; }
+    .ts-row .button[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
 
-    nav a {
+    nav a,
+    nav button {
+      padding: 0;
+      border: 0;
+      background: none;
       display: inline-flex;
       align-items: center;
       min-height: 44px;
       color: var(--muted);
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
       text-decoration: none;
     }
 
-    nav a:hover {
+    nav a:hover,
+    nav button:hover {
       color: var(--ink);
     }
 
@@ -305,7 +362,7 @@
       max-width: 255px;
       padding-bottom: 4px;
       color: var(--muted);
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .hero {
@@ -328,7 +385,7 @@
       border: 1px solid #d1d9bf;
       border-radius: 100px;
       background: rgb(255 255 255 / 40%);
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .dot {
@@ -345,10 +402,10 @@
     }
 
     .hero-copy > p {
-      max-width: 365px;
+      max-width: 420px;
       margin-top: 13px;
-      color: #64715d;
-      font-size: 12px;
+      color: #56644f;
+      font-size: calc(16px * var(--ts, 1));
     }
 
     .wake-times {
@@ -362,19 +419,19 @@
     .wake-times small {
       display: block;
       color: var(--muted);
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .wake-times strong {
       display: block;
-      font-size: 29px;
+      font-size: calc(29px * var(--ts, 1));
       font-weight: 400;
       letter-spacing: -1px;
     }
 
     .wake-arrow {
       color: #8c9a7d;
-      font-size: 23px;
+      font-size: calc(23px * var(--ts, 1));
     }
 
     .landscape {
@@ -399,7 +456,7 @@
       z-index: 1;
       top: 25px;
       color: #807654;
-      font-size: 9px;
+      font-size: calc(12px * var(--ts, 1));
       letter-spacing: 2px;
       text-transform: uppercase;
     }
@@ -412,7 +469,7 @@
     }
 
     .landscape-caption .serif {
-      font-size: 25px;
+      font-size: calc(25px * var(--ts, 1));
       letter-spacing: -0.7px;
     }
 
@@ -462,7 +519,7 @@
       border-radius: 14px;
       background: transparent;
       color: var(--muted);
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .weather-button[aria-pressed="true"] {
@@ -478,7 +535,7 @@
       border-radius: 13px;
       background: #f8f2e3;
       color: #786444;
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .walk-divider {
@@ -496,7 +553,7 @@
     }
 
     .step-title h3 {
-      font-size: 13px;
+      font-size: calc(15px * var(--ts, 1));
     }
 
     .duration-options {
@@ -515,7 +572,7 @@
 
     .duration-button strong {
       display: block;
-      font-size: 21px;
+      font-size: calc(21px * var(--ts, 1));
       font-weight: 500;
       line-height: 1.3;
       letter-spacing: -0.6px;
@@ -523,7 +580,7 @@
 
     .duration-button span {
       color: var(--muted);
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .duration-button[aria-pressed="true"] {
@@ -533,7 +590,7 @@
 
     .tiny-walk-note {
       margin-top: 10px;
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
       color: var(--muted);
     }
 
@@ -549,7 +606,7 @@
       gap: 7px;
       min-width: 0;
       color: #626d5c;
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
     }
 
     input,
@@ -558,11 +615,11 @@
       min-width: 0;
       min-height: 44px;
       padding: 10px 11px;
-      border: 1px solid #d4dcca;
+      border: 1px solid #7c8676;
       border-radius: 11px;
       background: var(--white);
       color: var(--ink);
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .full-field {
@@ -574,7 +631,7 @@
       padding-left: 13px;
       border-left: 2px solid #b4c3a2;
       color: #607054;
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .walk-actions {
@@ -594,7 +651,7 @@
     }
 
     .timer-number {
-      font-size: 27px;
+      font-size: calc(27px * var(--ts, 1));
       font-variant-numeric: tabular-nums;
       letter-spacing: -1px;
     }
@@ -606,15 +663,15 @@
     }
 
     .timer-buttons .button {
-      min-height: 40px;
+      min-height: 44px;
       padding: 7px 12px;
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
     }
 
     .walk-status {
       margin-top: 12px;
       color: var(--muted);
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
     }
 
     .companion-card {
@@ -631,7 +688,7 @@
 
     .companion-heading h2 {
       margin-top: 6px;
-      font-size: 27px;
+      font-size: calc(27px * var(--ts, 1));
     }
 
     .companion-face {
@@ -663,12 +720,12 @@
 
     .mode-button {
       flex: 1;
-      min-height: 42px;
+      min-height: 44px;
       padding: 8px 5px;
       border: 1px solid #d5dbc9;
       border-radius: 100px;
       background: transparent;
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .mode-button[aria-pressed="true"] {
@@ -680,7 +737,7 @@
     .companion-disclosure {
       margin-top: 9px;
       color: var(--muted);
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .conversation {
@@ -701,7 +758,7 @@
       border: 1px solid #e0e3d6;
       border-radius: 16px 16px 16px 4px;
       background: var(--white);
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
       line-height: 1.75;
     }
 
@@ -716,7 +773,7 @@
       display: block;
       margin-bottom: 4px;
       color: #7a826e;
-      font-size: 9px;
+      font-size: calc(12px * var(--ts, 1));
       font-weight: 600;
       letter-spacing: 0.8px;
       text-transform: uppercase;
@@ -735,28 +792,15 @@
       border: 1px solid #d7deca;
       border-radius: 100px;
       background: transparent;
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .chat-chip:hover {
       background: var(--white);
     }
 
-    .chat-form {
-      display: flex;
-      gap: 7px;
-      margin-top: 12px;
-    }
 
-    .chat-form input {
-      flex: 1;
-    }
 
-    .chat-send {
-      width: 44px;
-      flex-shrink: 0;
-      padding: 0;
-    }
 
     .discovery-card {
       position: relative;
@@ -782,7 +826,7 @@
     .discovery-card h3 {
       margin-top: 10px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 23px;
+      font-size: calc(23px * var(--ts, 1));
       font-weight: 400;
       letter-spacing: -0.5px;
     }
@@ -791,7 +835,7 @@
       min-height: 43px;
       margin-top: 7px;
       color: #7b715f;
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .discovery-card .actions {
@@ -799,9 +843,9 @@
     }
 
     .discovery-card .button {
-      min-height: 40px;
+      min-height: 44px;
       border-color: #d9c8ad;
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .season-strip {
@@ -826,13 +870,13 @@
     }
 
     .season-item h3 {
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .season-item p {
       margin-top: 4px;
       color: var(--muted);
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
     }
 
     .daily-layout {
@@ -887,20 +931,23 @@
     }
 
     .habit h3 {
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .habit p {
       margin-top: 4px;
       color: var(--muted);
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
     }
 
+        .gist { padding: 8px 12px; border-radius: 10px; background: var(--sage); color: var(--green-dark); }
+    .habit p strong { color: var(--ink); font-weight: 700; }
+    .habit-more { display: block; margin-top: 3px; color: var(--muted); font-size: .92em; }
     .habit-time {
       display: block;
       margin-top: 4px;
       color: #8a8f80;
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .check-button {
@@ -923,7 +970,7 @@
       border: 1px solid #c7d1b9;
       border-radius: 50%;
       color: transparent;
-      font-size: 14px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .check-button[aria-pressed="true"] .check-circle {
@@ -952,7 +999,7 @@
     .evening-card h3 {
       margin-top: 16px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 30px;
+      font-size: calc(30px * var(--ts, 1));
       font-weight: 400;
       line-height: 1.2;
       letter-spacing: -1px;
@@ -961,7 +1008,7 @@
     .evening-card > p {
       margin-top: 13px;
       color: var(--muted);
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .evening-times {
@@ -975,19 +1022,19 @@
 
     .evening-times strong {
       display: block;
-      font-size: 22px;
+      font-size: calc(22px * var(--ts, 1));
       font-weight: 500;
       letter-spacing: -0.7px;
     }
 
     .evening-times span {
       color: var(--muted);
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .evening-card .micro {
       margin-top: 15px;
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .rhythm-card {
@@ -1028,11 +1075,11 @@
 
     .history-name {
       color: var(--muted);
-      font-size: 9px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .history-number {
-      font-size: 13px;
+      font-size: calc(15px * var(--ts, 1));
     }
 
     .empty-mark {
@@ -1055,7 +1102,7 @@
       gap: 7px 20px;
       margin-top: 16px;
       color: var(--muted);
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
     }
 
     .bottom-grid {
@@ -1083,7 +1130,7 @@
     .energy-title {
       display: block;
       margin-top: 19px;
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .energy-options {
@@ -1100,14 +1147,14 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       background: transparent;
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .energy-button span {
       display: block;
       margin-bottom: 4px;
       color: #829a6d;
-      font-size: 18px;
+      font-size: calc(18px * var(--ts, 1));
       line-height: 1.1;
     }
 
@@ -1143,7 +1190,7 @@
     summary {
       position: relative;
       padding: 16px 24px 16px 0;
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
       font-weight: 500;
       list-style: none;
       cursor: pointer;
@@ -1157,7 +1204,7 @@
       position: absolute;
       right: 2px;
       content: "+";
-      font-size: 18px;
+      font-size: calc(18px * var(--ts, 1));
       font-weight: 400;
     }
 
@@ -1169,7 +1216,7 @@
     details ul {
       margin: 0 0 14px;
       color: #65705c;
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     details ul {
@@ -1184,7 +1231,7 @@
       display: grid;
       gap: 0;
       margin-bottom: 16px;
-      font-size: 11px;
+      font-size: calc(13px * var(--ts, 1));
     }
 
     .sources a {
@@ -1205,7 +1252,7 @@
       gap: 12px;
       padding: 23px 0;
       color: var(--muted);
-      font-size: 10px;
+      font-size: calc(12px * var(--ts, 1));
     }
 
     .footer-tools {
@@ -1239,6 +1286,8 @@
       margin-bottom: 12px;
     }
 
+    #menu-dialog .dialog-header { position: sticky; top: 0; z-index: 1; background: var(--paper); padding-bottom: 8px; }
+    .menu-close { width: 100%; margin-top: 16px; }
     .close-button {
       width: 44px;
       height: 44px;
@@ -1247,7 +1296,7 @@
       border: 1px solid var(--line);
       border-radius: 50%;
       background: transparent;
-      font-size: 23px;
+      font-size: calc(23px * var(--ts, 1));
     }
 
     .dialog-fields {
@@ -1267,7 +1316,7 @@
     .error {
       margin-top: 12px;
       color: #a4432b;
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
     }
 
     .toast {
@@ -1281,7 +1330,7 @@
       border-radius: 15px;
       background: var(--ink);
       color: white;
-      font-size: 12px;
+      font-size: calc(14px * var(--ts, 1));
       text-align: center;
       box-shadow: 0 8px 30px rgb(25 40 20 / 16%);
       opacity: 0;
@@ -1293,6 +1342,22 @@
     .toast.visible {
       opacity: 1;
       transform: translate(-50%, 0);
+    }
+
+    .cold-list { list-style: none; padding-left: 0; }
+    .cold-list label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+    .cold-list input { margin-top: 4px; flex: none; }
+    .toast.has-action { pointer-events: auto; }
+    .toast-action {
+      margin-left: 14px;
+      padding: 4px 4px;
+      border: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
     }
 
     .sr-only {
@@ -1382,7 +1447,7 @@
       }
 
       h1 {
-        font-size: 43px;
+        font-size: calc(43px * var(--ts, 1));
         letter-spacing: -2px;
       }
 
@@ -1400,7 +1465,7 @@
       }
 
       .hero h2 {
-        font-size: 35px;
+        font-size: calc(35px * var(--ts, 1));
       }
 
       .landscape {
@@ -1416,7 +1481,7 @@
       }
 
       .landscape-caption .serif {
-        font-size: 23px;
+        font-size: calc(23px * var(--ts, 1));
       }
 
       .walk-layout,
@@ -1432,7 +1497,7 @@
 
       .section-top > p {
         max-width: 150px;
-        font-size: 10px;
+        font-size: calc(12px * var(--ts, 1));
       }
 
       .walking-section,
@@ -1479,7 +1544,7 @@
 
     @media (max-width: 380px) {
       h1 {
-        font-size: 37px;
+        font-size: calc(37px * var(--ts, 1));
       }
 
       .walk-card,
@@ -1501,7 +1566,7 @@
       }
 
       .weather-button {
-        font-size: 9px;
+        font-size: calc(12px * var(--ts, 1));
       }
 
       .wake-times {
@@ -1509,22 +1574,38 @@
       }
 
       .wake-times strong {
-        font-size: 24px;
+        font-size: calc(24px * var(--ts, 1));
       }
     }
 
 
-    .note-input { width: 100%; min-height: 72px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); color: var(--ink); font: inherit; resize: vertical; }
+    .note-input { width: 100%; min-height: 72px; padding: 12px 14px; border: 1px solid #7c8676; border-radius: 16px; background: var(--white); color: var(--ink); font: inherit; resize: vertical; }
     .chat-chip[aria-pressed="true"] { border-color: var(--green); background: var(--green); color: #fff; }
+    .plan-summary { margin-top: 10px; padding: 10px 14px; border-radius: 14px; background: var(--sage); color: var(--green-dark); }
+    .dialog-fields select:disabled, .dialog-fields input:disabled { opacity: .6; }
+    .bubble p { white-space: pre-line; }
+    .pr-step { margin: 14px 0 6px; padding: 16px 18px; border-radius: 16px; background: var(--sage); color: var(--green-dark); font-size: calc(18px * var(--ts, 1)); line-height: 1.55; min-height: 96px; }
+    .pr-step strong { font-weight: 700; }
+    .bubble:not(.user) strong { font-weight: 700; color: var(--green-dark); }
+    .helped-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+    .helped-item p { flex: 1; font-size: calc(14px * var(--ts, 1)); }
+    .helped-item .pill { flex-shrink: 0; max-width: 40%; }
+    #fab-shortcuts { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; padding-bottom: 4px; }
+    .chip-group { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 6px; }
+    .chat-chip.suggested { border-color: var(--green); box-shadow: 0 0 0 2px rgb(94 128 87 / 28%); font-weight: 700; }
+    .chip-group-label { flex: 0 0 100%; font-size: calc(.72rem * var(--ts, 1)); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted, #6b6258); }
+    #fab-shortcuts .chat-chip { max-width: 100%; white-space: normal; text-align: left; }
+    .eve-item { justify-content: flex-start; text-align: left; width: 100%; }
+    .eve-item[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
     /* Step track + reward */
     .step-track { margin: 16px 4px 0; }
-    .st-labels { display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+    .st-labels { display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--muted); font-size: calc(13px * var(--ts, 1)); font-variant-numeric: tabular-nums; }
     .st-bar { height: 8px; overflow: hidden; border-radius: 100px; background: var(--sage); }
     .st-bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--yellow), var(--orange)); transition: width 600ms ease; }
     .reward { text-align: center; }
     .reward-sun { position: relative; display: inline-block; margin-top: 4px; }
     .reward-sun .rays { transform-origin: 60px 60px; animation: spin 24s linear infinite; }
-    .spark { position: absolute; color: var(--orange); font-size: 14px; opacity: 0; animation: twinkle 2.6s ease-in-out infinite; }
+    .spark { position: absolute; color: var(--orange); font-size: calc(14px * var(--ts, 1)); opacity: 0; animation: twinkle 2.6s ease-in-out infinite; }
     .spark.s1 { left: -8px; top: 8px; } .spark.s2 { right: -6px; top: 22px; animation-delay: .8s; } .spark.s3 { right: 10px; bottom: 0; animation-delay: 1.6s; }
     @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.6); } 50% { opacity: 1; transform: scale(1.2); } }
@@ -1542,29 +1623,27 @@
     .fab-face[data-mode="practical"] { color: #d6ac70; }
     .fab-face[data-mode="curious"] { color: #aaaac0; }
     .fab-face svg { display: block; width: 100%; height: 100%; }
-    .fab-hint { max-width: 210px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 16px 16px 4px 16px; background: var(--white); box-shadow: var(--shadow); font-size: 12px; }
+    .fab-hint { max-width: 210px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 16px 16px 4px 16px; background: var(--white); box-shadow: var(--shadow); font-size: calc(14px * var(--ts, 1)); }
     .fab-panel { display: flex; flex-direction: column; width: min(360px, calc(100vw - 32px)); max-height: min(72vh, 560px); padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); box-shadow: 0 18px 50px rgb(38 55 35 / 22%); }
     .fab-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .fab-head .fab-face { width: 40px; height: 40px; flex-shrink: 0; }
-    .fab-head strong { flex: 1; font-size: 14px; }
-    .fab-panel .conversation { flex: 1; max-height: none; min-height: 110px; margin-top: 0; }
+    .fab-head strong { flex: 1; font-size: calc(14px * var(--ts, 1)); }
+    .fab-panel .conversation { flex: 1 1 auto; max-height: none; min-height: 80px; margin-top: 0; }
     .fab-panel .chat-prompts { margin-top: 10px; }
-    .fab-mic[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: #fff; }
-    .fab-mic { min-width: 44px; padding: 0 12px; }
     @media (max-width: 740px) { .toast { bottom: calc(92px + env(safe-area-inset-bottom, 0px)); } }
     @media (prefers-reduced-motion: reduce) { .fab-button .fab-face, .companion-face .eyes, .fab-face .eyes { animation: none; } }
 
     /* Meditation */
     .med-options { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
-    .med-len { min-height: 44px; min-width: 76px; padding: 8px 16px; border: 1px solid #cfd7c5; border-radius: 100px; background: transparent; font-size: 12px; font-weight: 600; }
+    .med-len { min-height: 44px; min-width: 76px; padding: 8px 16px; border: 1px solid #cfd7c5; border-radius: 100px; background: transparent; font-size: calc(14px * var(--ts, 1)); font-weight: 600; }
     .med-len[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
     #meditate-dialog { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; border-radius: 0; background: #26372a; color: #f5f3eb; }
     #meditate-dialog[open] { display: flex; }
     .med-stage { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; width: 100%; padding: 32px 24px calc(32px + env(safe-area-inset-bottom, 0px)); text-align: center; }
     .med-orb-wrap { position: relative; display: grid; place-items: center; width: min(72vw, 300px); aspect-ratio: 1; }
-    .med-orb { width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #f1ca7d, #d99a5b 70%, #ad532f); opacity: .92; transform: scale(.55); box-shadow: 0 0 80px rgb(241 202 125 / 30%); }
-    .med-phase { font-family: Georgia, "Times New Roman", serif; font-size: 28px; letter-spacing: -.5px; min-height: 36px; }
-    .med-time { font-size: 15px; letter-spacing: 2px; color: #cfd7c5; font-variant-numeric: tabular-nums; }
+    .med-orb { width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #f1ca7d, #d99a5b 70%, #984726); opacity: .92; transform: scale(.55); box-shadow: 0 0 80px rgb(241 202 125 / 30%); }
+    .med-phase { font-family: Georgia, "Times New Roman", serif; font-size: calc(28px * var(--ts, 1)); letter-spacing: -.5px; min-height: 36px; }
+    .med-time { font-size: calc(15px * var(--ts, 1)); letter-spacing: 2px; color: #cfd7c5; font-variant-numeric: tabular-nums; }
     .med-stage .button { border-color: #5d7460; color: #f5f3eb; }
     .med-stage .button:hover:not(:disabled) { background: #354c35; }
     .med-stage .button.primary { background: #f1ca7d; border-color: #f1ca7d; color: #303f34; }
@@ -1592,6 +1671,7 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <symbol id="i-sunrise" viewBox="0 0 24 24">
@@ -1645,22 +1725,24 @@
 
   <div class="wrap">
     <header class="site-header">
-      <a href="#" class="brand" aria-label="Daybreak home">
+      <button type="button" class="brand" data-scroll="top" aria-label="Daybreak, back to top">
         <svg class="icon" aria-hidden="true"><use href="#i-sunrise"/></svg>
         daybreak
-      </a>
+      </button>
       <div class="header-right">
         <nav aria-label="Main navigation">
-          <a href="#walking">Little walks</a>
-          <a href="#daily">Daily rhythm</a>
-          <a href="#meditate">Meditate</a>
-          <a href="#guidance">The science</a>
+          <button type="button" data-scroll="walking">Little walks</button>
+          <button type="button" data-scroll="daily">Daily rhythm</button>
+          <button type="button" data-scroll="meditate">Meditate</button>
+          <button type="button" data-scroll="guidance">The science</button>
         </nav>
-        <button class="button" id="open-settings" type="button">My morning plan</button>
+        <button class="button" id="header-feel" type="button" aria-label="How do I feel now?">💬 Feel</button>
+        <button class="button" id="open-menu" type="button" aria-haspopup="dialog" aria-label="Menu: all sections">☰ Menu</button>
+        <button class="button" id="open-settings" type="button" aria-label="Settings and morning plan">⚙ Settings</button>
       </div>
     </header>
 
-    <main>
+    <main id="main" tabindex="-1">
       <section class="intro" aria-labelledby="page-title">
         <div>
           <p class="eyebrow" id="date-label">A little light. A fresh beginning.</p>
@@ -1671,6 +1753,15 @@
           More room to feel like yourself—without turning life into a checklist.
         </p>
       </section>
+
+      <button type="button" class="sprout" id="sprout" aria-label="Your sprout. Tap to see your last two weeks.">
+        <span class="sprout-icon" id="sprout-icon" aria-hidden="true">🌱</span>
+        <span class="sprout-text">
+          <strong id="sprout-title">Your sprout</strong>
+          <span id="sprout-sub" class="small"></span>
+          <span class="sprout-bar" aria-hidden="true"><i id="sprout-fill"></i></span>
+        </span>
+      </button>
 
       <section class="card hero" aria-labelledby="hero-title">
         <div class="hero-copy">
@@ -1694,10 +1785,10 @@
               <strong class="serif" id="target-wake">7:00 am</strong>
             </div>
           </div>
-          <a href="#walking" class="button primary">
+          <button type="button" class="button primary" data-scroll="walking">
             Find my smallest walk
             <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
+          </button>
         </div>
 
         <div class="landscape">
@@ -1761,6 +1852,7 @@
             <p class="weather-message" id="weather-message" aria-live="polite">
               Choose what you see. We’ll make a plan for the day you actually have.
             </p>
+            <p class="micro wx-line" id="wx-line" hidden></p>
 
             <hr class="walk-divider">
 
@@ -1892,15 +1984,15 @@
                 <button class="chat-chip" type="button" data-prompt="bored">Same old route</button>
                 <button class="chat-chip" type="button" data-prompt="missed">I missed days</button>
                 <button class="chat-chip" type="button" data-prompt="ready">Help me begin</button>
+                <button class="chat-chip" type="button" data-prompt="lowmood">Feeling low</button>
+                <button class="chat-chip" type="button" data-prompt="rain">Rainy day</button>
+                <button class="chat-chip" type="button" data-prompt="winter">Winter</button>
+                <button class="chat-chip" type="button" data-prompt="sunshine">Sunny gap</button>
+                <button class="chat-chip" type="button" data-prompt="sleep">Sleep</button>
+                <button class="chat-chip" type="button" data-prompt="science">Why walk?</button>
               </div>
-
-              <form class="chat-form" id="chat-form">
-                <label class="sr-only" for="chat-input">Tell your companion what is making today difficult</label>
-                <input id="chat-input" type="text" maxlength="240" placeholder="What’s making today difficult?" autocomplete="off">
-                <button class="button primary chat-send" type="submit" aria-label="Send to companion">↑</button>
-              </form>
               <p class="micro" style="margin-top: 8px;">
-                Try “rain,” “winter,” “sunshine,” “sleep,” or “why walk?”
+                Tap whatever fits. There’s nothing to type.
               </p>
             </section>
 
@@ -1962,7 +2054,7 @@
               <span class="habit-symbol"><svg class="icon" aria-hidden="true"><use href="#i-sunrise"/></svg></span>
               <div>
                 <h3>Feet down. Let the daylight in.</h3>
-                <p>Leave the bed and seek morning daylight. A little outdoor time can pair with your walk; never look directly at the sun.</p>
+                <p><strong>Open the curtains or step outside.</strong> <span class="habit-more">A little outdoor time can pair with your walk. Never look directly at the sun.</span></p>
                 <span class="habit-time" id="light-time">After waking</span>
               </div>
               <button class="check-button" type="button" data-habit="light" aria-label="Mark morning daylight as done" aria-pressed="false">
@@ -1974,7 +2066,7 @@
               <span class="habit-symbol"><svg class="icon" aria-hidden="true"><use href="#i-walk"/></svg></span>
               <div>
                 <h3>Let the day have a little movement.</h3>
-                <p>A walk, gentle stretches, or comfortable indoor movement. Your walking check-in marks this automatically.</p>
+                <p><strong>A few minutes of movement counts.</strong> <span class="habit-more">A walk, stretches or easy indoor movement. Your walking check-in ticks this for you.</span></p>
                 <span class="habit-time">A little counts · not a workout requirement</span>
               </div>
               <button class="check-button" type="button" data-habit="move" aria-label="Mark gentle movement as done" aria-pressed="false">
@@ -1986,7 +2078,7 @@
               <span class="habit-symbol"><svg class="icon" aria-hidden="true"><use href="#i-cup"/></svg></span>
               <div>
                 <h3>Give caffeine an earlier finish.</h3>
-                <p>Try at least 8 hours before your sleep window; sensitivity varies. Already caffeine-free? That counts too.</p>
+                <p><strong>Last coffee or tea about 8 hours before sleep.</strong> <span class="habit-more">Sensitivity varies. Already caffeine-free? That counts too.</span></p>
                 <span class="habit-time" id="caffeine-time">Earlier in the day</span>
               </div>
               <button class="check-button" type="button" data-habit="caffeine" aria-label="Mark caffeine boundary as done" aria-pressed="false">
@@ -1998,7 +2090,7 @@
               <span class="habit-symbol"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></span>
               <div>
                 <h3>Make room for a quieter evening.</h3>
-                <p>Lower lights and stimulation. Choose something restful. Bedtime follows sleepiness—not a race against the clock.</p>
+                <p><strong>Dim the lights and pick something restful.</strong> <span class="habit-more">Bedtime follows sleepiness, not the clock.</span></p>
                 <span class="habit-time" id="unwind-time">An hour before your sleep window</span>
               </div>
               <button class="check-button" type="button" data-habit="unwind" aria-label="Mark evening wind-down as done" aria-pressed="false">
@@ -2018,7 +2110,7 @@
             </div>
             <h3 id="evening-title">Invite sleep.<br>Don’t chase it.</h3>
             <p>
-              Consistent mornings and daytime activity can support sleep.
+              <strong>Consistent mornings and daytime activity can support sleep.</strong>
               They cannot make you fall asleep on command—and that is not your fault.
             </p>
             <div class="evening-times">
@@ -2042,6 +2134,9 @@
               Awake and frustrated? Get up for a quiet activity in dim light,
               and return when sleepy. Avoid clock-watching.
             </p>
+            <div class="actions" style="margin-top: 14px;">
+              <button class="button white" type="button" id="open-evening">🌙 Set up tonight</button>
+            </div>
           </div>
           <div class="step-track">
             <div class="st-labels"><span id="st-from"></span><span id="st-to"></span></div>
@@ -2061,9 +2156,40 @@
           <button class="med-len" type="button" data-min="5" aria-pressed="false">5 min</button>
           <button class="med-len" type="button" data-min="10" aria-pressed="false">10 min</button>
         </div>
+        <p class="small" style="margin-top: 16px;">Or choose a kind of practice. You pick; nothing starts by itself.</p>
+        <div class="chat-prompts" role="group" aria-label="Kinds of practice">
+          <button class="chat-chip" type="button" data-practice="relax">🌬 Relax the breath</button>
+          <button class="chat-chip" type="button" data-practice="concentrate">🎯 Focus on one thing</button>
+          <button class="chat-chip" type="button" data-practice="body">🧍 Ease the body</button>
+          <button class="chat-chip" type="button" data-practice="kind">💛 Kind wishes</button>
+          <button class="chat-chip" type="button" data-practice="ground">🌿 Ground yourself</button>
+          <button class="chat-chip" type="button" data-practice="learn">📖 Learn more</button>
+          <button class="chat-chip" type="button" id="open-teacher">🎧 Listen to a teacher</button>
+        </div>
         <div class="actions">
           <button class="button primary" type="button" id="med-begin">Begin</button>
           <span class="micro" id="med-stats" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <section class="card" id="helped" aria-labelledby="helped-title" style="margin-top: 26px; padding: 26px;">
+        <p class="eyebrow">Your own notes</p>
+        <h2 id="helped-title" style="margin-top: 6px;">What helped me before.</h2>
+        <p class="small" style="margin-top: 8px; max-width: 460px;">When something hard comes back, a solution you found yourself is the easiest to trust. Save what worked, and your companion can remind you.</p>
+        <div id="helped-list" style="margin-top: 14px;"></div>
+        <div class="field-grid" style="margin-top: 14px;">
+          <label class="field" for="helped-tag">
+            When this happens…
+            <select id="helped-tag"></select>
+          </label>
+        </div>
+        <label class="field" for="helped-text" style="margin-top: 12px;">
+          …this helped
+          <textarea id="helped-text" class="note-input" maxlength="240" placeholder="e.g. Warm socks and a hot drink before getting back under the blanket."></textarea>
+        </label>
+        <div class="actions" style="margin-top: 12px;">
+          <button class="button primary" type="button" id="helped-add">Save to my notes</button>
+          <span class="micro">Stays in this browser. Not medical advice.</span>
         </div>
       </section>
 
@@ -2108,6 +2234,7 @@
           <p>Leaves are walking check-ins. Blank days are just days—not broken streaks.</p>
         </div>
         <div class="history" id="history" aria-label="Fourteen-day activity history"></div>
+        <div class="actions" style="margin-top: 14px;"><button class="button" type="button" id="open-patterns">📊 See mood &amp; patterns</button></div>
         <div class="history-footer">
           <span id="history-summary">Your first little return can be today.</span>
           <span id="walk-pattern">No distances. No leaderboards. No catching up.</span>
@@ -2144,7 +2271,7 @@
             </div>
             <div class="actions" style="margin-top: 12px;">
               <button class="button white" type="button" id="stamp-awake">☀ I’m awake now</button>
-              <button class="button white" type="button" id="stamp-up">🚶 I’m out of bed now</button>
+              <button class="button white" type="button" id="stamp-up">⬆ I’m out of bed now</button>
               <button class="button white" type="button" id="open-feel">💬 How do I feel?</button>
             </div>
             <p class="small" id="feel-summary" aria-live="polite" style="margin-top: 10px;"></p>
@@ -2166,17 +2293,23 @@
                 <option value="water">Drink a glass of water</option>
                 <option value="stand">Stand up and stretch</option>
                 <option value="bathroom">Restroom trip = stay up (open the curtains)</option>
+                <option value="warm">Put on my warm layer first</option>
               </select>
             </div>
             <p class="small" id="if-then" style="margin-top: 8px;"></p>
             <p class="micro" style="margin-top: 10px;">
-              Sleep clinicians record “woke up” and “out of bed” as two separate times in the Consensus Sleep Diary, because the gap between them is worth noticing, not judging.
-              A practical idea (not a proven treatment): keep your phone where you have to stand up to switch the alarm off.
-              If you often lie awake for long or feel unrefreshed, a clinician can help.
+              Why two times? The gap between them is worth noticing, not judging. If you often lie awake for long or feel unrefreshed, a clinician can help.
             </p>
-            <p class="micro" style="margin-top: 8px;">
-              On alarm sounds: in one small survey (50 people), melodic alarm sounds were linked to less morning grogginess than harsh beeps (McFarlane et al., 2020), so a gentler tone is a reasonable choice. It is early, self-reported evidence, and I found nothing on bird sounds specifically.
-            </p>
+            <details class="note-more">
+              <summary>The evidence behind this</summary>
+              <p class="micro">
+                Sleep clinicians record “woke up” and “out of bed” as two separate times in the Consensus Sleep Diary, because the gap between them is worth noticing, not judging.
+                A practical idea (not a proven treatment): keep your phone where you have to stand up to switch the alarm off.
+              </p>
+              <p class="micro" style="margin-top: 8px;">
+                On alarm sounds: in one small survey (50 people), melodic alarm sounds were linked to less morning grogginess than harsh beeps (McFarlane et al., 2020), so a gentler tone is a reasonable choice. It is early, self-reported evidence, and I found nothing on bird sounds specifically.
+              </p>
+            </details>
             <div class="reflection-bottom">
               <span class="micro" id="reflection-status" aria-live="polite">Just for you, in this browser.</span>
               <button class="button" type="submit">Save check-in ↗</button>
@@ -2190,6 +2323,7 @@
 
           <details>
             <summary>Why start with just a few minutes?</summary>
+            <p class="gist"><strong>In short: a little movement counts, and a tiny start is easier to repeat.</strong></p>
             <p>
               Physical activity has health benefits, and some is better than none.
               Regular activity can support sleep and mood. You do not need a
@@ -2205,6 +2339,7 @@
 
           <details>
             <summary>What if motivation never arrives first?</summary>
+            <p class="gist"><strong>In short: pick a cue, start small, and stop early if you like. You don’t need to feel ready.</strong></p>
             <p>
               Repeating a manageable action after a consistent cue can help it
               become more automatic. A specific “after X, I will do Y” plan is
@@ -2224,6 +2359,7 @@
 
           <details>
             <summary>Sunshine, light rain, and the winter backup</summary>
+            <p class="gist"><strong>In short: any outdoor daylight helps your body clock. Skip it when conditions aren’t safe.</strong></p>
             <p>
               Daylight is a timing cue for your body clock. Outdoor light is
               generally brighter than typical indoor light, even on cloudy
@@ -2244,8 +2380,45 @@
             </p>
           </details>
 
+          <details id="cold-checklist">
+            <summary>Cold-weather checklist</summary>
+            <p>
+              A quick check before a winter walk. If it is extremely cold or
+              windy, the indoor version is a fine choice.
+            </p>
+            <ul class="cold-list">
+              <li><label><input type="checkbox"> I checked the forecast and any wind-chill or ice warnings.</label></li>
+              <li><label><input type="checkbox"> I am wearing several loose layers and a water-resistant coat.</label></li>
+              <li><label><input type="checkbox"> Hat, gloves or mittens, and water-resistant boots are on.</label></li>
+              <li><label><input type="checkbox"> Nose, ears, cheeks, chin, fingers and toes are covered and dry.</label></li>
+              <li><label><input type="checkbox"> My route avoids ice, and I will keep it short.</label></li>
+              <li><label><input type="checkbox"> Someone knows where I am going and roughly when I will be back.</label></li>
+            </ul>
+            <p>
+              <strong>While out:</strong> try not to sweat or get wet. Redness
+              or pain on any skin is a cue to go inside or cover it up, since
+              frostbite can start before numbness makes it obvious.
+            </p>
+            <p>
+              <strong>If something feels wrong:</strong> shivering that won't
+              stop, confusion, slurred speech or unusual drowsiness can be
+              signs of hypothermia, which is a medical emergency, so get help
+              right away. For suspected frostbite, get warm and seek medical
+              care. Don't rub the skin or use direct heat, and avoid walking
+              on frostbitten feet or toes.
+            </p>
+            <p class="small">
+              Adapted from CDC winter weather guidance. Older adults, people
+              with long-term health conditions, and people who drink alcohol
+              are at higher risk and may want extra care.
+              <a href="https://www.cdc.gov/winter-weather/prevention/index.html" target="_blank" rel="noopener noreferrer">CDC: staying safe in the cold</a>
+              (opens online).
+            </p>
+          </details>
+
           <details>
             <summary>Will walking help me sleep earlier and more deeply?</summary>
+            <p class="gist"><strong>In short: regular activity helps sleep on average, but it can’t promise earlier or deeper sleep.</strong></p>
             <p>
               Regular physical activity can improve sleep quality on average,
               but it cannot guarantee earlier sleep or more deep sleep for an
@@ -2267,6 +2440,7 @@
 
           <details>
             <summary>What if I am genuinely exhausted?</summary>
+            <p class="gist"><strong>In short: rest is allowed. Stop for warning signs, and ask a clinician about ongoing tiredness or low mood.</strong></p>
             <p>
               Rest is a valid choice. Do not exercise through fever, chest pain,
               dizziness, faintness, or unusual breathlessness. New or severe
@@ -2325,15 +2499,60 @@
       <span>daybreak · A kinder way back to your rhythm.</span>
       <div class="footer-tools">
         <span id="storage-status">Saved in this browser · no account or tracking</span>
+        <button class="text-button" id="backup-data" type="button">Save a backup</button>
+        <button class="text-button" id="restore-data" type="button">Restore a backup</button>
+        <input type="file" id="restore-file" accept="application/json,.json" hidden>
         <button class="text-button" id="clear-data" type="button">Clear my data</button>
       </div>
     </footer>
   </div>
 
+  <dialog id="reminder-dialog" aria-labelledby="rem-title">
+    <div class="dialog-header">
+      <h2 id="rem-title">A gentle daily reminder</h2>
+      <button class="close-button" type="button" data-close="reminder-dialog" aria-label="Close">×</button>
+    </div>
+    <p class="small">Pick a time, then add a repeating event to your phone’s calendar. Your own calendar rings reliably, even when Daybreak is closed, and nothing is sent anywhere.</p>
+    <label class="field" for="rem-time" style="margin-top: 14px;">
+      Time each day
+      <input type="time" id="rem-time" value="20:00">
+    </label>
+    <div class="dialog-actions">
+      <button class="button" type="button" data-close="reminder-dialog">Not now</button>
+      <button class="button primary" type="button" id="rem-add">Add to calendar</button>
+    </div>
+    <p class="micro" style="margin-top: 12px;">Open the downloaded file and choose your calendar. It repeats every day and asks “How are you feeling?”</p>
+    <details class="note-more">
+      <summary>How to stop or change it</summary>
+      <p class="micro">To stop it, delete the event in your calendar. Re-adding at a new time replaces it in most calendars.</p>
+    </details>
+  </dialog>
+
+  <dialog id="patterns-dialog" aria-labelledby="patterns-title">
+    <div class="dialog-header">
+      <h2 id="patterns-title">Mood &amp; patterns</h2>
+      <button class="close-button" type="button" data-close="patterns-dialog" aria-label="Close">×</button>
+    </div>
+    <p class="small" id="pat-progress"></p>
+    <h3 class="pat-h">Your mood, day by day</h3>
+    <div id="pat-chart"></div>
+    <p class="micro" id="pat-chart-note"></p>
+    <p class="micro" id="pat-aside"></p>
+    <h3 class="pat-h">What seems to go with it</h3>
+    <div id="pat-links"></div>
+    <details class="pat-more" style="margin-top: 14px;">
+    <summary>Recent check-ins: fix, set aside or remove</summary>
+    <label class="trial-row"><input type="checkbox" id="pat-all"> Count every tap anyway (to compare with and without)</label>
+    <p class="micro">Tapped by accident, or just trying things out? Fix it any time: change the mood, set it aside, or remove it. Patterns update straight away.</p>
+    <ul class="pat-list" id="pat-entries"></ul>
+    </details>
+    <p class="micro" style="margin-top: 14px;">These are hints from your own taps, not proof of cause, and not a diagnosis. Patterns get clearer after a few weeks. If low days keep coming or feel heavy, a doctor or someone you trust can help.</p>
+  </dialog>
+
   <dialog id="reward-dialog" aria-labelledby="reward-title" class="reward">
     <div class="reward-sun" aria-hidden="true">
       <span class="spark s1">✦</span><span class="spark s2">✦</span><span class="spark s3">✦</span>
-      <svg viewBox="0 0 120 120" width="112" height="112"><g class="rays" stroke="#F1CA7D" stroke-width="5" stroke-linecap="round"><line x1="98.0" y1="60.0" x2="112.0" y2="60.0"/><line x1="86.9" y1="86.9" x2="96.8" y2="96.8"/><line x1="60.0" y1="98.0" x2="60.0" y2="112.0"/><line x1="33.1" y1="86.9" x2="23.2" y2="96.8"/><line x1="22.0" y1="60.0" x2="8.0" y2="60.0"/><line x1="33.1" y1="33.1" x2="23.2" y2="23.2"/><line x1="60.0" y1="22.0" x2="60.0" y2="8.0"/><line x1="86.9" y1="33.1" x2="96.8" y2="23.2"/></g><circle cx="60" cy="60" r="27" fill="#F1CA7D"/><circle cx="60" cy="60" r="27" fill="none" stroke="#AD532F" stroke-opacity=".25"/></svg>
+      <svg viewBox="0 0 120 120" width="112" height="112"><g class="rays" stroke="#F1CA7D" stroke-width="5" stroke-linecap="round"><line x1="98.0" y1="60.0" x2="112.0" y2="60.0"/><line x1="86.9" y1="86.9" x2="96.8" y2="96.8"/><line x1="60.0" y1="98.0" x2="60.0" y2="112.0"/><line x1="33.1" y1="86.9" x2="23.2" y2="96.8"/><line x1="22.0" y1="60.0" x2="8.0" y2="60.0"/><line x1="33.1" y1="33.1" x2="23.2" y2="23.2"/><line x1="60.0" y1="22.0" x2="60.0" y2="8.0"/><line x1="86.9" y1="33.1" x2="96.8" y2="23.2"/></g><circle cx="60" cy="60" r="27" fill="#F1CA7D"/><circle cx="60" cy="60" r="27" fill="none" stroke="#984726" stroke-opacity=".25"/></svg>
     </div>
     <h2 id="reward-title" style="margin-top: 8px;"></h2>
     <p class="small" id="reward-text" style="margin-top: 12px;"></p>
@@ -2351,9 +2570,34 @@
     <div class="energy-options" id="feel-scale" role="group" aria-label="How you feel" style="margin-top: 14px;"></div>
     <p class="small" style="margin-top: 14px;">A word for it? (optional)</p>
     <div class="chat-prompts" id="feel-words" role="group" aria-label="Optional feeling word"></div>
+    <p class="small" style="margin-top: 14px;">The weather today? (optional, you choose)</p>
+    <div class="chat-prompts" id="feel-weather" role="group" aria-label="Optional weather">
+      <button class="chat-chip" type="button" data-fw="sunny" aria-pressed="false">☀ Sunny</button>
+      <button class="chat-chip" type="button" data-fw="cloudy" aria-pressed="false">☁ Cloudy</button>
+      <button class="chat-chip" type="button" data-fw="rain" aria-pressed="false">🌧 Rain</button>
+      <button class="chat-chip" type="button" data-fw="inside" aria-pressed="false">🏠 Stayed in</button>
+    </div>
+    <p class="small" style="margin-top: 14px;">Anything in the body today? (optional)</p>
+    <div class="chat-prompts" id="feel-sym" role="group" aria-label="Optional body symptoms"></div>
+    <label class="trial-row"><input type="checkbox" id="feel-trial"> Just trying this out (won’t count in patterns)</label>
     <div class="dialog-actions">
       <button class="button" type="button" data-close="feel-dialog">Skip</button>
       <button class="button primary" type="button" id="feel-save" disabled>Save</button>
+    </div>
+  </dialog>
+
+  <dialog id="evening-dialog" aria-labelledby="eve-title">
+    <div class="dialog-header">
+      <h2 id="eve-title">Tonight, gently.</h2>
+      <button class="close-button" type="button" data-close="evening-dialog" aria-label="Close">×</button>
+    </div>
+    <p class="small" id="eve-times"></p>
+    <p class="small" id="eve-lately" style="margin-top: 8px;"></p>
+    <div id="eve-list" role="group" aria-label="Tonight’s set-up" style="display: grid; gap: 8px; margin-top: 16px;"></div>
+    <p class="micro" style="margin-top: 12px;">Practical ideas, not proven treatments. Skip any that don’t fit.</p>
+    <div class="dialog-actions">
+      <button class="button" type="button" id="eve-lights">🌙 Lights out now</button>
+      <button class="button primary" type="button" data-close="evening-dialog">Done</button>
     </div>
   </dialog>
 
@@ -2361,13 +2605,22 @@
     <form id="settings-form">
       <div class="dialog-header">
         <h2 id="settings-title">Your kind of morning.</h2>
-        <button class="close-button" type="button" data-close="settings-dialog" aria-label="Close morning plan">×</button>
+        <button class="close-button" type="button" data-close="settings-dialog" aria-label="Close settings">×</button>
       </div>
       <p class="small">
         Start from your usual out-of-bed time, not your ideal one.
         An earlier alarm should not mean less sleep.
       </p>
+      <p class="plan-summary small" id="plan-summary"></p>
+      <button class="button" type="button" id="talk-setup" style="margin-top: 12px;">💬 Talk it through instead</button>
       <div class="dialog-fields">
+        <label class="field" for="setting-lock">
+          Keep my plan steady · turns back on after saving
+          <select id="setting-lock">
+            <option value="on">On · protects against accidental edits</option>
+            <option value="off">Off · I want to edit my plan</option>
+          </select>
+        </label>
         <label class="field" for="setting-current">
           Where you are now · usual out-of-bed time (moves earlier as you progress)
           <select id="setting-current" required><option value="04:00">4:00 am</option><option value="04:05">4:05 am</option><option value="04:10">4:10 am</option><option value="04:15">4:15 am</option><option value="04:20">4:20 am</option><option value="04:25">4:25 am</option><option value="04:30">4:30 am</option><option value="04:35">4:35 am</option><option value="04:40">4:40 am</option><option value="04:45">4:45 am</option><option value="04:50">4:50 am</option><option value="04:55">4:55 am</option><option value="05:00">5:00 am</option><option value="05:05">5:05 am</option><option value="05:10">5:10 am</option><option value="05:15">5:15 am</option><option value="05:20">5:20 am</option><option value="05:25">5:25 am</option><option value="05:30">5:30 am</option><option value="05:35">5:35 am</option><option value="05:40">5:40 am</option><option value="05:45">5:45 am</option><option value="05:50">5:50 am</option><option value="05:55">5:55 am</option><option value="06:00">6:00 am</option><option value="06:05">6:05 am</option><option value="06:10">6:10 am</option><option value="06:15">6:15 am</option><option value="06:20">6:20 am</option><option value="06:25">6:25 am</option><option value="06:30">6:30 am</option><option value="06:35">6:35 am</option><option value="06:40">6:40 am</option><option value="06:45">6:45 am</option><option value="06:50">6:50 am</option><option value="06:55">6:55 am</option><option value="07:00">7:00 am</option><option value="07:05">7:05 am</option><option value="07:10">7:10 am</option><option value="07:15">7:15 am</option><option value="07:20">7:20 am</option><option value="07:25">7:25 am</option><option value="07:30">7:30 am</option><option value="07:35">7:35 am</option><option value="07:40">7:40 am</option><option value="07:45">7:45 am</option><option value="07:50">7:50 am</option><option value="07:55">7:55 am</option><option value="08:00">8:00 am</option><option value="08:05">8:05 am</option><option value="08:10">8:10 am</option><option value="08:15">8:15 am</option><option value="08:20">8:20 am</option><option value="08:25">8:25 am</option><option value="08:30">8:30 am</option><option value="08:35">8:35 am</option><option value="08:40">8:40 am</option><option value="08:45">8:45 am</option><option value="08:50">8:50 am</option><option value="08:55">8:55 am</option><option value="09:00">9:00 am</option><option value="09:05">9:05 am</option><option value="09:10">9:10 am</option><option value="09:15">9:15 am</option><option value="09:20">9:20 am</option><option value="09:25">9:25 am</option><option value="09:30">9:30 am</option><option value="09:35">9:35 am</option><option value="09:40">9:40 am</option><option value="09:45">9:45 am</option><option value="09:50">9:50 am</option><option value="09:55">9:55 am</option><option value="10:00">10:00 am</option><option value="10:05">10:05 am</option><option value="10:10">10:10 am</option><option value="10:15">10:15 am</option><option value="10:20">10:20 am</option><option value="10:25">10:25 am</option><option value="10:30">10:30 am</option><option value="10:35">10:35 am</option><option value="10:40">10:40 am</option><option value="10:45">10:45 am</option><option value="10:50">10:50 am</option><option value="10:55">10:55 am</option><option value="11:00">11:00 am</option><option value="11:05">11:05 am</option><option value="11:10">11:10 am</option><option value="11:15">11:15 am</option><option value="11:20">11:20 am</option><option value="11:25">11:25 am</option><option value="11:30">11:30 am</option><option value="11:35">11:35 am</option><option value="11:40">11:40 am</option><option value="11:45">11:45 am</option><option value="11:50">11:50 am</option><option value="11:55">11:55 am</option></select>
@@ -2430,32 +2683,34 @@
             <option value="on">On · browser voice</option>
           </select>
         </label>
-        <label class="field" for="setting-notifications">
-          Daybreak reminders
-          <select id="setting-notifications">
-            <option value="off">Off · show in app only</option>
-            <option value="on">On · gentle reminders</option>
+        <label class="field" for="setting-wx">
+          Real weather
+          <select id="setting-wx">
+            <option value="off">Off · you pick the weather</option>
+            <option value="on">On · fetch today’s weather</option>
           </select>
         </label>
-        <label class="field" for="setting-quiet-start">
-          Quiet hours start
-          <input id="setting-quiet-start" type="time" required>
-        </label>
-        <label class="field" for="setting-quiet-end">
-          Quiet hours end
-          <input id="setting-quiet-end" type="time" required>
+        <label class="field" for="setting-wxhint">
+          Pressure heads-up
+          <select id="setting-wxhint">
+            <option value="off">Off</option>
+            <option value="on">On · gentle note on big pressure-drop days</option>
+          </select>
         </label>
       </div>
+      <p class="small" id="wx-note"></p>
       <p class="small">
-        Saving restarts the schedule today and keeps your check-ins.
-        Steps advance by calendar day, not by checkmarks. If you are not
-        sleeping enough, restart from a sustainable time or choose a slower
-        pace. This app does not set an alarm.
+        Changing your start time, step size or pace restarts your steps from
+        today. Other changes keep your progress, and check-ins are always kept.
+        If you are not sleeping enough, choose a slower pace. This app does
+        not set an alarm.
       </p>
+      <p class="small" id="settings-change-note" aria-live="polite"></p>
       <p class="error" id="settings-error" role="alert"></p>
       <div class="dialog-actions">
-        <button class="button" type="button" data-close="settings-dialog">Not now</button>
-        <button class="button primary" type="submit">Begin gently ↗</button>
+        <button class="text-button" type="button" id="undo-plan" hidden>Undo last change</button>
+        <button class="button" type="button" data-close="settings-dialog">Close</button>
+        <button class="button primary" id="settings-save" type="submit" disabled>Save changes</button>
       </div>
     </form>
   </dialog>
@@ -2522,21 +2777,30 @@
         <button class="close-button" type="button" id="fab-close" aria-label="Close companion">×</button>
       </div>
       <div class="conversation" id="fab-log" role="log" aria-label="Companion chat" aria-live="polite" aria-relevant="additions"></div>
-      <div class="chat-prompts" aria-label="Shortcuts">
-        <button class="chat-chip" type="button" data-go="awake">☀ I’m awake</button>
-        <button class="chat-chip" type="button" data-go="up">🚶 I’m up</button>
-        <button class="chat-chip" type="button" data-go="feel">💬 How I feel</button>
-        <button class="chat-chip" type="button" data-go="meditate">🧘 Meditate</button>
-        <button class="chat-chip" type="button" data-go="log">🚪 Log a walk</button>
-        <button class="chat-chip" type="button" data-go="sleep">🌙 Sleep plan</button>
+      <div class="chat-prompts" id="fab-choices" aria-label="Answer options" hidden></div>
+      <div class="chat-prompts" id="fab-shortcuts" aria-label="Shortcuts">
+        <div class="chip-group" role="group" aria-label="Now">
+          <span class="chip-group-label" aria-hidden="true">Now</span>
+          <button class="chat-chip" type="button" data-go="awake">☀ I’m awake</button>
+          <button class="chat-chip" type="button" data-go="up">⬆ Out of bed</button>
+          <button class="chat-chip" type="button" data-go="log">🚪 Log a walk</button>
+        </div>
+        <div class="chip-group" role="group" aria-label="Feeling">
+          <span class="chip-group-label" aria-hidden="true">Feeling</span>
+          <button class="chat-chip" type="button" data-go="feel">💬 How I feel</button>
+          <button class="chat-chip" type="button" data-go="overwhelmed">😮‍💨 Overwhelmed / anxious</button>
+          <button class="chat-chip" type="button" data-go="helped">💡 What helped me</button>
+          <button class="chat-chip" type="button" data-go="meditate">🧘 Meditate</button>
+        </div>
+        <div class="chip-group" role="group" aria-label="Plan">
+          <span class="chip-group-label" aria-hidden="true">Plan</span>
+          <button class="chat-chip" type="button" data-go="plan">🗓 Set up my plan</button>
+          <button class="chat-chip" type="button" data-go="evening">🌙 Tonight</button>
+          <button class="chat-chip" type="button" data-go="sleep">🌙 Sleep plan</button>
+          <button class="chat-chip" type="button" data-go="progress">🌱 My progress</button>
+        </div>
       </div>
-      <form class="chat-form" id="fab-form">
-        <label class="sr-only" for="fab-input">Talk to your companion</label>
-        <input id="fab-input" type="text" maxlength="240" placeholder="Type or tap the mic…" autocomplete="off">
-        <button class="button fab-mic" type="button" id="fab-mic" aria-pressed="false" aria-label="Speak to companion">🎤</button>
-        <button class="button primary chat-send" type="submit" aria-label="Send to companion">↑</button>
-      </form>
-      <p class="micro" style="margin-top: 8px;">Scripted offline helper, not AI or medical advice. Try “start a 5 min meditation”, “log a walk”, or “show my sleep plan”.</p>
+      <p class="micro" style="margin-top: 8px;">Tap what you need. Scripted offline helper, not AI or medical advice.</p>
     </section>
     <button class="fab-button" type="button" id="fab-toggle" aria-expanded="false" aria-controls="fab-panel" aria-label="Open companion"><span class="fab-face" id="fab-face" data-mode="gentle"><svg viewBox="0 0 90 90" fill="none" aria-hidden="true">
                     <circle cx="45" cy="45" r="43" fill="currentColor" opacity=".16"/>
@@ -2550,12 +2814,71 @@
                   </svg></span></button>
   </div>
 
+  <dialog id="menu-dialog" aria-labelledby="menu-title">
+    <div class="dialog-header">
+      <h2 id="menu-title">Where to?</h2>
+      <button class="close-button" type="button" data-close="menu-dialog" aria-label="Close menu">×</button>
+    </div>
+    <div class="menu-list">
+      <p class="mh">Now</p>
+      <div class="mg">
+        <button class="button" type="button" data-menu="__feel">💬 How I feel</button>
+        <button class="button" type="button" data-menu="walking">🚶 Little walks</button>
+        <button class="button" type="button" data-menu="daily">🌅 Check-in</button>
+      </div>
+      <p class="mh">Reflect &amp; calm</p>
+      <div class="mg">
+        <button class="button" type="button" data-menu="rhythm">🌱 Progress</button>
+        <button class="button" type="button" data-menu="__patterns">📊 Mood &amp; patterns</button>
+        <button class="button" type="button" data-menu="helped">💡 What helped me</button>
+        <button class="button" type="button" data-menu="meditate">🧘 Meditate</button>
+        <button class="button" type="button" data-menu="guidance">🔬 Gentle science</button>
+      </div>
+      <details class="menu-more">
+        <summary>⚙ Settings &amp; backup</summary>
+        <div class="mg">
+          <button class="button" type="button" data-menu="__reminder">⏰ Daily reminder</button>
+          <button class="button" type="button" data-menu="__settings">⚙ Settings</button>
+          <button class="button" type="button" data-menu="__backup">💾 Save a backup</button>
+          <button class="button" type="button" data-menu="__restore">📂 Restore a backup</button>
+        </div>
+      </details>
+    </div>
+    <div class="ts-row" role="group" aria-label="Text size">
+      <span class="ts-label">Text size</span>
+      <button class="button" type="button" data-ts="0" style="font-size: 14px">Aa</button>
+      <button class="button" type="button" data-ts="1" style="font-size: 17px">Aa</button>
+      <button class="button" type="button" data-ts="2" style="font-size: 21px">Aa</button>
+    </div>
+    <button class="button menu-close" type="button" data-close="menu-dialog">Close</button>
+  </dialog>
+
+  <dialog id="practice-dialog" aria-labelledby="practice-title">
+    <div class="dialog-header">
+      <h2 id="practice-title">Practice</h2>
+      <button class="close-button" type="button" data-close="practice-dialog" aria-label="Close practice">×</button>
+    </div>
+    <p class="small" id="practice-lead"></p>
+    <div class="pr-step" id="practice-step" aria-live="polite"></div>
+    <p class="micro" id="practice-count"></p>
+    <div class="dialog-actions">
+      <button class="button" type="button" id="practice-back">Back</button>
+      <button class="button primary" type="button" id="practice-next">Next</button>
+    </div>
+    <p class="micro" style="margin-top: 12px;">Plain-words versions of standard, widely taught practices, not a substitute for a teacher. Stop any time. If it feels worse, open your eyes or try “Ground yourself”.
+      For a real teacher’s voice: <a href="https://www.uclahealth.org/programs/uclamindful/free-guided-meditations" target="_blank" rel="noopener noreferrer">free guided recordings from UCLA Mindful</a> (opens online).</p>
+  </dialog>
+
   <dialog id="meditate-dialog" aria-label="Guided breathing session">
     <div class="med-stage">
       <div class="med-orb-wrap" aria-hidden="true"><div class="med-orb" id="med-orb"></div></div>
       <p class="med-phase" id="med-phase" role="status" aria-live="off">Get comfortable</p>
       <p class="med-time" id="med-time">3:00</p>
-      <div class="actions" style="justify-content:center;">
+      <div class="actions" id="med-ready" style="justify-content:center;" hidden>
+        <button class="button primary" type="button" id="med-go">I’m ready</button>
+        <button class="button" type="button" id="med-notnow">Not now</button>
+      </div>
+      <div class="actions" id="med-running" style="justify-content:center;">
         <button class="button primary" type="button" id="med-pause">Pause</button>
         <button class="button" type="button" id="med-end">End</button>
       </div>
@@ -2580,6 +2903,38 @@
   <script>
     (() => {
       "use strict";
+
+      /* Text size: Normal / Large / Extra large, remembered in this browser */
+      const TS_KEY = "daybreak.textsize.v1";
+      const TS = [["Normal", 1, "Aa"], ["Large", 1.2, "Aa +"], ["Extra large", 1.4, "Aa ++"]];
+      let tsIndex = 0;
+      try { tsIndex = Math.max(0, Math.min(2, Number(localStorage.getItem(TS_KEY)) || 0)); } catch {}
+      function applyTextSize() {
+        document.documentElement.style.setProperty("--ts", String(TS[tsIndex][1]));
+        document.querySelectorAll("[data-ts]").forEach((b) => {
+          b.setAttribute("aria-pressed", String(Number(b.dataset.ts) === tsIndex));
+          b.setAttribute("aria-label", `Text size: ${TS[Number(b.dataset.ts)][0]}`);
+        });
+      }
+      applyTextSize();
+      document.querySelectorAll("[data-ts]").forEach((b) => b.addEventListener("click", () => {
+        tsIndex = Number(b.dataset.ts);
+        try { localStorage.setItem(TS_KEY, String(tsIndex)); } catch {}
+        applyTextSize();
+      }));
+
+      /* Scroll buttons: registered first so they work even if later code fails. Buttons never navigate. */
+      document.addEventListener("click", (event) => {
+        const el = event.target.closest("[data-scroll]");
+        if (!el) return;
+        const id = el.dataset.scroll;
+        const target = id === "top" ? null : document.getElementById(id);
+        if (id !== "top" && !target) return;
+        if (!target) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+      });
 
       const STORAGE_KEY = "daybreak.gentle-plan.v4-rhythm";
       const OLD_STORAGE_KEY = "daybreak.gentle-plan.v1";
@@ -2655,13 +3010,22 @@
       let activeDay = dateKey(new Date());
       let storageAvailable = true;
       let toastTimeout;
-      const WHY = [["alarm", "Switched the alarm off"], ["phone", "Scrolled my phone"], ["tired", "Still tired"], ["cozy", "Warm and comfy"], ["mind", "Busy mind"], ["late", "Went to bed late"], ["early", "Woke before the alarm"], ["clock", "Checked the time"], ["doze", "Dozed on and off"]];
-      const MOVES = { feet: "put my feet on the floor", curtains: "open the curtains", water: "drink a glass of water", stand: "stand up and stretch", bathroom: "stay up after the restroom and open the curtains" };
+      const WHY = [["alarm", "Switched the alarm off"], ["phone", "Scrolled my phone"], ["tired", "Still tired"], ["cozy", "Warm and comfy"], ["mind", "Busy mind"], ["late", "Went to bed late"], ["early", "Woke before the alarm"], ["clock", "Checked the time"], ["doze", "Dozed on and off"], ["cold", "Too cold"], ["ache", "Body ached"]];
+      const MOVES = { feet: "put my feet on the floor", curtains: "open the curtains", water: "drink a glass of water", stand: "stand up and stretch", bathroom: "stay up after the restroom and open the curtains", warm: "put on my warm layer" };
       const MOVE_KEY = "daybreak.firstmove.v1";
       const FEEL = [[1, "Very low", "◔"], [2, "Low", "◑"], [3, "Okay", "◕"], [4, "Good", "☼"], [5, "Very good", "✺"]];
+      const SYM = [["head", "Headache"], ["body", "Body or joint pain"], ["dizzy", "Dizzy"], ["heavy", "Heavy body"], ["none", "None today"]];
+      let feelSym = [];
       const FEEL_WORDS = ["Calm", "Tired", "Anxious", "Content", "Irritable", "Hopeful", "Flat"];
       let feelValue = null;
       let feelWord = "";
+      let feelWeather = "";
+      const PREV_KEY = "daybreak.prevplan.v1";
+      const PLAN_IDS = ["setting-current", "setting-target", "setting-duration", "setting-stepsize", "setting-pace"];
+      let settingsSnap = "";
+      const EVE = [["warm", "Warm layer and socks within reach"], ["drink", "A drink ready for the morning"], ["phone", "Phone charging away from the bed"], ["dim", "Lights lower, screens down"]];
+      const HELPED_KEY = "daybreak.helped.v1";
+      const HELPED_TAGS = [["cold", "Cold nights or mornings"], ["ache", "Body ache at night"], ["overwhelmed", "Feeling overwhelmed"], ["cantup", "Can’t get out of bed"], ["mood", "Low mood or rainy days"], ["late", "Late nights"]];
       let selectedWhy = [];
       let selectedEnergy = null;
       let reflectionDirty = false;
@@ -2732,13 +3096,11 @@
             duration: 8,
             pace: 3,
             stepSize: 15,
+            locked: false,
             dataSaver: true,
             character: true,
             popups: true,
             voice: false,
-            notifications: false,
-            quietStart: "22:30",
-            quietEnd: "07:00",
             start: activeDay
           },
           walking: {
@@ -2759,11 +3121,14 @@
           sleep: "",
           wake: "",
           awake: "",
+          evening: [],
           feels: [],
           why: [],
           note: "",
           reflected: false,
           weather: "",
+          wx: null,
+          sym: [],
           mission: null,
           noticed: false,
           walk: null
@@ -2798,13 +3163,11 @@
             duration: settings.duration,
             pace: settings.pace,
             stepSize: [5, 10, 15].includes(settings.stepSize) ? settings.stepSize : 15,
+            locked: settings.locked === true,
             dataSaver: settings.dataSaver !== false,
             character: settings.character !== false,
             popups: settings.popups !== false,
             voice: settings.voice === true,
-            notifications: settings.notifications === true,
-            quietStart: TIME_RE.test(settings.quietStart) ? settings.quietStart : "22:30",
-            quietEnd: TIME_RE.test(settings.quietEnd) ? settings.quietEnd : "07:00",
             start: settings.start
           };
         }
@@ -2847,13 +3210,19 @@
             log.sleep = TIME_RE.test(value.sleep) ? value.sleep : "";
             log.wake = TIME_RE.test(value.wake) ? value.wake : "";
             log.awake = TIME_RE.test(value.awake) ? value.awake : "";
+            log.evening = Array.isArray(value.evening) ? value.evening.filter((id) => EVE.some((x) => x[0] === id)) : [];
             log.feels = Array.isArray(value.feels)
-              ? value.feels.filter((f) => f && [1, 2, 3, 4, 5].includes(f.v) && typeof f.w === "string" && TIME_RE.test(f.at)).slice(-6).map((f) => ({ v: f.v, w: f.w.slice(0, 20), at: f.at }))
+              ? value.feels.filter((f) => f && [1, 2, 3, 4, 5].includes(f.v) && typeof f.w === "string" && TIME_RE.test(f.at)).slice(-6).map((f) => ({ v: f.v, w: f.w.slice(0, 20), at: f.at, ...(f.x === true ? { x: true } : {}) }))
               : [];
             log.why = Array.isArray(value.why) ? value.why.filter((w) => WHY.some((x) => x[0] === w)) : [];
             log.note = typeof value.note === "string" ? value.note.slice(0, 400) : "";
             log.reflected = value.reflected === true;
             log.weather = WEATHER.includes(value.weather) ? value.weather : "";
+            log.sym = Array.isArray(value.sym) ? value.sym.filter((x, i, a) => SYM.some((y) => y[0] === x) && a.indexOf(x) === i).slice(0, 5) : [];
+            const wv = value.wx;
+            log.wx = wv && ["sunny", "cloudy", "rain", "snow"].includes(wv.c) && Number.isFinite(wv.t)
+              ? { c: wv.c, t: Math.round(wv.t), ...(Number.isFinite(wv.lo) ? { lo: Math.round(wv.lo) } : {}), ...(Number.isFinite(wv.p) ? { p: Math.max(0, Math.min(100, Math.round(wv.p))) } : {}), ...(Number.isFinite(wv.pm) && wv.pm > 850 && wv.pm < 1090 ? { pm: Math.round(wv.pm) } : {}), ...(Number.isFinite(wv.pd) && wv.pd >= 0 && wv.pd < 60 ? { pd: Math.round(wv.pd * 10) / 10 } : {}), ...(Number.isFinite(wv.h) && wv.h >= 0 && wv.h <= 100 ? { h: Math.round(wv.h) } : {}) }
+              : null;
             log.mission = Number.isInteger(value.mission)
               && value.mission >= 0
               && value.mission < discoveries.length
@@ -2934,13 +3303,27 @@
         return storageAvailable;
       }
 
-      function toast(message) {
+      function toast(message, undo) {
         clearTimeout(toastTimeout);
-        $("#toast").textContent = message;
-        $("#toast").classList.add("visible");
+        const el = $("#toast");
+        el.textContent = message;
+        el.classList.toggle("has-action", typeof undo === "function");
+        if (typeof undo === "function") {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "toast-action";
+          b.textContent = "Undo";
+          b.addEventListener("click", () => {
+            clearTimeout(toastTimeout);
+            el.classList.remove("visible", "has-action");
+            undo();
+          });
+          el.appendChild(b);
+        }
+        el.classList.add("visible");
         toastTimeout = setTimeout(() => {
-          $("#toast").classList.remove("visible");
-        }, 4300);
+          el.classList.remove("visible", "has-action");
+        }, typeof undo === "function" ? 15000 : 4300);
       }
 
       function savedToast(message) {
@@ -3091,7 +3474,7 @@
           const next = addDays(plan.stepStart, settings.pace);
           $("#next-step").textContent =
             `Next step: ${clock(Math.max(plan.target, plan.wake - plan.size))} `
-            + `from ${shortDate(next)}, if mornings feel steady. Too soon? Slow down in My morning plan.`;
+            + `from ${shortDate(next)}, if mornings feel steady. Too soon? Slow down in Settings.`;
         }
 
         renderStepTrack(plan);
@@ -3218,7 +3601,25 @@
         return svg;
       }
 
+      /* ---- Sprout: grows with every day you return; never shrinks, never scolds ---- */
+      const SPROUT_KEY = "daybreak.sprout.v1";
+      const SPROUT = [[0, "🌰", "A seed"], [1, "🌱", "A sprout"], [4, "🌿", "A little plant"], [9, "🪴", "Growing steadily"], [16, "🌳", "A young tree"], [30, "🌸", "In bloom"]];
+      function renderSprout() {
+        const days = Object.values(state.logs).filter((l) => l && (l.walk || l.reflected || l.noticed || l.awake || l.wake || (l.feels || []).length || (l.evening || []).length || HABITS.some((h) => l.habits && l.habits[h]))).length;
+        let i = 0; SPROUT.forEach((st, n) => { if (days >= st[0]) i = n; });
+        const cur = SPROUT[i], nxt = SPROUT[i + 1];
+        $("#sprout-icon").textContent = cur[1];
+        $("#sprout-title").textContent = cur[2];
+        $("#sprout-sub").textContent = `${days} ${days === 1 ? "day" : "days"} of showing up` + (nxt ? ` · ${nxt[0] - days} more to grow` : " · fully grown, and still yours");
+        $("#sprout-fill").style.width = (nxt ? Math.round(((days - cur[0]) / (nxt[0] - cur[0])) * 100) : 100) + "%";
+        let prev = null; try { prev = localStorage.getItem(SPROUT_KEY); } catch {}
+        if (prev !== null && Number(prev) < i) { $("#sprout-title").textContent = `✨ It grew: ${cur[2]}`; $("#sprout").classList.add("grew"); setTimeout(() => { $("#sprout").classList.remove("grew"); $("#sprout-title").textContent = cur[2]; }, 6000); }
+        try { localStorage.setItem(SPROUT_KEY, String(Math.max(i, Number(prev) || 0))); } catch {}
+      }
+      $("#sprout").addEventListener("click", () => $("#rhythm").scrollIntoView({ behavior: "smooth", block: "start" }));
+
       function renderHistory() {
+        renderSprout();
         const container = $("#history");
         container.replaceChildren();
 
@@ -3363,7 +3764,7 @@
         }
       }
 
-      function addMessage(text, user = false) {
+      function addMessage(text, user = false, fabOnly = false) {
         const bubble = document.createElement("div");
         bubble.className = user ? "bubble user" : "bubble";
 
@@ -3372,11 +3773,15 @@
         label.textContent = user ? "You" : names[state.walking.mode];
 
         const paragraph = document.createElement("p");
-        paragraph.textContent = text;
+        if (user) paragraph.textContent = text;
+        else String(text).split(/\*\*(.+?)\*\*/g).forEach((part, i) => {
+          if (i % 2) { const b = document.createElement("strong"); b.textContent = part; paragraph.append(b); }
+          else if (part) paragraph.append(document.createTextNode(part));
+        });
         bubble.append(label, paragraph);
 
         const conversation = $("#conversation");
-        conversation.append(bubble);
+        if (!fabOnly) conversation.append(bubble);
 
         const fabLog = $("#fab-log");
         if (fabLog) {
@@ -3423,59 +3828,59 @@
 
         const replies = {
           tired: {
-            gentle: "Then let today be smaller. Rest is allowed. If you feel well enough, try a doorway pause or a few easy steps—not a test. Persistent or unexplained fatigue deserves a clinician’s attention.",
-            practical: "Choose the low-energy version: 2 comfortable minutes, or rest. Stop if you feel unwell. If activity makes you markedly worse afterward, don’t push the plan; get medical advice.",
-            curious: "No expedition today. If comfortable, notice one color from your doorway or window. Curiosity can stay tiny, and it does not replace rest when you need it."
+            gentle: "Then **let today be smaller**. **Rest is allowed**. If you feel well enough, try a doorway pause or a few easy steps—not a test. Persistent or unexplained fatigue deserves a clinician’s attention.",
+            practical: "Choose the low-energy version: **2 comfortable minutes, or rest**. **Stop if you feel unwell**. If activity makes you markedly worse afterward, don’t push the plan; get medical advice.",
+            curious: "**No expedition today**. If comfortable, notice one color from your doorway or window. Curiosity can stay tiny, and it does not replace rest when you need it."
           },
           motivation: {
-            gentle: "You do not have to feel eager first. Could the whole plan be “shoes on, decide at the door”? You may turn back. Making the start kinder is the point.",
-            practical: "Try this: after your chosen cue, put on your shoes and begin 2 easy minutes. Keep the route familiar. A specific small plan can help more than waiting for a strong feeling of motivation.",
-            curious: "Give the walk a small reason other than exercise. Visit one tree or look for one new color. You can be only slightly curious—not enthusiastic—and still begin."
+            gentle: "**You do not have to feel eager first**. Could the whole plan be “**shoes on, decide at the door**”? You may turn back. Making the start kinder is the point.",
+            practical: "Try this: after your chosen cue, **put on your shoes and begin 2 easy minutes**. Keep the route familiar. A specific small plan can help more than waiting for a strong feeling of motivation.",
+            curious: "Give the walk **a small reason other than exercise**. Visit one tree or look for one new color. You can be only slightly curious—not enthusiastic—and still begin."
           },
           bored: {
-            gentle: "A familiar route is useful: fewer decisions, less effort to begin. You don’t need to love it today. A quiet little return is enough.",
-            practical: "Keep the route; change one detail. Visit at a different daylight time, choose a closer turnaround point, or notice one landmark. No route research required.",
+            gentle: "**A familiar route is useful**: fewer decisions, less effort to begin. You don’t need to love it today. A quiet little return is enough.",
+            practical: "Keep the route; **change one detail**. Visit at a different daylight time, choose a closer turnaround point, or notice one landmark. No route research required.",
             curious: `${mission.title} ${mission.text} The mission is optional. Keep your attention on traffic and footing while moving.`
           },
           missed: {
-            gentle: "There is no debt here. Rainy weeks and tired days do not erase you. Choose the easiest version available today—no make-up walk.",
-            practical: "Do not add missed minutes to today. Reuse the same cue and reduce the starting size if necessary. Repetition matters more than an unbroken streak.",
-            curious: "The path has not been keeping score. You can simply visit again and see what changed while you were away."
+            gentle: "**There is no debt here**. Rainy weeks and tired days do not erase you. Choose the easiest version available today—**no make-up walk**.",
+            practical: "**Do not add missed minutes to today**. Reuse the same cue and reduce the starting size if necessary. Repetition matters more than an unbroken streak.",
+            curious: "The path has not been keeping score. You can **simply visit again** and see what changed while you were away."
           },
           ready: {
-            gentle: `Your ${duration}-minute idea is only an invitation. Begin comfortably, and come back early if you want. If outside is unsafe, keep the ritual indoors.`,
+            gentle: `Your ${duration}-minute idea **is only an invitation**. Begin comfortably, and come back early if you want. If outside is unsafe, keep the ritual indoors.`,
             practical: `Your cue: after you ${cueLabels[state.walking.cue]}. Your first move: suitable shoes, then ${duration} easy minutes. Choose safe conditions and a comfortable pace. Log only what actually happens.`,
             curious: `Take a little question with you: “${mission.title}” No photo, no distance target. Check your surroundings, enjoy a small detail, and return whenever you like.`
           },
           rain: {
-            gentle: "A little rain can have a gentler version, but you never owe the weather a walk. If safe, try a short route close to home with suitable clothing. Indoors is a valid backup.",
-            practical: "Check footing, visibility, and local conditions. Light rain may be fine; lightning, flooding, ice, dangerous temperatures, or poor air are reasons to stay in. Keep the same cue for an indoor loop.",
-            curious: "If conditions are safe, a familiar street can sound different in light rain. Notice from shelter, then take a few easy steps if you want. No mission is worth unsafe conditions."
+            gentle: "A little rain can have a gentler version, but **you never owe the weather a walk**. If safe, try a short route close to home with suitable clothing. **Indoors is a valid backup**.",
+            practical: "Check footing, visibility, and local conditions. Light rain may be fine; **lightning, flooding, ice, dangerous temperatures, or poor air are reasons to stay in**. Keep the same cue for an indoor loop.",
+            curious: "If conditions are safe, a familiar street can sound different in light rain. Notice from shelter, then take a few easy steps if you want. **No mission is worth unsafe conditions**."
           },
           winter: {
-            gentle: "Let winter inherit a tiny, forgiving routine—not a big obligation. Keep your cue and allow a daylight stroll, a sheltered pause, or an indoor version.",
-            practical: "Make two plans now: one safe daylight route and one indoor loop. Leave suitable layers and shoes ready. Shorten or switch plans when cold, darkness, ice, or air quality makes outside unsafe.",
+            gentle: "Let winter inherit a **tiny, forgiving routine**—not a big obligation. Keep your cue and allow a daylight stroll, a sheltered pause, or an indoor version.",
+            practical: "Make two plans now: **one safe daylight route and one indoor loop**. Leave suitable layers and shoes ready. Shorten or switch plans when cold, darkness, ice, or air quality makes outside unsafe.",
             curious: "A familiar tree can become a little seasonal companion. Visit in safe daylight when you can; on indoor days, look for changing light from a window instead."
           },
           sunshine: {
-            gentle: "A bright patch of day is an invitation, not a last chance. Take a little outdoor pause if it fits. You have not wasted the day if you need rest.",
-            practical: "Choose one realistic daylight pocket and keep the walk short enough to begin. Use suitable sun protection and avoid dangerous heat. The app’s optional time is a planning note, not an alarm.",
-            curious: "Same route, different light. Look for a shadow or a softly lit leaf while safely stopped. Never look directly at the sun. A few minutes can be your whole outing."
+            gentle: "A bright patch of day is **an invitation, not a last chance**. Take a little outdoor pause if it fits. You have not wasted the day if you need rest.",
+            practical: "Choose **one realistic daylight pocket** and keep the walk short enough to begin. Use suitable sun protection and avoid dangerous heat. The app’s optional time is a planning note, not an alarm.",
+            curious: "Same route, different light. Look for a shadow or a softly lit leaf while safely stopped. **Never look directly at the sun.** A few minutes can be your whole outing."
           },
           sleep: {
-            gentle: "Sleep cannot be forced. A steady morning, daylight, and gentle activity can support your rhythm over time. If the earlier alarm is cutting sleep short, slow the shift.",
-            practical: "Protect enough sleep, keep the wake time reasonably steady, seek daylight after waking, and dim evenings. Go to bed when sleepy. Persistent insomnia deserves evidence-based help such as CBT-I.",
+            gentle: "**Sleep cannot be forced**. A steady morning, daylight, and gentle activity can support your rhythm over time. If the earlier alarm is cutting sleep short, slow the shift.",
+            practical: "Protect enough sleep, keep the wake time reasonably steady, seek daylight after waking, and dim evenings. Go to bed when sleepy. **Persistent insomnia deserves evidence-based help such as CBT-I**.",
             curious: "You can notice energy and sleep over time without scoring them. A walk might help your rhythm, but one good or bad night cannot tell you why it happened."
           },
           science: {
-            gentle: "Some activity is better than none, and regular activity can support sleep and mood. The tiny starting options are about making return easier—not a promise that two minutes will treat fatigue.",
-            practical: "The evidence supports physical activity, consistent sleep cues, and specific action plans. This app’s 2-minute option, companions, and missions are not clinically tested treatments. Open The gentle science for sources.",
+            gentle: "**Some activity is better than none**, and regular activity can support sleep and mood. The tiny starting options are about making return easier—not a promise that two minutes will treat fatigue.",
+            practical: "The evidence supports physical activity, consistent sleep cues, and specific action plans. This app’s 2-minute option, companions, and missions are **not clinically tested treatments**. Open The gentle science for sources.",
             curious: "Here’s the useful distinction: the health benefits of activity have evidence; our little noticing missions are simply optional ways to make a familiar route more enjoyable."
           },
           done: {
             gentle: log.walk
               ? "Your little return is already saved. Nothing more to earn today. Feeling the same afterward is allowed, too."
-              : "A little return is worth acknowledging. Use “I made a little return” to save what actually happened. I won’t mark it automatically.",
+              : "A little return is worth acknowledging. Use “I made a little return” to save what actually happened. **I won’t mark it automatically**.",
             practical: log.walk
               ? "Today’s walk is recorded. You can edit its details, but there is no need to add another outing to satisfy the app."
               : "Use the walking check-in to record outdoors or indoors, optional minutes, and how you felt. No distance or proof needed.",
@@ -3484,81 +3889,20 @@
               : "You went to meet the day. Save a little return if you’d like, and perhaps one small thing you noticed."
           },
           lowmood: {
-            gentle: "I’m sorry it feels heavy. You do not have to solve it with a walk. Consider reaching out to someone you trust; persistent low mood or loss of interest deserves professional support.",
-            practical: "Keep demands small and ask for support. If low mood or loss of interest persists, especially with shorter days, talk with a clinician. Walking can support wellbeing but is not a replacement for care.",
-            curious: "It is okay if nothing feels interesting today. Skip the mission and choose rest or gentle company. Persistent low mood is a reason to seek support, not a reason to blame yourself."
+            gentle: "I’m sorry it feels heavy. You do not have to solve it with a walk. Consider **reaching out to someone you trust**; persistent low mood or loss of interest deserves professional support.",
+            practical: "Keep demands small and ask for support. If low mood or loss of interest persists, especially with shorter days, **talk with a clinician**. Walking can support wellbeing but is not a replacement for care.",
+            curious: "It is okay if nothing feels interesting today. Skip the mission and choose rest or gentle company. **Persistent low mood is a reason to seek support**, not a reason to blame yourself."
           },
           unknown: {
-            gentle: "I can offer a few prepared kinds of support, rather than understand everything like a person. Would “I’m tired,” “No motivation,” or “I missed days” fit what you need?",
-            practical: "I use simple offline topic matching, so I may have missed your meaning. Try tired, motivation, rain, winter, sleep, or science—or choose one of the buttons.",
-            curious: "I may have missed what you meant. We can make the usual route less dull, choose a tiny first step, or find a rain-day backup. Which would help?"
+            gentle: "I can offer **a few prepared kinds of support**, rather than understand everything like a person. Would “I’m tired,” “No motivation,” or “I missed days” fit what you need?",
+            practical: "I use **simple offline topic matching**, so I may have missed your meaning. Try tired, motivation, rain, winter, sleep, or science—or choose one of the buttons.",
+            curious: "I may have missed what you meant. We can make the usual route less dull, choose a tiny first step, or find a rain-day backup. **Which would help?**"
           }
         };
 
         return replies[intent]?.[mode] || replies.unknown[mode];
       }
 
-      function detectIntent(text) {
-        const value = text.toLowerCase();
-
-        if (/\b(suicid|kill myself|hurt myself|end my life|can't stay safe|cannot stay safe)/.test(value)) {
-          return "crisis";
-        }
-
-        if (/chest pain|faint|severe breath|can't breathe|cannot breathe/.test(value)) {
-          return "urgent";
-        }
-
-        if (/\b(depress|hopeless|low mood|sad|nothing matters)/.test(value)) {
-          return "lowmood";
-        }
-
-        if (/no motivation|unmotivated|motivat|can't start|cannot start|lazy/.test(value)) {
-          return "motivation";
-        }
-
-        if (/tired|exhaust|fatigue|drained|no energy|sick|unwell|pain|dizz/.test(value)) {
-          return "tired";
-        }
-
-        if (/boring|bored|same|familiar|route/.test(value)) {
-          return "bored";
-        }
-
-        if (/missed|guilty|guilt|failed|failure|streak|behind/.test(value)) {
-          return "missed";
-        }
-
-        if (/winter|cold|dark|ice|snow/.test(value)) {
-          return "winter";
-        }
-
-        if (/rain|storm|weather|wet/.test(value)) {
-          return "rain";
-        }
-
-        if (/sun|bright|daylight/.test(value)) {
-          return "sunshine";
-        }
-
-        if (/sleep|bed|wake|insomnia/.test(value)) {
-          return "sleep";
-        }
-
-        if (/science|evidence|why|benefit|medical|trivia/.test(value)) {
-          return "science";
-        }
-
-        if (/done|finished|walked|went out|did it/.test(value)) {
-          return "done";
-        }
-
-        if (/ready|begin|start|let's go|lets go|help me/.test(value)) {
-          return "ready";
-        }
-
-        return "unknown";
-      }
 
       function respond(intent, userText) {
         addMessage(userText, true);
@@ -3721,18 +4065,6 @@
         button.addEventListener("click", () => {
           respond(button.dataset.prompt, button.textContent);
         });
-      });
-
-      $("#chat-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        const text = $("#chat-input").value.trim();
-
-        if (!text) {
-          return;
-        }
-
-        $("#chat-input").value = "";
-        handleUserText(text);
       });
 
       $("#log-walk").addEventListener("click", () => {
@@ -3898,10 +4230,14 @@
         $("#setting-character").value = settings.character === false ? "off" : "on";
         $("#setting-popups").value = settings.popups === false ? "off" : "on";
         $("#setting-voice").value = settings.voice === true ? "on" : "off";
-        $("#setting-notifications").value = settings.notifications === true ? "on" : "off";
-        $("#setting-quiet-start").value = settings.quietStart || "22:30";
-        $("#setting-quiet-end").value = settings.quietEnd || "07:00";
+        $("#setting-wx").value = wxRead().on ? "on" : "off"; $("#setting-wxhint").value = wxRead().hint ? "on" : "off"; wxNote();
         $("#settings-error").textContent = "";
+        $("#setting-lock").value = settings.locked ? "on" : "off";
+        const plan = morningPlan();
+        $("#plan-summary").textContent = `Now: out of bed around ${clock(plan.wake)} → goal ${clock(plan.target)} · ${plan.size}-min steps · next step after ${settings.pace} steady mornings.`;
+        try { $("#undo-plan").hidden = !localStorage.getItem(PREV_KEY); } catch { $("#undo-plan").hidden = true; }
+        settingsSnap = settingsSnapshot();
+        updateSettingsUI();
         $("#settings-dialog").showModal();
       });
 
@@ -3938,8 +4274,10 @@
           && Number($("#setting-pace").value) === prefilledPace
           && Number($("#setting-stepsize").value) === prefilledStep;
         const old = state.settings;
+        try { localStorage.setItem(PREV_KEY, JSON.stringify(old)); } catch {}
 
         state.settings = {
+          locked: true,
           current: keep ? old.current : current,
           target,
           stepSize: Number($("#setting-stepsize").value),
@@ -3949,24 +4287,21 @@
           character: $("#setting-character").value !== "off",
           popups: $("#setting-popups").value !== "off",
           voice: $("#setting-voice").value === "on",
-          notifications: $("#setting-notifications").value === "on",
-          quietStart: $("#setting-quiet-start").value,
-          quietEnd: $("#setting-quiet-end").value,
           start: keep ? old.start : activeDay
         };
 
         persist();
         applyRhythmPreferences();
         renderMorning();
-        if (state.settings.notifications && "Notification" in window && Notification.permission === "default") { try { Notification.requestPermission(); } catch {} }
         $("#settings-dialog").close();
-        savedToast("A fresh morning plan. Keep it kind and adjustable.");
+        savedToast("Saved. Your plan is locked so it stays put. Unlock any time.");
       });
 
       function applyRhythmPreferences() {
         const settings = state.settings;
         const companion = $("#companion-face")?.closest(".companion-card");
         if (companion) companion.hidden = settings.character === false;
+        if ($("#talk-setup")) $("#talk-setup").hidden = settings.character === false;
         if ($("#fab")) {
           $("#fab").hidden = settings.character === false;
           if (settings.character === false) $("#fab-panel").hidden = true;
@@ -3982,32 +4317,6 @@
       function speakCharacter(text) {
         if (!state.settings.voice || !window.speechSynthesis) return;
         try { window.speechSynthesis.cancel(); window.speechSynthesis.speak(new SpeechSynthesisUtterance(text)); } catch {}
-      }
-
-      function reminderMessage() {
-        const plan = morningPlan();
-        const mins = new Date().getHours() * 60 + new Date().getMinutes();
-        const wind = ((plan.windDown % 1440) + 1440) % 1440;
-        const bed = ((plan.headToBed % 1440) + 1440) % 1440;
-        const wake = plan.wake % 1440;
-        if (mins >= wind && mins < bed) return "A quieter evening might feel good now.";
-        if (mins >= bed && mins < ((plan.sleep % 1440)+1440)%1440) return "If you are ready, this is a good time to head to bed.";
-        if (mins >= wake && mins < wake + 120) return "Morning is here. Daylight or Door & back can be enough.";
-        return "A little movement opportunity is still here today.";
-      }
-
-      function showRhythmReminder() {
-        if (!state.settings.notifications) return;
-        const msg = reminderMessage();
-        const toastEl = $("#toast");
-        if (toastEl) savedToast(msg);
-        if (state.settings.popups && state.settings.character !== false) {
-          addMessage(companionReply("ready"));
-          speakCharacter(msg);
-        }
-        if (state.settings.notifications && "Notification" in window && Notification.permission === "granted") {
-          try { new Notification("Daybreak", {body: msg}); } catch {}
-        }
       }
 
       $("#door-back-action")?.addEventListener("click", () => {
@@ -4052,7 +4361,7 @@
         $("#timer-note").hidden = true;
         $("#conversation").replaceChildren();
         $("#fab-log").replaceChildren();
-        try { localStorage.removeItem(REWARD_KEY); localStorage.removeItem(MOVE_KEY); } catch {}
+        try { localStorage.removeItem(WXC_KEY); localStorage.removeItem(REWARD_KEY); localStorage.removeItem("daybreak.cold.v1"); localStorage.removeItem(HINT_KEY); localStorage.removeItem(SPROUT_KEY); localStorage.removeItem(MOVE_KEY); localStorage.removeItem(PREV_KEY); writeHelped({ items: [] }); } catch {}
         renderAll();
         greetCompanion();
         $("#clear-dialog").close();
@@ -4094,6 +4403,200 @@
         }
       });
 
+      /* ---- Mood & patterns: hints from your own taps, with honest limits ---- */
+      let patAll = false;
+      function mean(a) { return a.reduce((x, y) => x + y, 0) / a.length; }
+      /* Taps within 20 minutes count as ONE moment. Back-and-forth taps in that window are set aside, and you can always compare with and without. */
+      function analyse(feels, all) {
+        const es = (feels || []).map((f, i) => ({ f, i, m: timeMinutes(f.at) })).filter((e) => all || !e.f.x);
+        const clusters = [];
+        es.forEach((e) => { const c = clusters[clusters.length - 1]; if (c && e.m - c.last <= 20) { c.items.push(e); c.last = e.m; } else clusters.push({ items: [e], last: e.m }); });
+        const status = {};
+        (feels || []).forEach((f, i) => { if (f.x && !all) status[i] = "aside"; });
+        const vals = [];
+        clusters.forEach((c) => {
+          const v = c.items.map((e) => e.f.v), r = Math.max(...v) - Math.min(...v), n = v.length;
+          const unsteady = !all && ((n >= 3 && r >= 2) || (n >= 2 && r >= 3));
+          c.items.forEach((e) => { status[e.i] = unsteady ? "unsteady" : "ok"; });
+          if (!unsteady) vals.push(mean(v));
+        });
+        return { status, avg: vals.length ? mean(vals) : null };
+      }
+      function dayAvg(l) { return l && l.feels && l.feels.length ? analyse(l.feels, patAll).avg : null; }
+      function renderPatterns() {
+        const days = []; for (let i = 59; i >= 0; i--) { const key = addDays(activeDay, -i); days.push({ key, log: state.logs[key], prev: state.logs[addDays(key, -1)] }); }
+        const last30 = days.slice(-30);
+        const act = (l) => l && (l.walk || l.reflected || l.noticed || l.awake || l.wake || (l.feels || []).length || (l.evening || []).length);
+        const moodDays = last30.filter((d) => dayAvg(d.log) !== null).length;
+        $("#pat-progress").textContent = `Last 30 days: ${last30.filter((d) => act(d.log)).length} days showing up, ${last30.filter((d) => d.log && d.log.walk).length} little walks, ${moodDays} days with a mood check-in. Showing up matters more than the numbers.`;
+        let aside = 0; days.forEach((d) => { if (d.log && d.log.feels) { const st = analyse(d.log.feels, false).status; aside += Object.values(st).filter((x) => x !== "ok").length; } });
+        $("#pat-aside").textContent = aside ? `${aside} check-in${aside === 1 ? " was" : "s were"} set aside (marked “just trying”, or tapped back and forth within 20 minutes), so they don’t pull the picture around.` : "";
+        $("#pat-all").checked = patAll;
+        // chart
+        const W = 300, H = 90, bw = 7, svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("viewBox", `0 0 ${W} ${H + 16}`); svg.setAttribute("role", "img");
+        svg.setAttribute("aria-label", `Mood by day for the last 30 days. ${moodDays} days have a check-in.`);
+        svg.style.width = "100%";
+        last30.forEach((d, i) => {
+          const v = dayAvg(d.log), x = i * 10 + 1;
+          const r = document.createElementNS(svgNS, "rect");
+          if (v === null) { r.setAttribute("x", x); r.setAttribute("y", H - 3); r.setAttribute("width", bw); r.setAttribute("height", 3); r.setAttribute("fill", "#d8ddd0"); }
+          else { const h = (v / 5) * H; r.setAttribute("x", x); r.setAttribute("y", H - h); r.setAttribute("width", bw); r.setAttribute("height", h); r.setAttribute("rx", 2); r.setAttribute("fill", "#5e8057"); r.setAttribute("opacity", String(0.45 + v / 10)); const t = document.createElementNS(svgNS, "title"); t.textContent = `${localDate(d.key).toLocaleDateString(undefined, { month: "short", day: "numeric" })}: about ${v.toFixed(1)} / 5`; r.append(t); }
+          svg.append(r);
+        });
+        [[0, "start"], [29, "end"]].forEach(([i, anchor]) => { const t = document.createElementNS(svgNS, "text"); t.setAttribute("x", anchor === "start" ? 1 : W - 1); t.setAttribute("y", H + 13); t.setAttribute("text-anchor", anchor); t.setAttribute("font-size", "9"); t.setAttribute("fill", "#5b6356"); t.textContent = localDate(last30[i].key).toLocaleDateString(undefined, { month: "short", day: "numeric" }); svg.append(t); });
+        $("#pat-chart").replaceChildren(svg);
+        $("#pat-chart-note").textContent = moodDays ? "Taller means a higher check-in (1 to 5). Short grey marks are days with no check-in, which is fine." : "No mood check-ins yet. Tap 💬 Feel whenever you like.";
+        // comparisons
+        const out = [], notes = [];
+        const note = (title, text, mag, ok) => { if (ok && !/^About the same/.test(text)) notes.push({ t: `${title}: ${text.charAt(0).toLowerCase()}${text.slice(1)}`, mag }); };
+        const compare = (title, aName, bName, a, b, noun = "days") => {
+          if (a.length < 3 || b.length < 3) return;
+          const ma = mean(a), mb = mean(b), diff = ma - mb, small = Math.min(a.length, b.length) < 6;
+          const card = document.createElement("div"); card.className = "pat-card";
+          const head = document.createElement("strong"); head.textContent = title;
+          const verdict = document.createElement("div");
+          verdict.textContent = Math.abs(diff) < 0.3 ? "About the same either way." : `A little ${diff > 0 ? "higher" : "lower"} on “${aName}” ${noun}.`;
+          note(title, verdict.textContent, Math.abs(diff) / 4, !small && Math.abs(diff) >= 0.3);
+          if (small) verdict.textContent += " Early hint only.";
+          const bars = document.createElement("div"); bars.className = "bars";
+          [[aName, ma, a.length], [bName, mb, b.length]].forEach(([n, m, c]) => {
+            const row = document.createElement("div"); row.className = "bar";
+            const l = document.createElement("span"); l.textContent = `${n} (${c})`;
+            const bar = document.createElement("i"); bar.style.width = (m / 5) * 100 + "%";
+            const v = document.createElement("span"); v.textContent = m.toFixed(1);
+            row.append(l, bar, v); bars.append(row);
+          });
+          card.append(head, verdict, bars); out.push(card);
+        };
+        const split = (pred, aDays) => { const a = [], b = []; days.forEach((d) => { const v = dayAvg(d.log); if (v === null) return; const r = pred(d); if (r === null) return; (r ? a : b).push(v); }); return [a, b]; };
+        let [a, b] = split((d) => ["sunny", "cloudy", "rain"].includes(d.log.weather) ? d.log.weather === "sunny" : null);
+        compare("Weather you chose", "Sunny", "Cloudy / rain", a, b);
+        [a, b] = split((d) => d.log.wx ? d.log.wx.c === "sunny" : null);
+        compare("Actual weather (fetched)", "Sunny", "Cloudy / rain / snow", a, b);
+        [a, b] = split((d) => d.log.wx ? d.log.wx.t <= 8 : null);
+        compare("Cold or milder (fetched)", "8°C or below", "Milder", a, b);
+        /* pressure, humidity and body symptoms (fetched weather) */
+        const fall = (l) => l && l.wx && l.wx.pd !== undefined ? l.wx.pd >= 5 : null;
+        [[0, "same day", 3], [1, "the day before", 5], [3, "3 days before", 5]].forEach(([lag, nm, need]) => {
+          const [fa, fb] = split((d) => fall(lag ? state.logs[addDays(d.key, -lag)] : d.log));
+          if (fa.length >= need && fb.length >= need) compare(lag ? `Pressure drop ${nm}` : "Pressure drop that day", "Fell 5+ hPa", "Steadier", fa, fb);
+        });
+        [a, b] = split((d) => d.log.wx && d.log.wx.h !== undefined ? d.log.wx.h >= 80 : null);
+        compare("Humidity (fetched)", "Humid (80%+)", "Less humid", a, b);
+        const rate = (title, aName, bName, a, b) => {
+          if (a.length < 3 || b.length < 3) return;
+          const ma = mean(a), mb = mean(b), diff = ma - mb;
+          const card = document.createElement("div"); card.className = "pat-card";
+          const head = document.createElement("strong"); head.textContent = title;
+          const verdict = document.createElement("div");
+          verdict.textContent = Math.abs(diff) < 0.15 ? "About the same either way." : `Body symptoms were noted ${diff > 0 ? "more" : "less"} often on “${aName}” days.`;
+          note(title, verdict.textContent, Math.abs(diff), Math.min(a.length, b.length) >= 6 && Math.abs(diff) >= 0.15);
+          if (Math.min(a.length, b.length) < 6) verdict.textContent += " Early hint only.";
+          const bars = document.createElement("div"); bars.className = "bars";
+          [[aName, ma, a.length], [bName, mb, b.length]].forEach(([n, m, c]) => {
+            const row = document.createElement("div"); row.className = "bar";
+            const l = document.createElement("span"); l.textContent = `${n} (${c})`;
+            const bar = document.createElement("i"); bar.style.width = m * 100 + "%";
+            const v = document.createElement("span"); v.textContent = Math.round(m * 100) + "%";
+            row.append(l, bar, v); bars.append(row);
+          });
+          card.append(head, verdict, bars); out.push(card);
+        };
+        const symOf = (l) => l && l.sym && l.sym.length ? (l.sym.includes("none") ? 0 : 1) : null;
+        const sa = [], sb = [];
+        days.forEach((d) => { const y = symOf(d.log), f = fall(d.log); if (y === null || f === null) return; (f ? sa : sb).push(y); });
+        rate("Body symptoms and pressure drops", "Pressure fell 5+ hPa", "Steadier", sa, sb);
+        if (days.some((d) => symOf(d.log) === 1)) {
+          const note = document.createElement("p"); note.className = "micro";
+          note.textContent = "These are patterns in your own notes, not a diagnosis. Days you note “None today” count as symptom-free days, so the comparison stays fair. If pain, dizziness or low mood keeps coming back, it is worth telling a doctor.";
+          out.push(note);
+        }
+        [a, b] = split((d) => !!d.log.walk);
+        compare("A little walk that day", "Walked", "No walk logged", a, b);
+        [a, b] = split((d) => { const g = gapBetween(d.log.awake, d.log.wake); return g === null ? null : g <= 10; });
+        compare("Time from awake to out of bed", "Up within 10 min", "Longer", a, b);
+        [a, b] = split((d) => (d.prev && (d.prev.evening || []).length) > 0);
+        compare("Evening set-up the night before", "Set up", "Not set up", a, b);
+        const am = [], pm = []; days.forEach((d) => { const st = analyse(d.log && d.log.feels || [], patAll).status; (d.log && d.log.feels || []).forEach((f, i) => { if (st[i] === "ok") (parseInt(f.at, 10) < 12 ? am : pm).push(f.v); }); });
+        compare("Time of day of the check-in", "before-noon", "afternoon / evening", am, pm, "check-ins");
+        // words
+        const words = {}; days.forEach((d) => (d.log && d.log.feels || []).forEach((f) => { if (f.w) (words[f.w] = words[f.w] || []).push(f.v); }));
+        const top = Object.entries(words).filter(([, v]) => v.length >= 2).sort((x, y) => y[1].length - x[1].length).slice(0, 4);
+        if (top.length) { const card = document.createElement("div"); card.className = "pat-card"; const hd = document.createElement("strong"); hd.textContent = "Words that came up"; const p = document.createElement("div"); p.textContent = top.map(([w, v]) => `${w} ×${v.length} (about ${mean(v).toFixed(1)})`).join(" · "); card.append(hd, p); out.push(card); }
+        if (!out.length) { const p = document.createElement("p"); p.className = "small"; p.textContent = "Not enough yet. Patterns need at least 3 days on each side of a comparison. Keep checking in when it feels natural, and this fills in on its own."; out.push(p); }
+        const cards = out.filter((n) => n.classList.contains("pat-card")).length;
+        if (!cards) $("#pat-links").replaceChildren(...out);
+        else {
+          const sum = document.createElement("div"); sum.className = "pat-sum";
+          const hd = document.createElement("strong"); hd.textContent = "What stands out";
+          sum.append(hd);
+          const top2 = notes.sort((x, y) => y.mag - x.mag).slice(0, 2);
+          if (top2.length) top2.forEach((n) => { const p = document.createElement("div"); p.textContent = n.t; sum.append(p); });
+          else { const p = document.createElement("div"); p.textContent = "Nothing clear yet. That is normal early on. A few early hints are below if you are curious."; sum.append(p); }
+          const mi = document.createElement("p"); mi.className = "micro"; mi.textContent = "A pattern, not a rule."; sum.append(mi);
+          const det = document.createElement("details"); det.className = "pat-more";
+          const sm = document.createElement("summary"); sm.textContent = `See all comparisons (${cards})`;
+          det.append(sm, ...out);
+          $("#pat-links").replaceChildren(sum, det);
+        }
+        // entries (removable)
+        const rows = [];
+        days.slice().reverse().forEach((d) => (d.log && d.log.feels || []).map((f, idx) => ({ d, f, idx })).reverse().forEach((e) => rows.push(e)));
+        const ul = $("#pat-entries"); ul.replaceChildren();
+        rows.slice(0, 12).forEach(({ d, f, idx }) => {
+          const st = analyse(d.log.feels, patAll).status[idx];
+          const li = document.createElement("li");
+          const span = document.createElement("span");
+          span.textContent = `${localDate(d.key).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })} · ${clock(timeMinutes(f.at))}${f.w ? " · " + f.w : ""}` + (st === "aside" ? " · set aside" : st === "unsteady" ? " · tapped back and forth, not counted" : "");
+          const sel = document.createElement("select"); sel.setAttribute("aria-label", "Change this mood");
+          FEEL.forEach(([v, label]) => { const o = document.createElement("option"); o.value = v; o.textContent = label; if (v === f.v) o.selected = true; sel.append(o); });
+          sel.addEventListener("change", () => { f.v = Number(sel.value); persist(); renderAll(); renderPatterns(); });
+          const aBtn = document.createElement("button"); aBtn.type = "button"; aBtn.className = "text-button"; aBtn.textContent = f.x ? "Count it" : "Set aside";
+          aBtn.addEventListener("click", () => { if (f.x) delete f.x; else f.x = true; persist(); renderAll(); renderPatterns(); });
+          const rm = document.createElement("button"); rm.type = "button"; rm.className = "text-button"; rm.textContent = "Remove"; rm.setAttribute("aria-label", `Remove the check-in from ${d.key} at ${f.at}`);
+          rm.addEventListener("click", () => { d.log.feels.splice(idx, 1); persist(); renderAll(); renderPatterns(); });
+          const ctl = document.createElement("div"); ctl.className = "pat-ctl"; ctl.append(sel, aBtn, rm);
+          li.append(span, ctl); ul.append(li);
+        });
+        if (!rows.length) { const li = document.createElement("li"); li.textContent = "Nothing yet."; ul.append(li); }
+      }
+      function openPatterns() { renderPatterns(); $("#patterns-dialog").showModal(); }
+      $("#open-patterns").addEventListener("click", openPatterns);
+      $("#pat-all").addEventListener("change", (e) => { patAll = e.target.checked; renderPatterns(); });
+
+      /* ---- Backup & restore: a file you keep, so clearing the browser can't erase it ---- */
+      function exportBackup() {
+        const data = { app: "daybreak", version: 1, saved: new Date().toISOString(), items: {} };
+        try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith("daybreak.")) data.items[k] = localStorage.getItem(k); } } catch {}
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: "application/json" }));
+        a.download = `daybreak-backup-${dateKey(new Date())}.json`;
+        document.body.append(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+        toast("Backup saved. Look in your Downloads, and keep the file somewhere safe.");
+      }
+      $("#backup-data").addEventListener("click", exportBackup);
+      $("#restore-data").addEventListener("click", () => $("#restore-file").click());
+      $("#restore-file").addEventListener("change", (e) => {
+        const file = e.target.files[0]; e.target.value = "";
+        if (!file) return;
+        const r = new FileReader();
+        r.onload = () => {
+          try {
+            const d = JSON.parse(r.result);
+            const keys = d && d.app === "daybreak" && d.items && typeof d.items === "object" ? Object.keys(d.items) : [];
+            if (!keys.length || keys.some((k) => !k.startsWith("daybreak.") || typeof d.items[k] !== "string")) throw new Error("bad");
+            if (!confirm("Replace what is saved in this browser with this backup?")) return;
+            keys.forEach((k) => localStorage.setItem(k, d.items[k]));
+            reflectionDirty = false;
+            location.reload();
+          } catch { toast("That doesn’t look like a Daybreak backup file."); }
+        };
+        r.readAsText(file);
+      });
+
       window.addEventListener("pagehide", () => {
         if (reflectionDirty) {
           saveReflection(false);
@@ -4102,8 +4605,104 @@
 
       setInterval(checkDateChange, 30000);
 
+      /* ---- Real weather: OFF by default. One tiny request (about 0.4 to 1 KB), no key, no account.
+         Only a location rounded to about 10 km is sent. Data Saver on: fetches only when you tap Update,
+         reuses a result for 6 hours, asks for fewer fields. Data Saver off: on open, at most hourly. ---- */
+      const WXC_KEY = "daybreak.wx.v1";
+      const WXL = { sunny: "Sunny", cloudy: "Cloudy", rain: "Rain", snow: "Snow" };
+      const wxRead = () => { try { const c = JSON.parse(localStorage.getItem(WXC_KEY)); return c && typeof c === "object" ? c : {}; } catch { return {}; } };
+      const wxWrite = (c) => { try { localStorage.setItem(WXC_KEY, JSON.stringify(c)); } catch {} };
+      const wxGroup = (c) => c <= 1 ? "sunny" : c <= 48 ? "cloudy" : (c >= 71 && c <= 77) || c === 85 || c === 86 ? "snow" : "rain";
+      const wxSaver = () => state.settings.dataSaver !== false;
+      function wxNote() {
+        const el = $("#wx-note"); if (!el) return;
+        const saver = $("#setting-data-saver").value !== "off";
+        el.textContent = $("#setting-wx").value === "on"
+          ? (saver ? "Data Saver is on, so weather updates only when you tap Update (about 1.5 KB, reused for 6 hours). " : "Updates when you open the app, at most once an hour (about 2 KB). ") + "Only a location rounded to about 10 km is sent to open-meteo.com. Your own weather tap always wins."
+          : "Off. Nothing is fetched and no location is used.";
+      }
+      async function wxFetch(manual) {
+        const c = wxRead();
+        if (!c.on || typeof c.lat !== "number" || typeof c.lon !== "number" || !navigator.onLine) return "skip";
+        const saver = wxSaver();
+        if (!manual && saver) return "skip";
+        if (Date.now() - (c.at || 0) < (saver ? 6 * 3600e3 : 3600e3)) return "fresh";
+        const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 8000);
+        try {
+          const q = `latitude=${c.lat}&longitude=${c.lon}&daily=weather_code,temperature_2m_max${saver ? "" : ",temperature_2m_min,precipitation_probability_max"}&hourly=pressure_msl,relative_humidity_2m&past_days=1&forecast_days=1&timezone=auto&timeformat=unixtime`;
+          const r = await fetch("https://api.open-meteo.com/v1/forecast?" + q, { signal: ctl.signal });
+          if (!r.ok) return "fail";
+          const j = await r.json(), d = j.daily, k = d.weather_code.length - 1;
+          const code = d.weather_code[k], hi = d.temperature_2m_max[k];
+          if (!Number.isFinite(code) || !Number.isFinite(hi)) return "fail";
+          const lo = d.temperature_2m_min && d.temperature_2m_min[k], p = d.precipitation_probability_max && d.precipitation_probability_max[k];
+          /* hourly, yesterday + today: lowest pressure today, biggest 6-hour fall, average humidity */
+          const hr = j.hourly || {}, P = hr.pressure_msl || [], H = hr.relative_humidity_2m || [];
+          let pm, pd, h;
+          if (P.length >= 48) {
+            const t = P.slice(24, 48).filter(Number.isFinite);
+            if (t.length) pm = Math.round(Math.min(...t));
+            let m = 0; for (let i = 24; i < 48; i += 1) if (Number.isFinite(P[i]) && Number.isFinite(P[i - 6])) m = Math.max(m, P[i - 6] - P[i]);
+            if (t.length) pd = Math.round(m * 10) / 10;
+          }
+          if (H.length >= 48) { const t = H.slice(24, 48).filter(Number.isFinite); if (t.length) h = Math.round(t.reduce((a, b) => a + b, 0) / t.length); }
+          getLog(dateKey(new Date())).wx = { c: wxGroup(code), t: Math.round(hi), ...(Number.isFinite(lo) ? { lo: Math.round(lo) } : {}), ...(Number.isFinite(p) ? { p } : {}), ...(pm !== undefined ? { pm } : {}), ...(pd !== undefined ? { pd } : {}), ...(h !== undefined ? { h } : {}) };
+          wxWrite({ ...c, at: Date.now() });
+          persist();
+          return "ok";
+        } catch { return "fail"; } finally { clearTimeout(timer); }
+      }
+      function wxRender() {
+        const el = $("#wx-line"); if (!el) return;
+        const c = wxRead();
+        el.replaceChildren();
+        el.hidden = !c.on;
+        if (!c.on) return;
+        const log = state.logs[dateKey(new Date())], w = log && log.wx;
+        const span = document.createElement("span");
+        span.textContent = w
+          ? `Real weather today: ${WXL[w.c]}, ${w.t}°C${w.lo !== undefined ? ` (low ${w.lo}°)` : ""}${w.p !== undefined ? `, rain chance ${w.p}%` : ""}${w.pd !== undefined ? `, pressure drop up to ${w.pd} hPa` : ""}${c.at ? ` · updated ${new Date(c.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}` : ""}`
+          : "Real weather: not fetched yet.";
+        const up = document.createElement("button"); up.type = "button"; up.className = "text-button"; up.textContent = "Update";
+        up.addEventListener("click", async () => {
+          up.disabled = true;
+          const r = await wxFetch(true);
+          savedToast(r === "ok" ? "Weather updated." : r === "fresh" ? "Weather is already up to date." : r === "fail" ? "Couldn’t reach the weather service. Your own choice still works." : "No connection right now. Your own choice still works.");
+          wxRender(); renderAll();
+        });
+        el.append(span, up);
+        if (c.hint && w && w.pd >= 5) {
+          const n = document.createElement("span"); n.className = "micro"; n.style.flexBasis = "100%";
+          n.textContent = "Air pressure falls a fair bit today. Some people feel that in head, joints or mood. Not everyone does, and you never owe the day anything. Go gently if it applies to you.";
+          el.append(n);
+        }
+        if (w && !getLog().weather && activeDay === dateKey(new Date())) {
+          const use = document.createElement("button"); use.type = "button"; use.className = "text-button"; use.textContent = "Use this";
+          use.addEventListener("click", () => { getLog().weather = w.c === "snow" ? "cloudy" : w.c; persist(); renderAll(); wxRender(); });
+          el.append(use);
+        }
+      }
+      $("#setting-data-saver").addEventListener("change", wxNote);
+      $("#setting-wxhint").addEventListener("change", (e) => { wxWrite({ ...wxRead(), hint: e.target.value === "on" }); wxRender(); });
+      $("#setting-wx").addEventListener("change", (e) => {
+        const sel = e.target;
+        if (sel.value === "off") { wxWrite({ on: false, hint: !!wxRead().hint }); wxNote(); wxRender(); return; }
+        const note = $("#wx-note");
+        if (!navigator.geolocation) { sel.value = "off"; note.textContent = "This device can’t share a location, so real weather stays off."; return; }
+        note.textContent = "Asking for your approximate location…";
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          wxWrite({ on: true, hint: !!wxRead().hint, lat: Number(pos.coords.latitude.toFixed(1)), lon: Number(pos.coords.longitude.toFixed(1)), at: 0 });
+          wxNote(); await wxFetch(true); wxRender(); renderAll();
+        }, () => { sel.value = "off"; wxWrite({ on: false, hint: !!wxRead().hint }); note.textContent = "Couldn’t get a location, so real weather stays off."; },
+        { timeout: 10000, maximumAge: 86400000, enableHighAccuracy: false });
+      });
+      const wxAuto = () => { if (!document.hidden && wxRead().on) wxFetch(false).then((r) => { if (r === "ok") { wxRender(); renderAll(); } }); };
+      document.addEventListener("visibilitychange", wxAuto);
+
       persist();
       renderAll();
+      wxRender();
+      wxAuto();
       resetTimer();
       greetCompanion();
 
@@ -4196,7 +4795,12 @@
         $("#actual-awake").value = nowHM();
         saveReflection(false);
         renderGap();
-        toast(`Awake at ${clock(timeMinutes(nowHM()))}. Your first move: ${MOVES[getMove()].replace(/\bmy\b/, "your")}, then you’re on your way.`);
+        toast(`Awake at ${clock(timeMinutes(nowHM()))}. Your first move: ${MOVES[getMove()].replace(/\bmy\b/, "your")}, then you’re on your way.`, () => {
+          $("#actual-awake").value = "";
+          saveReflection(false);
+          renderGap();
+          toast("Awake time cleared.");
+        });
       });
 
       $("#stamp-up").addEventListener("click", () => {
@@ -4205,8 +4809,15 @@
         saveReflection(false);
         renderGap();
         const g = gapBetween($("#actual-awake").value, $("#actual-wake").value);
-        toast(g === null ? "Out of bed. That’s the win." : g <= 10 ? "Out of bed and barely a pause. Well done." : `Out of bed, ${g} min after waking. Noted, no judgment.`);
-        if (!feltToday()) setTimeout(() => { if (!document.querySelector("dialog[open]")) openFeel(); }, 1500);
+        let undone = false;
+        toast(g === null ? "Out of bed. That’s the win." : g <= 10 ? "Out of bed and barely a pause. Well done." : `Out of bed, ${g} min after waking. Noted, no judgment.`, () => {
+          undone = true;
+          $("#actual-wake").value = "";
+          saveReflection(false);
+          renderGap();
+          toast("Out-of-bed time cleared.");
+        });
+        if (!feltToday()) setTimeout(() => { if (!undone && !document.querySelector("dialog[open]")) openFeel(); }, 1500);
       });
 
       /* ---- Feelings check-in (tied to real moments, not notifications) ---- */
@@ -4216,6 +4827,8 @@
       function renderFeelPick() {
         $("#feel-scale").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.feel) === feelValue)));
         $("#feel-words").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.word === feelWord)));
+        $$("[data-fw]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.fw === feelWeather)));
+        $("#feel-sym").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(feelSym.includes(b.dataset.sym))));
         $("#feel-save").disabled = feelValue === null;
       }
 
@@ -4228,6 +4841,12 @@
             b.addEventListener("click", () => { feelValue = v; renderFeelPick(); });
             $("#feel-scale").append(b);
           });
+          SYM.forEach(([id, label]) => {
+            const b = document.createElement("button");
+            b.type = "button"; b.className = "chat-chip"; b.dataset.sym = id; b.textContent = label;
+            b.addEventListener("click", () => { feelSym = feelSym.includes(id) ? feelSym.filter((x) => x !== id) : id === "none" ? ["none"] : [...feelSym.filter((x) => x !== "none"), id]; renderFeelPick(); });
+            $("#feel-sym").append(b);
+          });
           FEEL_WORDS.forEach((w) => {
             const b = document.createElement("button");
             b.type = "button"; b.className = "chat-chip"; b.dataset.word = w; b.textContent = w;
@@ -4235,7 +4854,7 @@
             $("#feel-words").append(b);
           });
         }
-        feelValue = null; feelWord = "";
+        feelValue = null; feelWord = ""; feelWeather = getLog().weather || ""; feelSym = [...(getLog().sym || [])]; $("#feel-trial").checked = false;
         renderFeelPick();
         if (!$("#feel-dialog").open) $("#feel-dialog").showModal();
       }
@@ -4246,118 +4865,714 @@
         const week = [];
         for (let i = 0; i < 7; i += 1) {
           const f = state.logs[addDays(activeDay, -i)]?.feels;
-          if (f && f.length) week.push(f[f.length - 1].v);
+          const dv = dayAvg(state.logs[addDays(activeDay, -i)]);
+          if (dv !== null) week.push(dv);
         }
         const label = (v) => FEEL.find((x) => x[0] === v)[1];
         let text = latest ? `Right now: ${label(latest.v)}${latest.w ? ` · ${latest.w}` : ""} (${clock(timeMinutes(latest.at))}).` : "";
         if (week.length >= 3) text += ` Last ${week.length} days: about ${(week.reduce((a, b) => a + b, 0) / week.length).toFixed(1)} / 5.`;
+        const grp = { sunny: [], grey: [] };
+        for (let i = 0; i < 28; i += 1) {
+          const l = state.logs[addDays(activeDay, -i)];
+          if (!l || dayAvg(l) === null || !["sunny", "cloudy", "rain"].includes(l.weather)) continue;
+          grp[l.weather === "sunny" ? "sunny" : "grey"].push(dayAvg(l));
+        }
+        const avg = (a) => (a.reduce((x, y) => x + y, 0) / a.length).toFixed(1);
+        if (grp.sunny.length >= 3 && grp.grey.length >= 3) {
+          text += ` By weather you chose: sunny days about ${avg(grp.sunny)} / 5 (${grp.sunny.length} days), cloudy or rainy days about ${avg(grp.grey)} / 5 (${grp.grey.length} days). A reflection, not proof.`;
+        }
         $("#feel-summary").textContent = text;
       }
 
+      $$("[data-fw]").forEach((b) => b.addEventListener("click", () => { feelWeather = feelWeather === b.dataset.fw ? "" : b.dataset.fw; renderFeelPick(); }));
       $("#open-feel").addEventListener("click", openFeel);
       $("#feel-save").addEventListener("click", () => {
         if (feelValue === null) return;
         const log = getLog();
-        log.feels = [...(log.feels || []), { v: feelValue, w: feelWord, at: nowHM() }].slice(-6);
+        const prevF = (log.feels || []).filter((f) => !f.x).slice(-1)[0];
+        const quick = !!prevF && Math.abs(timeMinutes(nowHM()) - timeMinutes(prevF.at)) <= 20 && !$("#feel-trial").checked;
+        log.feels = [...(log.feels || []), { v: feelValue, w: feelWord, at: nowHM(), ...($("#feel-trial").checked ? { x: true } : {}) }].slice(-6);
+        log.weather = feelWeather;
+        if (!$("#feel-trial").checked) log.sym = [...feelSym];
         persist();
+        renderWalking();
         renderFeel();
         $("#feel-dialog").close();
-        savedToast(feelValue === 1
+        savedToast($("#feel-trial").checked ? "Saved as a trial. It won’t count in your patterns." : quick ? "Noted. Check-ins within 20 minutes count as one moment, so tapping around won’t skew things." : feelValue === 1
           ? "Thank you for saying so. If low days keep coming or feel heavy, someone you trust or a clinician can help."
           : "Noted. Thanks for checking in with yourself.");
       });
 
+      /* ---- Plan lock, change note, undo ---- */
+      function settingsSnapshot() {
+        return Array.from($("#settings-form").elements).filter((e) => e.id && e.id !== "setting-lock").map((e) => e.value).join("|");
+      }
+
+      function updateSettingsUI() {
+        const locked = $("#setting-lock").value === "on";
+        PLAN_IDS.forEach((id) => { $(`#${id}`).disabled = locked; });
+        const dirty = settingsSnapshot() !== settingsSnap;
+        $("#settings-save").disabled = !dirty;
+        const restart = $("#setting-current").value !== prefilledCurrent
+          || Number($("#setting-pace").value) !== prefilledPace
+          || Number($("#setting-stepsize").value) !== prefilledStep;
+        $("#settings-change-note").textContent = locked && !dirty
+          ? "Your plan is locked and stays exactly as it is. Switch “Keep my plan steady” to Off to edit."
+          : !dirty ? "No changes yet."
+          : restart ? "These changes restart your steps from today. Your check-ins are kept."
+          : "Your progress is kept.";
+      }
+
+      $("#settings-form").addEventListener("input", updateSettingsUI);
+      $("#settings-form").addEventListener("change", updateSettingsUI);
+
+      $("#undo-plan").addEventListener("click", () => {
+        try {
+          const prev = JSON.parse(localStorage.getItem(PREV_KEY));
+          const restored = sanitize({ settings: prev }).settings;
+          state.settings = { ...restored, locked: true };
+          localStorage.removeItem(PREV_KEY);
+        } catch { return; }
+        persist();
+        applyRhythmPreferences();
+        renderMorning();
+        $("#settings-dialog").close();
+        savedToast("Your previous plan is back.");
+      });
+
+      /* ---- Conversational plan setup ---- */
+      let setup = null;
+      const fabChoices = $("#fab-choices"), fabShortcuts = $("#fab-shortcuts");
+      const say = (t) => addMessage(t);
+      const okTime = (m) => m >= 240 && m <= 715;
+      const hhmm = (m) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+
+      function parseMorning(text) {
+        const t = text.toLowerCase();
+        if (/\bp\.?m\b/.test(t)) return { pm: true };
+        let x, hr, mn = 0;
+        if ((x = t.match(/(\d{1,2})\s*[:.h]\s*(\d{2})/))) { hr = +x[1]; mn = +x[2]; }
+        else if ((x = t.match(/\b(\d{3,4})\b/))) { const n = +x[1]; hr = Math.floor(n / 100); mn = n % 100; }
+        else if ((x = t.match(/\b(\d{1,2})\b/))) { hr = +x[1]; }
+        else return null;
+        if (mn > 59 || hr < 4 || hr > 11) return { bad: true };
+        return { min: Math.min(715, Math.round((hr * 60 + mn) / 5) * 5) };
+      }
+
+      function goalProblem(min, cur) {
+        if (min < 240 || min > 660) return "That time is outside 4:00 to 11:00 am.";
+        if (min >= cur) return `${clock(min)} is not earlier than ${clock(cur)}, where you are now. Try an earlier time.`;
+        return "";
+      }
+
+      function showChoices(items) {
+        fabChoices.replaceChildren();
+        items.concat([{ label: "Use the form", value: "__form" }, { label: "Cancel", value: "__cancel" }]).forEach((it) => {
+          const b = document.createElement("button");
+          b.type = "button"; b.className = "chat-chip"; b.textContent = it.label;
+          b.addEventListener("click", () => { if (it.value !== "__other") addMessage(it.label, true); processSetup(it.value); });
+          fabChoices.append(b);
+        });
+        fabChoices.hidden = false; fabShortcuts.hidden = true;
+      }
+
+      function showTimePicker() {
+        const d = setup.data;
+        const max = setup.step === "target" ? Math.min(660, d.current - 5) : 715;
+        const start = setup.step === "target" ? Math.max(240, Math.min(max, d.current - 30)) : d.current;
+        const sel = document.createElement("select");
+        sel.setAttribute("aria-label", "Choose a time");
+        for (let m = 240; m <= max; m += 5) sel.add(new Option(clock(m), String(m), false, m === start));
+        const done = document.createElement("button");
+        done.type = "button"; done.className = "button primary"; done.textContent = "Done";
+        done.addEventListener("click", () => { const m = Number(sel.value); addMessage(clock(m), true); processSetup(m); });
+        const back = document.createElement("button");
+        back.type = "button"; back.className = "chat-chip"; back.textContent = "Back";
+        back.addEventListener("click", () => ask(setup.step, true));
+        fabChoices.replaceChildren(sel, done, back);
+      }
+
+      function endSetup() {
+        setup = null;
+        fabChoices.hidden = true; fabChoices.replaceChildren(); fabShortcuts.hidden = false;
+      }
+
+      const timeItems = (list, first) => [...new Set(list)].filter(okTime).map((m, i) => ({ label: i === 0 && first ? `${clock(m)} (as now)` : clock(m), value: m }));
+
+      function ask(step, quiet = false) {
+        setup.step = step;
+        const d = setup.data;
+        const say = (t) => { if (!quiet) addMessage(t); };
+        const other = { label: "Other time…", value: "__other" };
+        if (step === "lock") {
+          say("Your plan is locked to keep it steady. Change it anyway?");
+          return showChoices([{ label: "Yes, change it", value: "yes" }, { label: "No, keep it", value: "no" }]);
+        }
+        if (step === "current") {
+          say("What time do you usually get out of bed now? Tap one, or choose “Other time…”.");
+          return showChoices([...timeItems([d.current, d.current - 30, d.current + 30, d.current + 60], true), other]);
+        }
+        if (step === "target") {
+          say(`And what morning would you like to reach? It needs to be earlier than ${clock(d.current)}. A modest goal, like 30 to 60 minutes earlier, is an easy place to start.`);
+          return showChoices([...timeItems([d.current - 30, d.current - 45, d.current - 60, d.current - 90]).filter((i) => !goalProblem(i.value, d.current)), other]);
+        }
+        if (step === "step") {
+          say("How big should each step be? Smaller steps are gentler.");
+          return showChoices([{ label: "5 min · very gentle", value: 5 }, { label: "10 min · gentle", value: 10 }, { label: "15 min · steady", value: 15 }]);
+        }
+        if (step === "pace") {
+          say("How many steady mornings before each next step?");
+          return showChoices([{ label: "3 · gentle", value: 3 }, { label: "4 · gentler", value: 4 }, { label: "7 · extra room", value: 7 }]);
+        }
+        if (step === "sleep") {
+          say("How many hours in bed do you aim for each night?");
+          return showChoices([7, 7.5, 8, 8.5, 9].map((n) => ({ label: `${n} h`, value: n })));
+        }
+        if (step === "pick") {
+          say("What would you like to change?");
+          return showChoices([["Start time", "current"], ["Goal", "target"], ["Step size", "step"], ["Pace", "pace"], ["Sleep hours", "sleep"]].map(([label, value]) => ({ label, value })));
+        }
+        if (step === "confirm") {
+          const days = Math.ceil((d.current - d.target) / d.stepSize) * d.pace;
+          say(`Here’s your plan: out of bed around ${clock(d.current)}, working toward ${clock(d.target)}, in steps of ${d.stepSize} min, with at least ${d.pace} steady mornings before each step, and about ${d.duration} hours in bed. If every morning goes steadily, that takes about ${days} days (around ${shortDate(addDays(activeDay, days))}), and longer is perfectly fine. Save it?`);
+          return showChoices([{ label: "Yes, save it", value: "yes" }, { label: "Change something", value: "change" }]);
+        }
+      }
+
+      function savePlan(d) {
+        const old = state.settings;
+        const anchor = morningPlan().wake;
+        try { localStorage.setItem(PREV_KEY, JSON.stringify(old)); } catch {}
+        const keep = d.current === anchor && d.pace === old.pace && d.stepSize === (old.stepSize || 15);
+        state.settings = {
+          ...old,
+          current: keep ? old.current : hhmm(d.current),
+          target: hhmm(d.target),
+          stepSize: d.stepSize,
+          duration: d.duration,
+          pace: d.pace,
+          start: keep ? old.start : activeDay,
+          locked: true
+        };
+        persist();
+        applyRhythmPreferences();
+        renderMorning();
+      }
+
+      const NEXT = { current: "target", target: "step", step: "pace", pace: "sleep", sleep: "confirm" };
+
+      function advance(step) { ask(setup.fromConfirm ? "confirm" : NEXT[step]); }
+
+      function processSetup(input) {
+        const text = typeof input === "string" ? input : "";
+        if (input === "__other") return showTimePicker();
+        if (input === "__cancel" || /^(cancel|stop|never ?mind|not now|exit|quit)\b/i.test(text)) { endSetup(); return say("No problem. Nothing changed."); }
+        if (input === "__form" || /\b(form|settings)\b/i.test(text)) { endSetup(); say("Opening the form."); setFab(false); return setTimeout(() => $("#open-settings").click(), 120); }
+        const d = setup.data;
+        const yes = input === "yes" || /^(y|yes|yep|yeah|sure|ok|okay|save|confirm)\b/i.test(text);
+        const no = input === "no" || /^(n|no|nope|keep)\b/i.test(text);
+        const step = setup.step;
+
+        if (step === "lock") { if (yes) return ask("current"); endSetup(); return say("Okay, your plan stays as it is."); }
+
+        if (step === "confirmGoal") {
+          if (yes) {
+            savePlan(d); endSetup();
+            savedToast("Updated.");
+            return say(`Done. You’re now aiming for ${clock(d.target)}. Your progress is kept, and “Undo last change” is in Settings if you need it.`);
+          }
+          endSetup(); return say("Okay, your goal stays as it is.");
+        }
+
+        if (step === "current" || step === "target") {
+          const v = typeof input === "number" ? { min: input } : parseMorning(text);
+          if (!v) return say("I didn’t catch a time. Try something like 7:45.");
+          if (v.pm) return say("Out-of-bed times here are mornings only. Did you mean an am time like 7:30?");
+          if (v.bad || !v.min) return say("Please choose a morning time between 4:00 and 11:45 am.");
+          if (step === "current") { if (!okTime(v.min)) return say("Please choose a morning time between 4:00 and 11:45 am."); d.current = v.min; if (d.target >= d.current) d.target = Math.max(240, d.current - 60); }
+          else { const problem = goalProblem(v.min, d.current); if (problem) return say(problem); d.target = v.min; }
+          return advance(step);
+        }
+
+        if (step === "step" || step === "pace" || step === "sleep") {
+          const n = typeof input === "number" ? input : parseFloat((text.match(/\d+(?:\.\d)?/) || [""])[0]);
+          const valid = { step: [5, 10, 15], pace: [3, 4, 7], sleep: [7, 7.5, 8, 8.5, 9] }[step];
+          if (!valid.includes(n)) return say(`Please choose one of: ${valid.join(", ")}.`);
+          d[{ step: "stepSize", pace: "pace", sleep: "duration" }[step]] = n;
+          return advance(step);
+        }
+
+        if (step === "pick") {
+          const map = /start|now|current/i.test(text) ? "current" : /goal/i.test(text) ? "target" : /step/i.test(text) ? "step" : /pace|morning/i.test(text) ? "pace" : /sleep|hour/i.test(text) ? "sleep" : (["current", "target", "step", "pace", "sleep"].includes(input) ? input : "");
+          if (!map) return say("Tap one of the options, or say start time, goal, step size, pace or sleep hours.");
+          setup.fromConfirm = true;
+          return ask(map);
+        }
+
+        if (step === "confirm") {
+          if (yes) {
+            savePlan(d); endSetup();
+            savedToast("Saved. Your plan is locked so it stays put.");
+            speakCharacter("Your plan is saved.");
+            return say(`Saved. Out of bed around ${clock(d.current)}, working toward ${clock(d.target)}. Your plan is now locked so it stays put, and “Undo last change” is in Settings.`);
+          }
+          return ask("pick");
+        }
+      }
+
+      function startSetup(text = "") {
+        setFab(true);
+        setup = { step: null, fromConfirm: false, data: { current: morningPlan().wake, target: timeMinutes(state.settings.target), stepSize: state.settings.stepSize || 15, pace: state.settings.pace, duration: state.settings.duration } };
+        const t = parseMorning(text);
+        if (/goal/i.test(text) && t && t.min) {
+          const problem = goalProblem(t.min, setup.data.current);
+          if (problem) { endSetup(); return say(problem); }
+          const before = setup.data.target;
+          setup.data.target = t.min;
+          setup.step = "confirmGoal";
+          say(`Change the morning you’re aiming for, from ${clock(before)} to ${clock(t.min)}? Your progress is kept.`);
+          return showChoices([{ label: "Yes, change it", value: "yes" }, { label: "No, keep it", value: "no" }]);
+        }
+        say("Sure, let’s set it together. Just tap an answer; there’s nothing to type. You can cancel any time.");
+        ask(state.settings.locked ? "lock" : "current");
+      }
+
+      $("#talk-setup").addEventListener("click", () => { $("#settings-dialog").close(); startSetup(); });
+
+      /* ---- Evening wind-down: set-up, lights-out stamp, gentle in-app nudge ---- */
+      const relNight = (m) => { const x = ((m % 1440) + 1440) % 1440; return x < 720 ? x + 1440 : x; };
+
+      function renderEvening() {
+        const plan = morningPlan();
+        $("#eve-times").textContent = `Wind down ${clock(plan.windDown)} · in bed ${clock(plan.headToBed)} · asleep around ${clock(plan.sleep)}.`;
+        const done = getLog().evening || [];
+        const list = $("#eve-list");
+        list.replaceChildren();
+        EVE.forEach(([id, label]) => {
+          const b = document.createElement("button");
+          b.type = "button"; b.className = "button white eve-item"; b.textContent = label;
+          b.setAttribute("aria-pressed", String(done.includes(id)));
+          b.addEventListener("click", () => {
+            const log = getLog();
+            log.evening = (log.evening || []).includes(id) ? log.evening.filter((x) => x !== id) : [...(log.evening || []), id];
+            persist(); renderEvening();
+          });
+          list.append(b);
+        });
+        const seen = [];
+        for (let i = -6; i <= 1; i += 1) {
+          const l = state.logs[addDays(activeDay, i)];
+          if (l && TIME_RE.test(l.sleep)) seen.push(relNight(timeMinutes(l.sleep)));
+        }
+        if (seen.length < 2) { $("#eve-lately").textContent = ""; return; }
+        const avg = Math.round(seen.reduce((a, b) => a + b, 0) / seen.length);
+        const diff = avg - relNight(plan.sleep);
+        $("#eve-lately").textContent = diff >= 20
+          ? `Lately you’ve settled around ${clock(avg)}, about ${diff} min later than tonight’s plan. A small step earlier is easier than a big jump.`
+          : `Lately you’ve settled around ${clock(avg)}, close to the plan.`;
+      }
+
+      function openEvening() { renderEvening(); if (!$("#evening-dialog").open) $("#evening-dialog").showModal(); }
+
+      $("#open-evening").addEventListener("click", openEvening);
+      $("#eve-lights").addEventListener("click", () => {
+        const hr = new Date().getHours();
+        const key = hr >= 12 ? addDays(activeDay, 1) : activeDay;
+        getLog(key).sleep = nowHM();
+        persist();
+        if (key === activeDay) $("#actual-sleep").value = getLog().sleep;
+        $("#evening-dialog").close();
+        savedToast("Lights out noted. Sleep well. You can edit the time in the morning.");
+      });
+
+
+      /* ---- What helped me ---- */
+      function readHelped() {
+        try {
+          const v = JSON.parse(localStorage.getItem(HELPED_KEY));
+          if (v && Array.isArray(v.items)) {
+            return { items: v.items.filter((i) => i && HELPED_TAGS.some((t) => t[0] === i.tag) && typeof i.text === "string").slice(0, 30).map((i) => ({ id: String(i.id || ""), tag: i.tag, text: i.text.slice(0, 240) })) };
+          }
+        } catch {}
+        return { items: [
+          { id: "s1", tag: "ache", text: "A medicated patch (shippu) at night eased my body ache better than the weak painkillers did. Follow the label, and ask a pharmacist if unsure." },
+          { id: "s2", tag: "overwhelmed", text: "Slow, deep breathing with nothing else to think about. The 1-minute breathing session helps." }
+        ] };
+      }
+      function writeHelped(v) { try { localStorage.setItem(HELPED_KEY, JSON.stringify(v)); } catch {} }
+
+      function renderHelped() {
+        const list = $("#helped-list");
+        list.replaceChildren();
+        const { items } = readHelped();
+        if (!items.length) {
+          const empty = document.createElement("p");
+          empty.className = "small"; empty.textContent = "Nothing saved yet. Add the first thing that helped.";
+          list.append(empty);
+        }
+        items.forEach((item) => {
+          const row = document.createElement("div"); row.className = "helped-item";
+          const tag = document.createElement("span"); tag.className = "pill"; tag.textContent = (HELPED_TAGS.find((t) => t[0] === item.tag) || [0, item.tag])[1];
+          const text = document.createElement("p"); text.textContent = item.text;
+          const del = document.createElement("button"); del.type = "button"; del.className = "text-button"; del.textContent = "Remove";
+          del.setAttribute("aria-label", "Remove this note");
+          del.addEventListener("click", () => { writeHelped({ items: readHelped().items.filter((i) => i.id !== item.id) }); renderHelped(); });
+          row.append(tag, text, del);
+          list.append(row);
+        });
+        if (!$("#helped-tag").options.length) HELPED_TAGS.forEach(([v, l]) => $("#helped-tag").add(new Option(l, v)));
+      }
+
+      $("#helped-add").addEventListener("click", () => {
+        const text = $("#helped-text").value.trim();
+        if (!text) { toast("Write a few words first. Dictation on your keyboard works too."); return; }
+        const v = readHelped();
+        if (v.items.length >= 30) { toast("Your notes are full. Remove one first."); return; }
+        v.items.push({ id: Date.now().toString(36), tag: $("#helped-tag").value, text: text.slice(0, 240) });
+        writeHelped(v);
+        $("#helped-text").value = "";
+        renderHelped();
+        savedToast("Saved to your notes.");
+      });
+      renderHelped();
+
       /* ---- Floating companion: talk + navigate ---- */
       const fabEl = $("#fab"), fabPanel = $("#fab-panel"), fabToggle = $("#fab-toggle"), fabHint = $("#fab-hint");
-      const NAV_VERB = /\b(show|open|take me|navigate|jump|scroll|go to|where)\b/;
+
+      /* ---- Practices: you choose; nothing starts by itself ---- */
+      const ROUTINE = "**Make it yours, even without this app.** Pick one thing you already do (first coffee, brushing teeth), one spot, and **1 to 3 minutes**. Repeat the same practice for a week. A new habit tied to an old one sticks more easily. You need no phone or timer; counting breaths is enough.";
+      const PRACTICES = {
+        relax: { name: "Relax the breath", lead: "About 3 minutes. A longer out-breath helps the body settle.", steps: [
+          "**Get comfortable.** Sit or lie down. Let your shoulders drop. Close your eyes, or rest them on one spot.",
+          "**Breathe in** through your nose for about **4** counts.",
+          "**Breathe out** slowly for about **6** counts. The out-breath is the longer one.",
+          "**Repeat** for a few minutes. If counting feels strained, shorten both. Never force the breath.",
+          "**Let go of counting.** Let the breath find its own rhythm and notice how you feel. No grading.",
+          "Anywhere, any time: **in for 4, out for 6, five times.**"], },
+        concentrate: { name: "Focus on one thing", lead: "About 3 to 5 minutes. A traditional way to train steady attention.", steps: [
+          "**Sit upright but relaxed.** Eyes closed or softly open.",
+          "**Choose one place** to feel your breath: the nostrils, chest or belly.",
+          "**Count each out-breath**, 1 up to 10, then begin again at 1.",
+          "**When the mind wanders** (it will), notice it kindly and return to 1. The returning *is* the practice.",
+          "**Finish** after 3 to 5 minutes. Take one easy breath before you move.",
+          "Anywhere: **count ten breaths on your fingers.**"], },
+        body: { name: "Ease the body", lead: "About 5 minutes. A short version of the body scan taught in mindfulness courses.", steps: [
+          "**Lie down or sit.** Let the surface hold your weight.",
+          "**Notice your feet.** Warmth, pressure, tingling, or nothing at all. Any of it is fine.",
+          "**Move slowly upward:** legs, hips, belly, chest, hands, arms, shoulders, face. A few breaths on each.",
+          "**If you find tension,** breathe toward it. You don't need to change it.",
+          "**Skip any area** that feels uncomfortable. Finish by feeling your whole body breathing.",
+          "On the stairs or at a desk: **feet, hands, jaw.**"], },
+        kind: { name: "Kind wishes", lead: "About 3 minutes. A traditional kindness practice (loving-kindness).", steps: [
+          "**Bring to mind someone** it is easy to care about. A friend, a child, a pet.",
+          "**Silently wish them well:** *May you be safe. May you be well. May you be at ease.*",
+          "**Turn the same wishes to yourself.** Go slowly. Hollow or awkward is normal.",
+          "**If it feels hard,** simply return to the breath instead. That is a fine practice too.",
+          "Anywhere: **one kind wish for someone you pass today.**"], },
+        ground: { name: "Ground yourself", lead: "About 2 minutes. Good when your mind is racing. Eyes stay open.", steps: [
+          "**Pause.** Feel your feet on the floor and your weight on the seat.",
+          "**Name 5 things you can see.** Slowly, in your head or out loud.",
+          "**4 things you can feel** (clothes, chair, air on skin).",
+          "**3 things you can hear.** Then **2 things you can smell.**",
+          "**1 slow breath out.** Notice whether anything has shifted, even slightly.",
+          "Anywhere: **name three things you can see.**"], },
+        learn: { name: "About meditation", lead: "A short read. Take your time.", steps: [
+          "**What it is.** Training your attention. You pick one thing, like the breath, and gently return to it when the mind wanders.",
+          "**What it isn't.** Not emptying your mind, and not feeling calm on demand. **Wandering is normal.** Noticing and returning is the exercise.",
+          "**How to start.** Short and regular beats long and rare. **1 to 3 minutes**, same time and place.",
+          "**Learn from a person.** A trained teacher can answer questions and adjust a practice for you. Look for local classes from teachers trained in mindfulness-based programs, or the free recordings linked below.",
+          "**Go gently.** With anxiety, trauma or low mood, sitting quietly can stir things up. **Stop if it feels worse**, keep your eyes open, and talk with a doctor or therapist if it keeps happening."], }
+      };
+      const TEACHER_URL = "https://www.uclahealth.org/programs/uclamindful/free-guided-meditations";
+      function openTeacher() {
+        const a = document.createElement("a");
+        a.href = TEACHER_URL; a.target = "_blank"; a.rel = "noopener noreferrer";
+        document.body.append(a); a.click(); a.remove();
+      }
+      const practiceDlg = $("#practice-dialog");
+      let prKey = "", prIdx = 0;
+      function richInto(el, text) {
+        el.replaceChildren();
+        String(text).split(/(\*\*.+?\*\*|\*.+?\*)/g).forEach((p) => {
+          if (/^\*\*.+\*\*$/.test(p)) { const b = document.createElement("strong"); b.textContent = p.slice(2, -2); el.append(b); }
+          else if (/^\*.+\*$/.test(p)) { const i = document.createElement("em"); i.textContent = p.slice(1, -1); el.append(i); }
+          else if (p) el.append(document.createTextNode(p));
+        });
+      }
+      function renderPractice() {
+        const p = PRACTICES[prKey];
+        const pages = p.steps.concat(prKey === "learn" ? [] : [ROUTINE]);
+        $("#practice-title").textContent = p.name;
+        $("#practice-lead").textContent = p.lead;
+        richInto($("#practice-step"), pages[prIdx]);
+        $("#practice-count").textContent = `${prIdx + 1} of ${pages.length}`;
+        $("#practice-back").disabled = prIdx === 0;
+        $("#practice-next").textContent = prIdx === pages.length - 1 ? "Done" : "Next";
+      }
+      function openPractice(key) { prKey = key; prIdx = 0; renderPractice(); if (!practiceDlg.open) practiceDlg.showModal(); }
+      $("#practice-back").addEventListener("click", () => { if (prIdx > 0) { prIdx--; renderPractice(); } });
+      $("#practice-next").addEventListener("click", () => {
+        const p = PRACTICES[prKey], n = p.steps.length + (prKey === "learn" ? 0 : 1);
+        if (prIdx >= n - 1) { practiceDlg.close(); return; }
+        prIdx++; renderPractice();
+      });
+      $("#open-teacher").addEventListener("click", openTeacher);
+      $("#header-feel").addEventListener("click", () => openFeel());
+      /* Installable + offline: only when served over https (or localhost). Opening the file directly skips this. */
+      if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("sw.js").catch(() => {});
+          if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+        });
+      }
+      /* Daily reminder: a repeating calendar event (.ics). Works offline; the phone's calendar does the ringing. */
+      const REM_KEY = "daybreak.rem.v1";
+      function openReminder() {
+        let t = "20:00"; try { t = localStorage.getItem(REM_KEY) || t; } catch {}
+        $("#rem-time").value = /^\d\d:\d\d$/.test(t) ? t : "20:00";
+        $("#reminder-dialog").showModal();
+      }
+      $("#rem-add").addEventListener("click", () => {
+        const t = /^\d\d:\d\d$/.test($("#rem-time").value) ? $("#rem-time").value : "20:00";
+        try { localStorage.setItem(REM_KEY, t); } catch {}
+        const [h, m] = t.split(":").map(Number), d = new Date(), p = (n) => String(n).padStart(2, "0");
+        const loc = (x) => `${x.getFullYear()}${p(x.getMonth() + 1)}${p(x.getDate())}T${p(x.getHours())}${p(x.getMinutes())}00`;
+        const st = new Date(d.getFullYear(), d.getMonth(), d.getDate(), h, m), en = new Date(st.getTime() + 600000);
+        const stamp = d.toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+        const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Daybreak//EN", "CALSCALE:GREGORIAN", "BEGIN:VEVENT", "UID:daybreak-checkin@daybreak.local", `DTSTAMP:${stamp}`,
+          `DTSTART:${loc(st)}`, `DTEND:${loc(en)}`, "RRULE:FREQ=DAILY", "SUMMARY:Daybreak: how are you feeling?", "DESCRIPTION:A small moment to check in with yourself. One tap is enough.",
+          "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:Daybreak check-in", "TRIGGER:PT0M", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n") + "\r\n";
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+        a.download = "daybreak-reminder.ics";
+        document.body.append(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+        $("#reminder-dialog").close();
+        toast("Reminder file saved. Open it to add the daily event to your calendar.");
+      });
+      $("#open-menu").addEventListener("click", () => $("#menu-dialog").showModal());
+      /* tap outside the menu card to close it (menu only, so forms are never closed by accident) */
+      $("#menu-dialog").addEventListener("click", (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) e.currentTarget.close();
+      });
+      $$("[data-menu]").forEach((b) => b.addEventListener("click", () => {
+        $("#menu-dialog").close();
+        const t = b.dataset.menu;
+        setTimeout(() => { if (t === "__settings") $("#open-settings").click(); else if (t === "__backup") exportBackup(); else if (t === "__patterns") openPatterns(); else if (t === "__restore") $("#restore-file").click(); else if (t === "__feel") openFeel(); else if (t === "__reminder") openReminder(); else $("#" + t)?.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80);
+      }));
+      $$("[data-practice]").forEach((b) => b.addEventListener("click", () => openPractice(b.dataset.practice)));
+
+      const PRACTICE_MODES = [["relax", "🌬 Relax the breath"], ["concentrate", "🎯 Focus on one thing"], ["body", "🧍 Ease the body"], ["kind", "💛 Kind wishes"], ["ground", "🌿 Ground yourself"]];
+      function fabDone() { fabChoices.hidden = true; fabChoices.replaceChildren(); fabShortcuts.hidden = false; }
+      function fabOffer(items) {
+        fabChoices.replaceChildren();
+        items.forEach((it) => {
+          const b = document.createElement("button");
+          b.type = "button"; b.className = "chat-chip"; b.textContent = it.label;
+          b.addEventListener("click", () => { fabDone(); addMessage(it.label, true); it.run(); });
+          fabChoices.append(b);
+        });
+        fabChoices.hidden = false; fabShortcuts.hidden = true;
+      }
+      function modeStart() {
+        addMessage("Which kind of practice fits right now? **You choose**, and you can stop at any time.");
+        fabOffer(PRACTICE_MODES.map(([k, l]) => ({ label: l, run: () => { setFab(false); openPractice(k); } })).concat([
+          { label: "🎧 Listen to a teacher", run: () => { addMessage("Opening free guided recordings by a trained teacher. **Needs the internet**, and Data Saver must be off."); openTeacher(); } },
+          { label: "⭕ Breathing circle (timer)", run: () => { setFab(false); $("#meditate").scrollIntoView({ block: "center" }); $("#med-begin").click(); } },
+          { label: "Not now", run: () => addMessage("No problem. I’m here when you want one.") }
+        ]));
+      }
+      function careStart() {
+        addMessage("Thank you for saying so. **You don’t have to fix anything right now.** Feeling overwhelmed or anxious is human, and naming it is enough.\nIf you ever feel unsafe, please contact local emergency services or a crisis line.");
+        fabOffer([
+          { label: "Just let it be here", run: () => addMessage("That’s allowed. **Nothing to do, nothing to prove.** I’ll be quiet. A practice is here whenever you want one.") },
+          { label: "Try a short practice", run: modeStart },
+          { label: "Learn about meditation", run: () => { setFab(false); openPractice("learn"); } },
+          { label: "Not now", run: () => setFab(false) }
+        ]);
+      }
       const goTo = (id) => () => { $(id).scrollIntoView({ behavior: "smooth", block: "start" }); };
       const ROUTES = [
-        { key: "awake", re: /(i'?m|i am) awake|awake now|just woke|woke up (early|before)/, say: "Noted. First move now, before anything else.", run: () => $("#stamp-awake").click() },
-        { key: "up", re: /(i'?m|i am) (up|out of bed)|out of bed now|got out of bed/, say: "Out of bed is the win. Well done.", run: () => $("#stamp-up").click() },
-        { key: "feel", re: /how (am i|do i|are you) feel|log (my )?(mood|feeling)|mood check|feeling check|check.?in.*(feel|mood)/, say: "Let’s check in. One tap.", run: () => openFeel() },
-        { key: "meditate", re: /meditat|breathing|breathe|mindful|calm me|relax/, say: "Let’s take a quiet minute together.",
-          run: (t) => { const n = (t.match(/(\d+)\s*min/) || [])[1]; $(`.med-len[data-min="${n}"]`)?.click(); $("#meditate").scrollIntoView({ block: "center" }); $("#med-begin").click(); } },
-        { key: "log", re: /(log|record|check.?in|add).*(walk|door|outing)|\bdoor\b/, say: "Opening a quick walking check-in.", run: () => $("#door-back-action").click() },
-        { key: "timer", re: /timer|(start|begin).*walk|2.?min/, say: "Here’s the easy walk timer. Stop whenever you like.", run: () => { goTo("#walking")(); $("#open-timer").click(); } },
-        { key: "settings", re: /settings?|morning plan|wake.?up time|goal time|preferences/, say: "Opening your morning plan.", run: () => $("#open-settings").click() },
-        { key: "sleep", nav: true, re: /sleep|bed(time)?|wind.?down|evening|rhythm/, say: "Here’s your evening-to-morning rhythm.", run: goTo("#day-rhythm") },
-        { key: "science", nav: true, re: /science|sources?|evidence|research/, say: "Here’s the gentle science.", run: goTo("#guidance") },
-        { key: "habits", nav: true, re: /habits?|history|progress|check-?ins?|today/, say: "Here’s today’s check-in.", run: goTo("#daily") },
-        { key: "walk", nav: true, re: /walk|route/, say: "Taking you to the little walks.", run: goTo("#walking") }
+        { key: "awake", say: "Noted. First move now, before anything else.", run: () => $("#stamp-awake").click() },
+        { key: "up", say: "Out of bed is the win. Well done.", run: () => $("#stamp-up").click() },
+        { key: "feel", say: "Let’s check in. One tap.", run: () => openFeel() },
+        { key: "evening", say: "Let’s make tomorrow morning a little warmer and easier.", run: () => openEvening() },
+        { key: "overwhelmed", keepOpen: true, say: "", run: () => careStart() },
+        { key: "helped", keepOpen: true, say: "", run: () => {
+          setFab(true);
+          const items = readHelped().items;
+          const label = (t) => (HELPED_TAGS.find((x) => x[0] === t) || [0, t])[1];
+          addMessage(items.length
+            ? "Here’s what has helped you before:\n" + items.slice(0, 8).map((i) => `• ${label(i.tag)}: ${i.text}`).join("\n")
+            : "You haven’t saved any notes yet. Add what helps in “What helped me”, and I’ll remind you here.");
+        } },
+        { key: "meditate", keepOpen: true, say: "", run: () => modeStart() },
+        { key: "log", say: "Opening a quick walking check-in.", run: () => $("#door-back-action").click() },
+        { key: "timer", say: "Here’s the easy walk timer. Stop whenever you like.", run: () => { goTo("#walking")(); $("#open-timer").click(); } },
+        { key: "plan", keepOpen: true, say: "", run: (t) => startSetup(t) },
+        { key: "settings", say: "Opening your morning plan.", run: () => $("#open-settings").click() },
+        { key: "sleep", say: "Here’s your evening-to-morning rhythm.", run: goTo("#day-rhythm") },
+        { key: "science", say: "Here’s the gentle science.", run: goTo("#guidance") },
+        { key: "progress", say: "Here are your last two weeks of little returns.", run: goTo("#rhythm") },
+        { key: "habits", say: "Here’s today’s check-in.", run: goTo("#daily") },
+        { key: "walk", say: "Taking you to the little walks.", run: goTo("#walking") }
       ];
 
+      /* ---- Smart check-ins: Moss reads the moment, speaks rarely ---- */
+      const HINT_KEY = "daybreak.hints.v1";
+      const readHints = () => { try { return JSON.parse(localStorage.getItem(HINT_KEY)) || {}; } catch { return {}; } };
+      const writeHints = (v) => { try { localStorage.setItem(HINT_KEY, JSON.stringify(v)); } catch {} };
+
+      function dayPart() {
+        const h = new Date().getHours();
+        return h >= 4 && h < 12 ? "morning" : h >= 12 && h < 18 ? "afternoon" : "evening";
+      }
+      function inWindDown() {
+        const f = (x) => (((x - 720) % 1440) + 1440) % 1440;
+        const n = new Date(), start = f(morningPlan().windDown), cur = f(n.getHours() * 60 + n.getMinutes());
+        return cur >= start && cur < start + 180;
+      }
+      const FEEL_SAY = ["feel", "How does it feel right now? One tap is enough.", "How are you feeling? One tap is enough."];
+      function nextBest() {
+        const log = getLog(), part = dayPart(), hour = new Date().getHours();
+        const awake = !!log.awake, up = !!log.wake, felt = (log.feels || []).length > 0;
+        const eve = (log.evening || []).length > 0, walked = !!log.walk;
+        const S = (key, say, hint) => ({ key, say, hint });
+        if (part === "morning") {
+          if (hour < 10 && !awake && !up) return S("awake", "Good morning. **Are you awake yet?** One tap notes the time, no rush.", "Good morning. Awake yet? One tap notes the time.");
+          if (hour < 10 && !up) return S("up", "You’re awake. **When you’re out of bed**, one tap notes it. Nothing to prove.", "Out of bed yet? One tap notes it.");
+          if (!felt) return S(...FEEL_SAY.map((x, i) => i === 1 && up ? "You’re up, and that’s the hard part. " + x : x));
+        } else if (part === "afternoon") {
+          if (!felt) return S(...FEEL_SAY);
+          if (!walked) return S("log", "Even a step to the door counts. **Want to log a little walk?**", "A tiny walk, even to the door? One tap logs it.");
+        } else {
+          if (!eve) return S("evening", "Evening. **A one-minute set-up now** makes tomorrow morning warmer.", "Wind-down time. A 1-minute set-up for a warmer morning?");
+          if (!felt) return S(...FEEL_SAY);
+        }
+        return null;
+      }
+
+      const GROUP_OF = { awake: "Now", up: "Now", log: "Now", feel: "Feeling", evening: "Plan" };
+      const GROUP_ORDER = { morning: ["Now", "Feeling", "Plan"], afternoon: ["Feeling", "Now", "Plan"], evening: ["Plan", "Feeling", "Now"] };
+      function refreshChips() {
+        const s = nextBest();
+        const order = GROUP_ORDER[dayPart()].slice();
+        if (s && GROUP_OF[s.key]) order.splice(order.indexOf(GROUP_OF[s.key]), 1), order.unshift(GROUP_OF[s.key]);
+        $$(".chip-group").forEach((g) => { g.style.order = String(order.indexOf(g.querySelector(".chip-group-label").textContent)); });
+        $$("#fab-shortcuts [data-go]").forEach((b) => {
+          const on = !!s && b.dataset.go === s.key;
+          b.classList.toggle("suggested", on);
+          if (on) b.setAttribute("aria-description", "Suggested for now"); else b.removeAttribute("aria-description");
+        });
+      }
+      let lastGreetAt = 0;
+      function smartOpen() {
+        refreshChips();
+        if (Date.now() - lastGreetAt < 10 * 60000) return;
+        const first = !lastGreetAt;
+        lastGreetAt = Date.now();
+        const s = nextBest();
+        if (first && $("#fab-log").children.length <= 1) $("#fab-log").replaceChildren();
+        addMessage(s ? s.say : "You’ve done enough for today. **I’m here if you’d like anything**, and nothing if you wouldn’t.", false, true);
+      }
+
+      function smartHint() {
+        if (state.settings.popups === false || state.settings.character === false) return;
+        if (document.hidden || !fabPanel.hidden || !fabHint.hidden || document.querySelector("dialog[open]")) return;
+        const h = readHints(), today = dateKey(new Date()), part = dayPart();
+        if (h.pausedUntil && today < h.pausedUntil) return;
+        h.shown = h.shown || {};
+        if (h.shown[part] === today) return;
+        const s = nextBest();
+        if (!s || (s.key === "evening" && !inWindDown())) return;
+        h.shown[part] = today;
+        writeHints(h);
+        fabHint.textContent = s.hint;
+        fabHint.dataset.kind = s.key;
+        fabHint.hidden = false;
+        setTimeout(() => {
+          if (fabHint.hidden || fabHint.dataset.kind !== s.key) return;
+          fabHint.hidden = true;
+          const v = readHints();
+          v.ignored = (v.ignored || 0) + 1;
+          if (v.ignored >= 2) { v.ignored = 0; v.pausedUntil = dateKey(new Date(Date.now() + 3 * 86400000)); }
+          writeHints(v);
+        }, 9000);
+      }
+      setTimeout(smartHint, 4000);
+      setInterval(smartHint, 60000);
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) smartHint(); });
+
       function setFab(open) {
+        const wasHidden = fabPanel.hidden;
         fabPanel.hidden = !open;
         fabToggle.setAttribute("aria-expanded", String(open));
         fabToggle.setAttribute("aria-label", open ? "Close companion" : "Open companion");
         fabHint.hidden = true;
-        if (open) $("#fab-input").focus();
+        if (open) fabToggle.blur();
+        if (open && wasHidden) smartOpen();
       }
 
       function runRoute(route, text) {
-        addMessage(route.say);
-        speakCharacter(route.say);
-        setFab(false);
+        if (route.say) { addMessage(route.say); speakCharacter(route.say); }
+        if (!route.keepOpen) setFab(false);
         setTimeout(() => route.run(text), 120);
       }
 
-      function handleUserText(text) {
-        const intent = detectIntent(text);
-        if (["crisis", "urgent", "lowmood"].includes(intent)) return respond(intent, text);
-        const lower = text.toLowerCase();
-        const route = ROUTES.find((r) => r.re.test(lower) && (!r.nav || NAV_VERB.test(lower)));
-        if (route) { addMessage(text, true); return runRoute(route, lower); }
-        respond(intent, text);
-      }
 
       fabHint.setAttribute("role", "button");
       fabHint.tabIndex = 0;
-      const hintAction = () => { fabHint.hidden = true; if (fabHint.dataset.kind === "feel") openFeel(); else setFab(true); };
+      const hintAction = () => {
+        fabHint.hidden = true;
+        const hs = readHints(); hs.ignored = 0; writeHints(hs);
+        const k = fabHint.dataset.kind;
+        if (k === "feel") openFeel();
+        else if (k === "evening") openEvening();
+        else if (["awake", "up", "log"].includes(k)) { setFab(true); $(`[data-go="${k}"]`)?.click(); }
+        else setFab(true);
+      };
       fabHint.addEventListener("click", hintAction);
       fabHint.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); hintAction(); } });
       fabToggle.addEventListener("click", () => setFab(fabPanel.hidden));
       $("#fab-close").addEventListener("click", () => { setFab(false); fabToggle.focus(); });
       fabPanel.addEventListener("keydown", (e) => { if (e.key === "Escape") { setFab(false); fabToggle.focus(); } });
-      $("#fab-form").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const text = $("#fab-input").value.trim();
-        if (!text) return;
-        $("#fab-input").value = "";
-        handleUserText(text);
-      });
       $$("[data-go]").forEach((b) => b.addEventListener("click", () => {
-        const route = ROUTES.find((r) => r.key === b.dataset.go);
-        addMessage(b.textContent.replace(/^\S+\s/, ""), true);
+        const key = b.dataset.go;
+        const route = ROUTES.find((r) => r.key === key);
+        const label = b.textContent.replace(/^\S+\s/, "");
+        const stampId = key === "awake" ? "#stamp-awake" : key === "up" ? "#stamp-up" : null;
+        if (stampId && !$(key === "awake" ? "#actual-awake" : "#actual-wake").value) {
+          const when = clock(timeMinutes(nowHM()));
+          addMessage(key === "awake" ? `Mark you as awake at ${when}?` : `Mark you as out of bed at ${when}?`);
+          const yes = document.createElement("button"), no = document.createElement("button");
+          yes.type = no.type = "button"; yes.className = no.className = "chat-chip";
+          yes.textContent = `Yes, ${when}`; no.textContent = "Not now";
+          const close = () => { fabChoices.hidden = true; fabChoices.replaceChildren(); fabShortcuts.hidden = false; };
+          yes.addEventListener("click", () => { close(); addMessage("Yes", true); runRoute(route, ""); });
+          no.addEventListener("click", () => { close(); addMessage("Not now. Nothing was saved."); });
+          fabChoices.replaceChildren(yes, no);
+          fabChoices.hidden = false; fabShortcuts.hidden = true;
+          yes.focus();
+          return;
+        }
+        addMessage(label, true);
         runRoute(route, "");
       }));
 
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      const mic = $("#fab-mic");
-      if (!SR) {
-        mic.hidden = true;
-      } else {
-        let rec = null;
-        mic.addEventListener("click", () => {
-          if (rec) { rec.stop(); return; }
-          if (state.settings.dataSaver !== false) {
-            toast("Voice input can use an online service in some browsers. Turn off Data Saver in My morning plan to use it.");
-            return;
-          }
-          rec = new SR();
-          rec.lang = document.documentElement.lang || "en-US";
-          rec.interimResults = false;
-          rec.onresult = (ev) => { $("#fab-input").value = ev.results[0][0].transcript; $("#fab-form").requestSubmit(); };
-          rec.onend = () => { rec = null; mic.setAttribute("aria-pressed", "false"); mic.setAttribute("aria-label", "Speak to companion"); };
-          rec.onerror = () => toast("I couldn’t hear that. You can type instead.");
-          mic.setAttribute("aria-pressed", "true");
-          mic.setAttribute("aria-label", "Listening. Tap to stop");
-          try { rec.start(); } catch { rec = null; }
-        });
-      }
 
-      if (state.settings.popups !== false && state.settings.character !== false) {
-        setTimeout(() => { if (fabPanel.hidden && !sessionStorage.getItem("daybreak.hint")) { fabHint.textContent = feltToday() ? "Need a hand? Tap me and tell me what you’d like to do." : "How are you feeling today? One tap is enough."; fabHint.dataset.kind = feltToday() ? "help" : "feel"; fabHint.hidden = false; try { sessionStorage.setItem("daybreak.hint", "1"); } catch {} setTimeout(() => (fabHint.hidden = true), 7000); } }, 1800);
-      }
+      /* ---- Cold-weather checklist: ticks kept for today only ---- */
+      (() => {
+        const COLD_KEY = "daybreak.cold.v1";
+        const boxes = $$("#cold-checklist .cold-list input");
+        try {
+          const saved = JSON.parse(localStorage.getItem(COLD_KEY));
+          if (saved && saved.date === dateKey(new Date()) && Array.isArray(saved.ticks)) boxes.forEach((b, i) => { b.checked = !!saved.ticks[i]; });
+        } catch {}
+        boxes.forEach((b) => b.addEventListener("change", () => {
+          try { localStorage.setItem(COLD_KEY, JSON.stringify({ date: dateKey(new Date()), ticks: boxes.map((x) => x.checked) })); } catch {}
+        }));
+      })();
 
       /* ---- Meditation ---- */
       (() => {
@@ -4412,7 +5627,19 @@
         async function keepAwake() { try { lock = await navigator.wakeLock?.request("screen"); } catch {} }
         function release() { try { lock?.release(); } catch {} lock = null; }
 
+        function ready() {
+          running = false; clearInterval(timer); total = 0; elapsed = 0; phase = "";
+          orb.style.transition = "none"; orb.style.transform = "scale(.55)";
+          $("#med-phase").textContent = "Ready when you are";
+          $("#med-time").textContent = `${minutes} min · find a comfortable position`;
+          $("#med-ready").hidden = false; $("#med-running").hidden = true;
+          $("#med-go").disabled = true;
+          setTimeout(() => { $("#med-go").disabled = false; }, 900);
+          if (!dlg.open) dlg.showModal();
+        }
+
         function start() {
+          $("#med-ready").hidden = true; $("#med-running").hidden = false;
           total = minutes * 60000; elapsed = 0; phase = "";
           orb.style.transition = "none"; orb.style.transform = "scale(.55)";
           $("#med-time").textContent = fmt(total);
@@ -4455,7 +5682,9 @@
           minutes = Number(b.dataset.min);
           $$(".med-len").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
         }));
-        $("#med-begin").addEventListener("click", start);
+        $("#med-begin").addEventListener("click", ready);
+        $("#med-go").addEventListener("click", start);
+        $("#med-notnow").addEventListener("click", () => dlg.close());
         $("#med-pause").addEventListener("click", () => (running ? pause() : resume()));
         $("#med-end").addEventListener("click", end);
         $("#med-sound").addEventListener("click", (e) => {
