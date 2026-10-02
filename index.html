@@ -317,11 +317,18 @@
     .mh:first-child { margin-top: 2px; }
     .mg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .mg button:last-child:nth-child(odd) { grid-column: 1 / -1; }
-    .dev-steps { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 8px; font-size: calc(13.5px * var(--ts, 1)); }
+    .dev-steps { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 12px; font-size: calc(16px * var(--ts, 1)); line-height: 1.5; }
+    .dev-lead { font-size: calc(16px * var(--ts, 1)); line-height: 1.5; margin: 8px 0; }
+    #dev-dialog .pat-list li { font-size: calc(15px * var(--ts, 1)); }
     .dev-steps code, #dev-dialog code { background: #eef0e6; padding: 1px 5px; border-radius: 6px; font-size: .92em; }
     #dev-menu-item[hidden] { display: none; }
+    .dev-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 10px 0; padding: 10px 14px; border: 1px dashed var(--line); border-radius: 14px; background: #f3f1e6; font-size: calc(14px * var(--ts, 1)); line-height: 1.4; }
+    .dev-bar[hidden] { display: none; }
+    .dev-bar-title { font-weight: 700; }
+    .dev-bar a { color: inherit; word-break: break-all; }
+    .dev-bar-actions { display: flex; gap: 10px; }
     .dev-more { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 4px; }
-    .dev-more summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; }
+    .dev-more summary { cursor: pointer; min-height: 48px; display: flex; align-items: center; font-weight: 600; font-size: calc(17px * var(--ts, 1)); }
     .dev-more .dev-steps { margin-top: 4px; }
     ul.dev-steps { list-style: disc; }
     .menu-more { margin-top: 12px; }
@@ -1754,6 +1761,15 @@
       </div>
     </header>
 
+    <div class="dev-bar" id="dev-bar" hidden>
+      <span class="dev-bar-title">🛠 Dev · build <span id="dev-bar-build"></span></span>
+      <a id="dev-bar-url" target="_blank" rel="noopener"></a>
+      <span class="dev-bar-actions">
+        <button type="button" class="text-button" id="dev-bar-copy">Copy address</button>
+        <button type="button" class="text-button" id="dev-bar-notes">Dev notes</button>
+      </span>
+    </div>
+
     <main id="main" tabindex="-1">
       <section class="intro" aria-labelledby="page-title">
         <div>
@@ -2528,33 +2544,33 @@
       <h2 id="dev-title">Dev notes</h2>
       <button class="close-button" type="button" data-close="dev-dialog" aria-label="Close">×</button>
     </div>
-    <p class="micro">For the person who updates the app. Hidden from the menu until unlocked (tap the daybreak logo 7 times). Hidden, not secret: anyone who knows the trick can see this.</p>
+    <p class="dev-lead">Notes for whoever updates the app. <strong>Nothing here needs doing today.</strong></p>
     <h3 class="pat-h">This build</h3>
     <ul class="pat-list" id="dev-info"></ul>
-    <h3 class="pat-h">Working on next</h3>
-    <p class="micro">Edit the list <code>DEV_NEXT</code> in <code>index.html</code> at the end of each session.</p>
+    <h3 class="pat-h">Next up</h3>
     <ol class="dev-steps" id="dev-next"></ol>
-    <details class="dev-more"><summary>What has been built (newest first)</summary><ul class="dev-steps" id="dev-log"></ul></details>
-    <details class="dev-more"><summary>Merging two versions of the app</summary><ol class="dev-steps" id="dev-merge"></ol></details>
+    <details class="dev-more"><summary>More ideas</summary><ol class="dev-steps" id="dev-next-more" start="4"></ol></details>
+    <details class="dev-more"><summary>How to update the app</summary>
+      <ol class="dev-steps">
+      <li><strong>Save a backup first</strong> (Menu → Settings &amp; backup).</li>
+      <li><strong>Edit <code>index.html</code></strong> on the PC and open it in your browser to try it.</li>
+      <li><strong>Raise <code>APP_BUILD</code></strong> in <code>index.html</code> by one, so this screen shows which version is live.</li>
+      <li><strong>Upload only <code>index.html</code></strong> to GitHub: Add file → Upload files → Commit changes. <code>sw.js</code> never needs touching.</li>
+      <li><strong>Wait about a minute</strong>, then refresh the live link. The build number here should be the new one.</li>
+      <li><strong>If something breaks:</strong> on GitHub open <code>index.html</code> → History, and restore the earlier version.</li>
+    </ol>
+    </details>
+    <details class="dev-more"><summary>Where the data lives</summary>
+      <p class="dev-lead">Only in each browser, for each web address. The repo and Cloudflare never see check-ins. A new address, a new browser or a cleared browser starts empty, so use Save a backup and Restore a backup to move data. The saved items on this device:</p>
+      <ul class="pat-list" id="dev-keys"></ul>
+    </details>
+    <details class="dev-more"><summary>What has been built</summary><ul class="dev-steps" id="dev-log"></ul></details>
+    <details class="dev-more"><summary>Merging two versions</summary><ol class="dev-steps" id="dev-merge"></ol></details>
     <details class="dev-more"><summary>Hand-off note for a new chat or account</summary>
-      <p class="micro">Tap the box, copy it, and paste it into the new chat together with the <code>index.html</code> file.</p>
+      <p class="dev-lead">Tap the box, copy it, and paste it into the new chat together with the <code>index.html</code> file.</p>
       <textarea id="dev-handoff" rows="10" readonly style="width: 100%; font: inherit; font-size: 13px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--white);"></textarea>
       <div class="actions" style="margin-top: 8px;"><button class="button" type="button" id="dev-copy">Copy note</button></div>
     </details>
-    <h3 class="pat-h">When you change the app</h3>
-    <ol class="dev-steps">
-      <li><strong>Save a backup first</strong> (Menu → Settings &amp; backup), so your check-ins are safe.</li>
-      <li><strong>Edit <code>index.html</code> on the PC</strong> and open it in your browser to try it. Installing and offline use only work from the live web address, so test those on the live link.</li>
-      <li><strong>Change the version in <code>sw.js</code></strong> (for example <code>daybreak-v27</code> to <code>daybreak-v28</code>) every time <code>index.html</code> changes. Without this, phones keep showing the old copy.</li>
-      <li><strong>Also update <code>APP_BUILD</code></strong> in <code>index.html</code> to the same number, so this screen can tell you if they match.</li>
-      <li><strong>Upload to GitHub:</strong> repo → Add file → Upload files → drag <code>index.html</code> and <code>sw.js</code> → Commit changes.</li>
-      <li><strong>Wait about a minute</strong> for Cloudflare, then open the live link and check this screen: the cache name should match the build.</li>
-      <li><strong>On the phone,</strong> close and reopen the installed app once or twice to load the new version.</li>
-      <li><strong>If something breaks:</strong> in GitHub open the file → History, and restore the earlier version (or upload the previous files again).</li>
-    </ol>
-    <h3 class="pat-h">Where the data lives</h3>
-    <p class="small">Only in each browser, for each web address. The repo and Cloudflare never see check-ins. A new address, a new browser or a cleared browser starts empty, so use Save a backup and Restore a backup to move data. The saved items on this device:</p>
-    <ul class="pat-list" id="dev-keys"></ul>
     <div class="dialog-actions">
       <button class="button" type="button" id="dev-hide">Hide dev notes</button>
       <button class="button primary" type="button" data-close="dev-dialog">Close</button>
@@ -4637,19 +4653,20 @@
 
       /* ---- Dev notes: hidden until the logo is tapped 7 times ---- */
       const DEV_KEY = "daybreak.dev.v1";
-      const APP_BUILD = "29";
+      const APP_BUILD = "32";
+      const LIVE_URL = "https://daybreak-wellbeing.cosmicvoyager010.workers.dev";
       const APP_DATE = "2026-10-01";
       /* EDIT THESE LISTS at the end of every session. They are the project memory that travels with the file. */
       const DEV_NEXT = [
-        "FIRST: use the app for a week or two before adding more. Keep a short list of what annoys you or gets skipped, and let that decide the next change.",
-        "Protect the data: install to the Home Screen (to check, verify whether Safari clears website data after about a week unused). Add a last-backed-up line with a gentle monthly nudge, and a readable summary export that could be shown to a doctor or therapist.",
-        "Simplify the main screen: one calm focus at the top (today, one small thing), everything else a tap away. Too many cards can feel like a to-do list.",
+        "Use the app for a week or two first. Note what annoys you or gets skipped.",
+        "Protect your data: install to the Home Screen, add a last-backed-up reminder, and a readable summary export.",
+        "Simplify the main screen: one calm focus at the top, everything else a tap away.",
         "First-run welcome: three short screens (what this is, nothing is graded, your data stays on your phone) and sensible starting settings.",
         "Gentle response to a run of very low days (for example several Very low check-ins in a row): a kind note suggesting someone they trust or a doctor. Never diagnose, never alarm. Needs careful wording and a real review.",
         "Weekly look-back: one short Sunday summary (days showing up, one pattern, the sprout) instead of numbers everywhere.",
         "Accessibility pass: VoiceOver labels on chips and dialogs, contrast of lighter text, and a dark mode for early mornings.",
         "Keep a small test script in the repo (the headless browser checks used so far) so any session can confirm nothing broke before uploading.",
-        "Test the live Cloudflare version on the iPhone: install to the home screen, reopen twice, and check an update arrives (see Match? above).",
+        "Test the live Cloudflare version on the iPhone: install to the home screen, reopen twice, and check an update arrives (the build number above should rise).",
         "Characters with roles: Moss gentle (feelings), Pip practical (plan and next step), Wren curious (one small question). The chosen character should be the one that checks in.",
         "Smarter navigation: Moss says where it is taking you, a small Back button appears after a jump, and Moss can answer where was I.",
         "Quiet milestone badges under the sprout (first walk, first week, first feeling check-in). No pressure, no streaks.",
@@ -4658,6 +4675,9 @@
         "Cleanup pass: look for code left unused after merging the two branches (search the comment markers listed in the merge notes)."
       ];
       const DEV_LOG = [
+        "Build 32 (Oct 2026): sw.js now tries the internet first and uses the saved copy only when offline (4-second wait), so updates need only index.html and sw.js never needs a version bump. The Match line was removed.",
+        "Build 31 (Oct 2026): when the dev switch is on, a small bar under the header shows the live address (LIVE_URL in the file) with Copy and Dev notes buttons. If the address ever changes, edit LIVE_URL.",
+        "Build 30 (Oct 2026): Dev notes simplified: bigger text, three next steps shown, everything else folded away.",
         "Build 29 (Oct 2026): Dev notes now hold the project memory (next steps, build history, merge tips, hand-off note) and the refinement ideas listed first under Working on next.",
         "Build 27 (Oct 2026): Dev notes screen, hidden until the logo is tapped 7 times. Merged branch fixed_25 (weather, daily reminder, installable app) with the sprout harvest cycle.",
         "Sprout cycle: grows over 30 days of showing up, glows more as it grows, blooms, then Harvest saves a seed and plants a new one. Never shrinks. Key daybreak.sprout.v2.",
@@ -4676,14 +4696,14 @@
         "Saved data is read through a clean-up step when the app loads. Any NEW saved field must be added there, or it is silently dropped after a reload (this happened with the set-aside flag on mood taps).",
         "Storage keys all start with daybreak. so backups pick them up. The main one is daybreak.gentle-plan.v4-rhythm. If you change how it is stored, add a migration instead of renaming it.",
         "When two versions both changed the same screen, keep the newer layout and re-add the other version's behaviour, then test the buttons by hand.",
-        "After merging: raise the version in sw.js and APP_BUILD together, upload index.html and sw.js, and use the Match? line above to confirm."
+        "After merging: raise APP_BUILD, upload index.html (sw.js only changes if the offline file list changes), and check the build number above."
       ];
       function devHandoff() {
         return [
-          `This is my Daybreak wellbeing app: a single index.html plus sw.js, manifest and icons. Build ${APP_BUILD} (${APP_DATE}). It is hosted on Cloudflare Pages from a private GitHub repo. All user data is saved in the browser (localStorage keys starting with daybreak.), never on a server.`,
+          `This is my Daybreak wellbeing app: a single index.html plus sw.js (offline copy, network-first, never needs a version bump), manifest and icons. Build ${APP_BUILD} (${APP_DATE}). It is hosted on Cloudflare Pages from a private GitHub repo. All user data is saved in the browser (localStorage keys starting with daybreak.), never on a server.`,
           "",
           "Tone rules: calm, no streaks, no scolding, nothing shrinks or is lost. Keep the text-size, Undo and confirm-before-save behaviours.",
-          "Technical rules: raise the version in sw.js and APP_BUILD together. Any new saved field must be added to the load clean-up step. Backups must include every daybreak.* key.",
+          "Technical rules: raise APP_BUILD with every change (sw.js needs no bump). Any new saved field must be added to the load clean-up step. Backups must include every daybreak.* key.",
           "",
           "Built so far (newest first):",
           ...DEV_LOG.map((x) => "- " + x),
@@ -4695,7 +4715,17 @@
         ].join("\n");
       }
       const devOn = () => { try { return localStorage.getItem(DEV_KEY) === "1"; } catch { return false; } };
-      const applyDev = () => { $("#dev-menu-item").hidden = !devOn(); };
+      const applyDev = () => {
+        $("#dev-menu-item").hidden = !devOn();
+        const bar = $("#dev-bar"); bar.hidden = !devOn();
+        $("#dev-bar-build").textContent = APP_BUILD;
+        const a = $("#dev-bar-url"); a.textContent = LIVE_URL; a.href = LIVE_URL;
+      };
+      $("#dev-bar-copy").addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(LIVE_URL); toast("Address copied."); }
+        catch { try { const t = document.createElement("textarea"); t.value = LIVE_URL; document.body.append(t); t.select(); document.execCommand("copy"); t.remove(); toast("Address copied."); } catch { toast("Select the address and copy it by hand."); } }
+      });
+      $("#dev-bar-notes").addEventListener("click", () => openDev());
       let devTaps = [];
       $(".brand").addEventListener("click", () => {
         const n = Date.now(); devTaps = devTaps.filter((t) => n - t < 4000); devTaps.push(n);
@@ -4708,16 +4738,16 @@
       async function openDev() {
         const info = $("#dev-info"); info.replaceChildren();
         const add = (a, b) => { const li = document.createElement("li"); const x = document.createElement("span"); x.textContent = a; const y = document.createElement("strong"); y.textContent = b; li.append(x, y); info.append(li); };
+        add("Live address", LIVE_URL);
         add("Build in this file", APP_BUILD);
         add("Opened from", location.protocol === "file:" ? "a file on this device (no install or offline)" : location.origin);
         let cache = "not available here";
         try { if ("caches" in window) { const ks = (await caches.keys()).filter((k) => k.startsWith("daybreak-")); cache = ks.length ? ks.join(", ") : "none yet"; } } catch {}
         add("Offline copy (service worker cache)", cache);
-        if (/^daybreak-v\d+$/.test(cache)) add("Match?", cache === `daybreak-v${APP_BUILD}` ? "Yes, up to date" : "No: reopen the app once or twice to finish updating");
         const ul = $("#dev-keys"); ul.replaceChildren();
         try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (!k.startsWith("daybreak.")) continue; const li = document.createElement("li"); const x = document.createElement("span"); x.textContent = k; const y = document.createElement("strong"); y.textContent = `${(localStorage.getItem(k) || "").length.toLocaleString()} chars`; li.append(x, y); ul.append(li); } } catch {}
         const fill = (id, arr) => { const el = $(id); el.replaceChildren(); arr.forEach((t) => { const li = document.createElement("li"); li.textContent = t; el.append(li); }); };
-        fill("#dev-next", DEV_NEXT); fill("#dev-log", DEV_LOG); fill("#dev-merge", DEV_MERGE);
+        fill("#dev-next", DEV_NEXT.slice(0, 3)); fill("#dev-next-more", DEV_NEXT.slice(3)); fill("#dev-log", DEV_LOG); fill("#dev-merge", DEV_MERGE);
         $("#dev-handoff").value = devHandoff();
         $("#dev-dialog").showModal();
       }
